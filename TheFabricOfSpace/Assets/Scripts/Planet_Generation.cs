@@ -45,8 +45,9 @@ public class Planet_Generation : MonoBehaviour
         for (currFace = 0; currFace < maxFaceAmount; currFace++)
         {
             SpawnManager(ref spawnPosition, ref spawnRotation);
-            GameObject temp = Instantiate(planetFaces[currFace], spawnPosition, Quaternion.Euler(spawnRotation));
-            temp.name = "Planet Face " + (currFace + 1);  
+            GameObject temp = Instantiate(planetFaces[currFace], transform.position + spawnPosition, Quaternion.Euler(spawnRotation));
+            temp.name = "Planet Face " + (currFace + 1);
+            temp.transform.parent = gameObject.transform;
         }
     }
 
@@ -56,37 +57,54 @@ public class Planet_Generation : MonoBehaviour
         //Planet face 1
         if(currFace == 0)
         {
-            spawnPosition.y = gridSize - 1;
+            //spawnPosition.x -= (gridSize - 1) / 2;
+            spawnPosition.y = (gridSize - 1) / 2;
+            //spawnPosition.z = (gridSize - 1) / 2;
+            //spawnPosition.y = gridSize - 1;
         }
         //Planet face 2
         if (currFace == 1)
         {
+            spawnPosition.x -= (gridSize - 1) / 2;
+            //spawnPosition.y -= (gridSize - 1) / 2;
+            //spawnPosition.z = (gridSize - 1) / 2;
             spawnRotation.z = 90;
         }
         //Planet face 3
         if (currFace == 2)
         {
-            spawnPosition.z = -gridSize + 1;
+            //spawnPosition.x -= (gridSize - 1) / 2;
+            spawnPosition.y -= (gridSize - 1) / 2;
+            //spawnPosition.z = (gridSize - 1) / 2;
+            //spawnPosition.z -= gridSize - 1;
             spawnRotation.x = 180;
         }
         //Planet face 4
         if (currFace == 3)
         {
-            spawnPosition.x = gridSize - 1;
-            spawnPosition.y = gridSize - 1;
+            spawnPosition.x = (gridSize - 1) / 2;
+            //spawnPosition.y -= (gridSize - 1) / 2;
+            //spawnPosition.z = (gridSize - 1) / 2;
+            //spawnPosition.x = gridSize - 1;
+            //spawnPosition.y = gridSize - 1;
             spawnRotation.z = -90;
         }
         //Planet face 5
         if (currFace == 4)
         {
-
+            //spawnPosition.x -= (gridSize - 1) / 2;
+            //spawnPosition.y -= (gridSize - 1) / 2;
+            spawnPosition.z = (gridSize - 1) / 2;
             spawnRotation.x = 90;
         }
         //Planet face 6
         if (currFace == 5)
         {
-            spawnPosition.y = gridSize - 1;
-            spawnPosition.z = -gridSize + 1;
+            //spawnPosition.x -= (gridSize - 1) / 2;
+            //spawnPosition.y -= (gridSize - 1) / 2;
+            spawnPosition.z -= (gridSize - 1) / 2;
+            //spawnPosition.y = gridSize - 1;
+            //spawnPosition.z -= gridSize - 1;
             spawnRotation.x = -90;
         }
     }
@@ -96,6 +114,14 @@ public class Planet_Generation : MonoBehaviour
     /// </summary>
     private void FaceReset(ref Vector3 spawnPosition, ref Vector3 spawnRotation)
     {
+        //spawnPosition.x = gameObject.transform.position.x;
+        //spawnPosition.y = gameObject.transform.position.y;
+        //spawnPosition.z = gameObject.transform.position.z;
+
+        //spawnRotation.x = gameObject.transform.rotation.x;
+        //spawnRotation.y = gameObject.transform.rotation.y;
+        //spawnRotation.z = gameObject.transform.rotation.z;
+
         spawnPosition.x = 0;
         spawnPosition.y = 0;
         spawnPosition.z = 0;
