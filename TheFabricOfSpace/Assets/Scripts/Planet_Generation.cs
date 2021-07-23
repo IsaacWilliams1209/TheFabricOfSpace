@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 public class Planet_Generation : MonoBehaviour
@@ -23,8 +24,11 @@ public class Planet_Generation : MonoBehaviour
     [SerializeField]
     private GameObject face06;
     [SerializeField]
-    private Vector3 spawnPosition;
+    private Vector3 spawnOrigin;
     [SerializeField]
+    private int gridSize;
+
+    private Vector3 spawnPosition;
     private Vector3 spawnRotation;
 
     private int maxFaceAmount = 6;
@@ -33,7 +37,6 @@ public class Planet_Generation : MonoBehaviour
     private void Start()
     {
         planetFaces = new GameObject[] { face01, face02, face03, face04, face05, face06 };
-        //GameObject newFace = Instantiate(face01, planetOrigin, Quaternion.Euler(faceSpawnRotation)) as GameObject;
         PlanetSpawn();
     }
 
@@ -42,57 +45,48 @@ public class Planet_Generation : MonoBehaviour
         for (currFace = 0; currFace < maxFaceAmount; currFace++)
         {
             SpawnManager(ref spawnPosition, ref spawnRotation);
-            GameObject newFace = Instantiate(planetFaces[currFace], spawnPosition, Quaternion.Euler(spawnRotation)) as GameObject;
+            GameObject temp = Instantiate(planetFaces[currFace], spawnPosition, Quaternion.Euler(spawnRotation));
+            temp.name = "Planet Face " + (currFace + 1);  
         }
     }
 
     private void SpawnManager(ref Vector3 spawnPosition, ref Vector3 spawnRotation)
     {
+        FaceReset(ref spawnPosition, ref spawnRotation);
         //Planet face 1
         if(currFace == 0)
         {
-            Debug.Log("0");
-            FaceReset(ref spawnPosition, ref spawnRotation);
-            spawnPosition.y = 6;
+            spawnPosition.y = gridSize - 1;
         }
         //Planet face 2
         if (currFace == 1)
         {
-            Debug.Log("1");
-            FaceReset(ref spawnPosition, ref spawnRotation);
             spawnRotation.z = 90;
         }
         //Planet face 3
         if (currFace == 2)
         {
-            Debug.Log("2");
-            FaceReset(ref spawnPosition, ref spawnRotation);
-            spawnPosition.z = -6;
+            spawnPosition.z = -gridSize + 1;
             spawnRotation.x = 180;
         }
         //Planet face 4
         if (currFace == 3)
         {
-            Debug.Log("3");
-            FaceReset(ref spawnPosition, ref spawnRotation);
-            spawnPosition.x = 6;
-            spawnPosition.y = 6;
+            spawnPosition.x = gridSize - 1;
+            spawnPosition.y = gridSize - 1;
             spawnRotation.z = -90;
         }
         //Planet face 5
         if (currFace == 4)
         {
-            Debug.Log("4");
-            FaceReset(ref spawnPosition, ref spawnRotation);
+
             spawnRotation.x = 90;
         }
         //Planet face 6
         if (currFace == 5)
         {
-            Debug.Log("5");
-            FaceReset(ref spawnPosition, ref spawnRotation);
-            spawnPosition.y = 6;
-            spawnPosition.z = -6;
+            spawnPosition.y = gridSize - 1;
+            spawnPosition.z = -gridSize + 1;
             spawnRotation.x = -90;
         }
     }
@@ -110,4 +104,5 @@ public class Planet_Generation : MonoBehaviour
         spawnRotation.y = 0;
         spawnRotation.z = 0;
     }
+
 }

@@ -115,11 +115,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   traversable: 00000000
   colliders:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 3383617266622937284}
+  - {fileID: 6826531006453303944}
+  - {fileID: 2720078058798333723}
+  - {fileID: 6647324458143221976}
+  - {fileID: 5053553222662586652}
   neighbours:
   - {fileID: 0}
   - {fileID: 0}

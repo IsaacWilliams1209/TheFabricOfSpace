@@ -8,9 +8,8 @@ using UnityEngine;
 /// 
 /// As a rule of thumb the positon should be a consistent number with just the x,y,z component being changed with the number as a positive/negative.
 /// </summary>
-public class Cube_Rotation_Second : MonoBehaviour
+public class Camera_Rotation : MonoBehaviour
 {
- 
     [SerializeField]
     private Vector3 camRot01 = new Vector3(90, 0, 0);
 
@@ -51,7 +50,7 @@ public class Cube_Rotation_Second : MonoBehaviour
     private float rotSpeed = 50.0f;
 
     ///<summary> Tells the update method to rotate/move the camera around the planet on request until interpolation is finished.</summary>
-    private bool isCubeRotating = false; 
+    private bool isCubeRotating = false;
     /// <summary> Allows for the script to track the correct camera position/rotation for the current planet face and the target planet face.
     /// </summary>
     private Vector3 targRotation;
@@ -59,9 +58,9 @@ public class Cube_Rotation_Second : MonoBehaviour
     private Vector3 currRotation;
     private Vector3 currPosition;
 
-    public void Update()
+    private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.W) && !isCubeRotating)
+        if (Input.GetKeyDown(KeyCode.W) && !isCubeRotating)
         {
             Debug.Log("W Press");
             isCubeRotating = true;
@@ -106,7 +105,7 @@ public class Cube_Rotation_Second : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(targetRot), donePercentage);
         transform.position = Vector3.Slerp(transform.position, targetPos, donePercentage);
 
-        if(donePercentage >= 1.0f)
+        if (donePercentage >= 1.0f)
         {
             currRotation = targRotation;
             currPosition = targPosition;
