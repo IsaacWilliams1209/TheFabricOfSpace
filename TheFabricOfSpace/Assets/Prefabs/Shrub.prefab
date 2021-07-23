@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5801305067906492181}
   - component: {fileID: 5801305067906492186}
   - component: {fileID: 5243151752211357206}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Shrub
   m_TagString: Reg
   m_Icon: {fileID: 0}
