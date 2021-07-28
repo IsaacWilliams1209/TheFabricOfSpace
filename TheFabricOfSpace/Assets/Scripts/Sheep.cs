@@ -31,6 +31,8 @@ public class Sheep : MonoBehaviour
 
     public bool canJump;
 
+    bool isJumping;
+
     bool canMove = true;
 
     int berryIndex = -1;
@@ -40,7 +42,9 @@ public class Sheep : MonoBehaviour
     Renderer matChanger;
 
     Vector3 jumpLanding;
+    int jumpIndex;
 
+    Vector3[] jumpFrames = new Vector3[1];
     CharacterController controller;
     // Start is called before the first frame update
     void Start()
@@ -105,6 +109,17 @@ public class Sheep : MonoBehaviour
 
                 controller.Move(movement);
             }
+            else
+            {
+                if (isJumping)
+                {
+                    transform.position = Vector3.Lerp(transform.position, jumpFrames[jumpIndex], 0.1f);
+                    if (transform.position == jumpFrames[jumpIndex] && jumpIndex < jumpFrames.Length - 1)
+                    {
+                        jumpIndex++;
+                    }
+                }
+            }
 
             if (Input.GetButtonDown("Jump"))
             {
@@ -143,6 +158,10 @@ public class Sheep : MonoBehaviour
                     poweredUp = !poweredUp;
                     ActivatePowerUp();
                 }
+            }
+            if (canJump && Input.GetKeyDown(KeyCode.G))
+            {
+                DoDaJump();
             }
 
             if (Input.GetKeyUp(KeyCode.LeftShift))
@@ -189,7 +208,7 @@ public class Sheep : MonoBehaviour
         }
         if (other.gameObject.tag == "Jump")
         {
-            Block block = other.gameObject.GetComponent<Block>();
+            Block block = other.gameObject.GetComponentInParent<Block>();
             canJump = true;
             for (int i = 0; i < 4; i++)
             {
@@ -258,8 +277,9 @@ public class Sheep : MonoBehaviour
     {
         canMove = false;
         canJump = false;
+        isJumping = true;
         int numFrames = 30;
-        Vector3[] frames = new Vector3[numFrames];
+        jumpFrames = new Vector3[numFrames];
 
         Vector3 startingPos;
         startingPos.x = MaskVector(transform.position, transform.right);
@@ -284,6 +304,27 @@ public class Sheep : MonoBehaviour
         float y2 = arrivingPos.y;
         float x3 = vertex.z;
         float y3 = vertex.y;
+
+        float denom = (x1 - x2) * (x1 - x3) * (x2 - x3);
+
+        var z_dist = (arrivingPos.z - startingPos.z) / numFrames;
+        var x_dist = (arrivingPos.x - startingPos.x) / numFrames;
+
+        float A = (x3 * (y2 - y1) + x2 * (y1 - y3) + x1 * (y3 - y2)) / denom;
+        float B = (float)(System.Math.Pow(x3, 2) * (y1 - y2) + System.Math.Pow(x2, 2) * (y3 - y1) + System.Math.Pow(x1, 2) * (y2 - y3)) / denom;
+        float C = (x2 * x3 * (x2 - x3) * y1 + x3 * x1 * (x3 - x1) * y2 + x1 * x2 * (x1 - x2) * y3) / denom;
+
+        float newX = startingPos.z;
+        float newZ = startingPos.x;
+
+        for (int i = 0; i < numFrames; i++)
+        {
+            newX += z_dist;
+            newZ += x_dist;
+            float yToBeFound = A * (newX * newX) + B * newX + C;
+            Vector3 temp1 = transform.right * newZ + transform.up * yToBeFound + transform.forward * newX;
+           jumpFrames[i] = temp1;
+        }
 
     }
 
