@@ -8,9 +8,9 @@ public class Block : MonoBehaviour
 
     public BoxCollider[] jumpTriggers = new BoxCollider[4];
 
-    public BoxCollider[] colliders = new BoxCollider[5];
+    public Vector3[] jumpLandings = new Vector3[4];
 
-    public GameObject[] neighbours = new GameObject[4];
+    public BoxCollider[] colliders = new BoxCollider[5];
 
 
     // Start is called before the first frame update
@@ -30,14 +30,14 @@ public class Block : MonoBehaviour
 
                 RaycastHit hit;
 
-                Debug.DrawRay(transform.parent.position, colliders[i].center - new Vector3(0, 1, 0));
+                Debug.DrawRay(transform.parent.position, colliders[i].center - transform.up);
 
-                if(Physics.Raycast(transform.parent.position, colliders[i].center - new Vector3(0,1,0), out hit, 2))
+                if(Physics.Raycast(transform.parent.position, colliders[i].center - transform.up, out hit, 2))
                 {
                     if (hit.distance > 1)
                     {
                         jumpTriggers[i].enabled = true;
-                        Debug.Log(i);
+                        jumpLandings[i] = hit.transform.position + transform.up;
                     }
                 }
 

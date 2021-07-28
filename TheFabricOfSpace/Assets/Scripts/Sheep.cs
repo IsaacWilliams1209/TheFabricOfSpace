@@ -14,7 +14,7 @@ public class Sheep : MonoBehaviour
 
     public bool voxel = false;
 
-    
+
     public bool poweredUp = false;
 
     List<GameObject> awakeSheep = new List<GameObject>();
@@ -29,7 +29,7 @@ public class Sheep : MonoBehaviour
 
     bool swap = false;
 
-    
+    public bool canJump;
 
     bool canMove = true;
 
@@ -38,6 +38,8 @@ public class Sheep : MonoBehaviour
     Shepherd shepherd;
 
     Renderer matChanger;
+
+    Vector3 jumpLanding;
 
     CharacterController controller;
     // Start is called before the first frame update
@@ -48,7 +50,7 @@ public class Sheep : MonoBehaviour
         awakeSheep = shepherd.awakeSheep;
         matChanger = GetComponent<Renderer>();
         controller = GetComponent<CharacterController>();
-        
+
         if (active)
         {
             matChanger.material = sheepMaterials[0];
@@ -87,13 +89,13 @@ public class Sheep : MonoBehaviour
                 else if (hit.distance < 0.4f)
                 {
                     movement += transform.parent.up * 0.01f;
-                    
+
 
                 }
                 else if (hit.distance > 0.5f)
                 {
                     movement -= transform.parent.up * 0.01f;
-                    
+
                 }
                 else if (hit.transform.tag == "Sheep" && hit.transform.GetComponent<Sheep>().voxel)
                 {
@@ -132,7 +134,7 @@ public class Sheep : MonoBehaviour
                 }
 
             }
-            
+
 
             if (Input.GetKeyDown(KeyCode.F))
             {
@@ -140,7 +142,7 @@ public class Sheep : MonoBehaviour
                 {
                     poweredUp = !poweredUp;
                     ActivatePowerUp();
-                }                
+                }
             }
 
             if (Input.GetKeyUp(KeyCode.LeftShift))
@@ -148,7 +150,6 @@ public class Sheep : MonoBehaviour
                 if (awakeSheep.Count != 0)
                 {
                     swap = true;
-                    
                 }
             }
         }
@@ -186,6 +187,18 @@ public class Sheep : MonoBehaviour
             // you win! activate world rotation
             Debug.Log("Good Job!");
         }
+        if (other.gameObject.tag == "Jump")
+        {
+            Block block = other.gameObject.GetComponent<Block>();
+            canJump = true;
+            for (int i = 0; i < 4; i++)
+            {
+                if(block.jumpTriggers[i].bounds == other.bounds)
+                {
+                    jumpLanding = block.jumpLandings[i];
+                }
+            }
+        }
     }
 
     private void ActivatePowerUp()
@@ -195,10 +208,10 @@ public class Sheep : MonoBehaviour
             if (poweredUp)
             {
                 canMove = false;
-                
+
                 Vector3 temp = new Vector3(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y), Mathf.Round(transform.position.z));
 
-                transform.position =  temp;
+                transform.position = temp;
                 RaycastHit[] hits = new RaycastHit[4];
                 Vector3[] directions = new Vector3[4];
                 directions[0] = transform.parent.forward;
@@ -239,5 +252,47 @@ public class Sheep : MonoBehaviour
                 transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
             }
         }
+    }
+
+    private void DoDaJump()
+    {
+        canMove = false;
+        canJump = false;
+        int numFrames = 30;
+        Vector3[] frames = new Vector3[numFrames];
+
+        Vector3 startingPos;
+        startingPos.x = MaskVector(transform.position, transform.right);
+        startingPos.y = MaskVector(transform.position, transform.up);
+        startingPos.z = MaskVector(transform.position, transform.forward);
+        
+        Vector3 stP = new Vector3(0, startingPos.y, startingPos.z);
+
+        Vector3 arrivingPos;
+        arrivingPos.x = MaskVector(jumpLanding, transform.right);
+        arrivingPos.y = MaskVector(jumpLanding, transform.up);
+        arrivingPos.z = MaskVector(jumpLanding, transform.forward);
+
+        Vector3 arP = new Vector3(0, arrivingPos.y, arrivingPos.z);
+
+        Vector3 diff = ((arP - stP) / 2) + transform.up;
+        Vector3 vertex = stP + diff;
+
+        float x1 = startingPos.z;
+        float y1 = startingPos.y;
+        float x2 = arrivingPos.z;
+        float y2 = arrivingPos.y;
+        float x3 = vertex.z;
+        float y3 = vertex.y;
+
+    }
+
+    float MaskVector(Vector3 data, Vector3 mask)
+    {
+        Vector3 temp;
+        temp.x = data.x * mask.x;
+        temp.y = data.y * mask.y;
+        temp.z = data.z * mask.z;
+        return temp.x + temp.y + temp.z;
     }
 }
