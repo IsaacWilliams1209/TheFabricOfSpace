@@ -292,8 +292,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 689017817}
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 25, z: 0}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: -35}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 749539751}
@@ -311,19 +311,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4def08d3fb1d2e4a8b5092fa5c7d89f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camRot01: {x: 90, y: 0, z: 0}
-  camPos01: {x: 0, y: 25, z: 0}
-  camRot02: {x: 0, y: 90, z: 0}
-  camPos02: {x: -25, y: 0, z: 0}
-  camRot03: {x: -90, y: 0, z: 0}
-  camPos03: {x: 0, y: -25, z: 0}
-  camRot04: {x: 0, y: -90, z: 0}
-  camPos04: {x: 0, y: 25, z: 0}
-  camRot05: {x: 0, y: -180, z: 0}
-  camPos05: {x: 0, y: 0, z: 25}
-  camRot06: {x: 0, y: 0, z: 0}
-  camPos06: {x: 0, y: 0, z: -25}
-  rotSpeed: 50
+  distFromPlanet: 25
+  cameraRotation: 90
+  rotSpeed: 100
 --- !u!1 &749539749
 GameObject:
   m_ObjectHideFlags: 0
@@ -369,7 +359,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 749539749}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12, y: 12, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 689017820}
