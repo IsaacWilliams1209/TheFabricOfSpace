@@ -42,6 +42,8 @@ public class Camera_Rotation : MonoBehaviour
     private Vector3 camRot = new Vector3(0, 0, 0);
     private Vector3 camStartPos = new Vector3(0, 0, 0);
 
+    private float timeOfRotation = 2;
+
     private void Start()
     {
         camStartPos.Set(gameObject.transform.parent.position.x, gameObject.transform.parent.position.y + distFromPlanet, gameObject.transform.parent.position.z);
@@ -96,16 +98,31 @@ public class Camera_Rotation : MonoBehaviour
     /// </summary>
     private void PlanetRotation(Vector3 camRotation, Vector3 camPosition)
     {
+        timeOfRotation -= Time.deltaTime;
+
         float angle = Quaternion.Angle(transform.rotation, Quaternion.Euler(camRotation));
         float timeToComplete = angle / rotSpeed;
         float donePercentage = Mathf.Min(1.0f, Time.deltaTime / timeToComplete);
 
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(camRotation), donePercentage);
         transform.position = Vector3.Slerp(transform.position, camPosition, donePercentage);
+        transform.LookAt(transform.parent);
+
+        Debug.Log(timeOfRotation);
+        if (timeOfRotation <= 0)
+        {
+            donePercentage = 1.0f;
+            Debug.Log("Should be finished");
+            transform.position = camPos;
+            transform.rotation = Quaternion.Euler(camRot);
+            //rotSpeed = 500;
+            isCubeRotating = false;
+        }
 
         if (donePercentage >= 1.0f)
         {
             isCubeRotating = false;
+            timeOfRotation = 2;
         }
     }
 
@@ -125,7 +142,7 @@ public class Camera_Rotation : MonoBehaviour
         planetFace[0].directionData.Set(4, 1, 5, 3); //Face 01 directions
         planetFace[1].directionData.Set(0, 4, 2, 5); //Face 02 directions
         planetFace[2].directionData.Set(5, 1, 4, 3); //Face 03 directions
-        planetFace[3].directionData.Set(0, 5, 4, 2); //Face 04 directions
+        planetFace[3].directionData.Set(0, 5, 2, 4); //Face 04 directions
         planetFace[4].directionData.Set(0, 3, 2, 1); //Face 05 directions
         planetFace[5].directionData.Set(0, 1, 2, 3); //Face 06 directions
 
