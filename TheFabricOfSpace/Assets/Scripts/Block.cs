@@ -14,7 +14,7 @@ public class Block : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         jumpTriggers = transform.GetChild(0).GetComponents<BoxCollider>();
         colliders = GetComponents<BoxCollider>();
@@ -52,17 +52,27 @@ public class Block : MonoBehaviour
         {
             if (!traversable[i])
             {
-                colliders[i].enabled = true;
-
                 RaycastHit hit;
 
-                if (Physics.Raycast(transform.parent.position, colliders[i].center, out hit, 2))
+                if (Physics.Raycast(transform.parent.position, colliders[i].center - transform.up, out hit, 2))
                 {
                     if (hit.distance > 1)
                     {
                         jumpTriggers[i].enabled = true;
+                        jumpLandings[i] = hit.transform.position + transform.up;
+                        colliders[i].enabled = true;
+                        Debug.DrawRay(transform.parent.position, colliders[i].center - transform.up);
+                    }
+                    else
+                    {
+                        traversable[i] = true;
+                        colliders[i].enabled = false;
                     }
                 }
+                
+
+
+                
             }
         }
     }
