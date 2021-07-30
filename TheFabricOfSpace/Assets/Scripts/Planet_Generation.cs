@@ -45,49 +45,42 @@ public class Planet_Generation : MonoBehaviour
         for (currFace = 0; currFace < maxFaceAmount; currFace++)
         {
             SpawnManager(ref spawnPosition, ref spawnRotation);
-            GameObject temp = Instantiate(planetFaces[currFace], spawnPosition, Quaternion.Euler(spawnRotation));
-            temp.name = "Planet Face " + (currFace + 1);  
+            GameObject temp = Instantiate(planetFaces[currFace], transform.position + spawnPosition, Quaternion.Euler(spawnRotation));
+            temp.name = "Planet Face " + (currFace + 1);
+            temp.transform.parent = gameObject.transform;
         }
     }
 
     private void SpawnManager(ref Vector3 spawnPosition, ref Vector3 spawnRotation)
     {
         FaceReset(ref spawnPosition, ref spawnRotation);
-        //Planet face 1
-        if(currFace == 0)
+        switch (currFace)
         {
-            spawnPosition.y = gridSize - 1;
-        }
-        //Planet face 2
-        if (currFace == 1)
-        {
-            spawnRotation.z = 90;
-        }
-        //Planet face 3
-        if (currFace == 2)
-        {
-            spawnPosition.z = -gridSize + 1;
-            spawnRotation.x = 180;
-        }
-        //Planet face 4
-        if (currFace == 3)
-        {
-            spawnPosition.x = gridSize - 1;
-            spawnPosition.y = gridSize - 1;
-            spawnRotation.z = -90;
-        }
-        //Planet face 5
-        if (currFace == 4)
-        {
-
-            spawnRotation.x = 90;
-        }
-        //Planet face 6
-        if (currFace == 5)
-        {
-            spawnPosition.y = gridSize - 1;
-            spawnPosition.z = -gridSize + 1;
-            spawnRotation.x = -90;
+            case 0:
+                spawnPosition.y = (gridSize - 1) / 2;
+                break;
+            case 1:
+                spawnPosition.x -= (gridSize - 1) / 2;
+                spawnRotation.z = 90;
+                break;
+            case 2:
+                spawnPosition.y -= (gridSize - 1) / 2;
+                spawnRotation.x = 180;
+                break;
+            case 3:
+                spawnPosition.x = (gridSize - 1) / 2;
+                spawnRotation.z = -90;
+                break;
+            case 4:
+                spawnPosition.z = (gridSize - 1) / 2;
+                spawnRotation.x = 90;
+                break;
+            case 5:
+                spawnPosition.z -= (gridSize - 1) / 2;
+                spawnRotation.x = -90;
+                break;
+            default:
+                break;
         }
     }
 

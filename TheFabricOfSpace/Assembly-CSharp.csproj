@@ -63,7 +63,7 @@
     <Compile Include="Assets\Scripts\Cube_Rotation_Second.cs" />
     <Compile Include="Assets\Scripts\Sheep.cs" />
     <Compile Include="Assets\Scripts\Planet_Generation.cs" />
-    <Compile Include="Assets\Camera_Rotation.cs" />
+    <Compile Include="Assets\Scripts\Camera_Rotation.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
