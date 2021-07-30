@@ -14,7 +14,7 @@ public class Sheep : MonoBehaviour
 
     public bool voxel = false;
 
-    
+
     public bool poweredUp = false;
 
     List<GameObject> awakeSheep = new List<GameObject>();
@@ -29,16 +29,24 @@ public class Sheep : MonoBehaviour
 
     bool swap = false;
 
-    
+    public bool canJump;
+
+    bool isJumping;
 
     bool canMove = true;
 
     int berryIndex = -1;
-
+    
     Shepherd shepherd;
 
     Renderer matChanger;
 
+    float jumpTime = 0;
+
+    Vector3 jumpLanding;
+    int jumpIndex;
+
+    Vector3[] jumpFrames = new Vector3[1];
     CharacterController controller;
     // Start is called before the first frame update
     void Start()
@@ -48,7 +56,7 @@ public class Sheep : MonoBehaviour
         awakeSheep = shepherd.awakeSheep;
         matChanger = GetComponent<Renderer>();
         controller = GetComponent<CharacterController>();
-        
+
         if (active)
         {
             matChanger.material = sheepMaterials[0];
@@ -87,13 +95,13 @@ public class Sheep : MonoBehaviour
                 else if (hit.distance < 0.4f)
                 {
                     movement += transform.parent.up * 0.01f;
-                    
+
 
                 }
                 else if (hit.distance > 0.5f)
                 {
                     movement -= transform.parent.up * 0.01f;
-                    
+
                 }
                 else if (hit.transform.tag == "Sheep" && hit.transform.GetComponent<Sheep>().voxel)
                 {
@@ -103,7 +111,27 @@ public class Sheep : MonoBehaviour
 
                 controller.Move(movement);
             }
-
+            else
+            {
+                if (isJumping)
+                {
+                    jumpTime += Time.deltaTime;
+                    float percentDone = jumpTime/ 0.25f;
+                    transform.position = Vector3.Lerp(jumpFrames[jumpIndex], jumpFrames[jumpIndex + 1], percentDone);
+                    if (transform.position == jumpFrames[jumpIndex + 1])
+                    {
+                        jumpTime = 0;
+                        if (jumpIndex < jumpFrames.Length - 2)
+                            jumpIndex++;
+                        else
+                        {
+                            isJumping = false;
+                            canMove = true;                            
+                            jumpIndex = 0;
+                        }
+                    }
+                }
+            }
             if (Input.GetButtonDown("Jump"))
             {
                 for (int i = 0; i < sheep.Length; i++)
@@ -115,7 +143,7 @@ public class Sheep : MonoBehaviour
                         awakeSheep.Add(sheep[i]);
                     }
                 }
-                if (!poweredUp)
+                if (berryIndex != -1)
                 {
                     for (int i = 0; i < shepherd.berries.Length; i++)
                     {
@@ -132,15 +160,17 @@ public class Sheep : MonoBehaviour
                 }
 
             }
-            
-
             if (Input.GetKeyDown(KeyCode.F))
             {
                 if (berryIndex != -1)
                 {
                     poweredUp = !poweredUp;
                     ActivatePowerUp();
-                }                
+                }
+            }
+            if (canJump && Input.GetKeyDown(KeyCode.G))
+            {
+                DoDaJump();
             }
 
             if (Input.GetKeyUp(KeyCode.LeftShift))
@@ -148,7 +178,6 @@ public class Sheep : MonoBehaviour
                 if (awakeSheep.Count != 0)
                 {
                     swap = true;
-                    
                 }
             }
         }
@@ -165,6 +194,7 @@ public class Sheep : MonoBehaviour
 
         }
     }
+
     void LateUpdate()
     {
         if (swap)
@@ -186,6 +216,24 @@ public class Sheep : MonoBehaviour
             // you win! activate world rotation
             Debug.Log("Good Job!");
         }
+        if (other.gameObject.tag == "Jump")
+        {
+            Block block = other.gameObject.GetComponentInParent<Block>();
+            canJump = true;
+            for (int i = 0; i < 4; i++)
+            {
+                if(block.jumpTriggers[i].bounds == other.bounds)
+                {
+                    jumpLanding = block.jumpLandings[i];
+                }
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Jump")
+            canJump = false;
     }
 
     private void ActivatePowerUp()
@@ -194,11 +242,13 @@ public class Sheep : MonoBehaviour
         {
             if (poweredUp)
             {
-                canMove = false;
-                
+                transform.GetChild(0).gameObject.SetActive(true);
+                transform.GetComponentInChildren<Block>().BlockUpdate();
+                gameObject.layer = 1;
+                canMove = false;                
                 Vector3 temp = new Vector3(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y), Mathf.Round(transform.position.z));
 
-                transform.position =  temp;
+                transform.position = temp;
                 RaycastHit[] hits = new RaycastHit[4];
                 Vector3[] directions = new Vector3[4];
                 directions[0] = transform.parent.forward;
@@ -219,6 +269,7 @@ public class Sheep : MonoBehaviour
             }
             else
             {
+                transform.GetChild(0).gameObject.SetActive(false);
                 RaycastHit[] hits = new RaycastHit[4];
                 Vector3[] directions = new Vector3[4];
                 directions[0] = transform.parent.forward;
@@ -227,17 +278,90 @@ public class Sheep : MonoBehaviour
                 directions[3] = -transform.parent.right;
                 for (int i = 0; i < hits.Length; i++)
                 {
-                    if (Physics.Raycast(transform.position, directions[i], out hits[i], 1.0f))
+                    if (Physics.Raycast(transform.position, directions[i], out hits[i], 2.0f))
                     {
-                        if (hits[i].transform.tag == "Block" || hits[i].transform.tag == "Slope Upper")
+                        if (hits[i].distance < 1)
                         {
-                            hits[i].transform.GetChild(0).GetComponent<Block>().colliders[(i + 2) % 4].enabled = true;
-                        }
+                            if (hits[i].transform.tag == "Block")
+                            {
+                                hits[i].transform.GetChild(0).GetComponent<Block>().colliders[(i + 2) % 4].enabled = true;
+                                
+                            }
+                            else
+                            {
+                                hits[i].transform.GetComponentInChildren<Block>().BlockUpdate();
+                            }
+                        }                        
                     }
                 }
+                gameObject.layer = 2;
                 canMove = true;
                 transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
             }
         }
+    }
+
+    private void DoDaJump()
+    {
+        canMove = false;
+        canJump = false;
+        isJumping = true;
+        int numFrames = 30;
+        jumpFrames = new Vector3[numFrames];
+
+        Vector3 startingPos;
+        startingPos.x = MaskVector(transform.position, transform.right);
+        startingPos.y = MaskVector(transform.position, transform.up);
+        startingPos.z = MaskVector(transform.position, transform.forward);
+        
+        Vector3 stP = new Vector3(0, startingPos.y, startingPos.z);
+
+        Vector3 arrivingPos;
+        arrivingPos.x = MaskVector(jumpLanding, transform.right);
+        arrivingPos.y = MaskVector(jumpLanding, transform.up);
+        arrivingPos.z = MaskVector(jumpLanding, transform.forward);
+
+        Vector3 arP = new Vector3(0, arrivingPos.y, arrivingPos.z);
+
+        Vector3 diff = ((arP - stP) / 2) + transform.up;
+        Vector3 vertex = stP + diff;
+
+        float x1 = startingPos.z;
+        float y1 = startingPos.y;
+        float x2 = arrivingPos.z;
+        float y2 = arrivingPos.y;
+        float x3 = vertex.z;
+        float y3 = vertex.y;
+
+        float denom = (x1 - x2) * (x1 - x3) * (x2 - x3);
+
+        var z_dist = (arrivingPos.z - startingPos.z) / numFrames;
+        var x_dist = (arrivingPos.x - startingPos.x) / numFrames;
+
+        float A = (x3 * (y2 - y1) + x2 * (y1 - y3) + x1 * (y3 - y2)) / denom;
+        float B = (float)(System.Math.Pow(x3, 2) * (y1 - y2) + System.Math.Pow(x2, 2) * (y3 - y1) + System.Math.Pow(x1, 2) * (y2 - y3)) / denom;
+        float C = (x2 * x3 * (x2 - x3) * y1 + x3 * x1 * (x3 - x1) * y2 + x1 * x2 * (x1 - x2) * y3) / denom;
+
+        float newX = startingPos.z;
+        float newZ = startingPos.x;
+
+        for (int i = 0; i < numFrames; i++)
+        {
+            newX += z_dist;
+            newZ += x_dist;
+            float yToBeFound = A * (newX * newX) + B * newX + C;
+            Vector3 temp = transform.right * newZ + transform.up * yToBeFound + transform.forward * newX;
+           jumpFrames[i] = temp;
+        }
+
+    }
+
+    float MaskVector(Vector3 data, Vector3 mask)
+    {
+        Vector3 temp;
+        temp.x = data.x * mask.x;
+        temp.y = data.y * mask.y;
+        temp.z = data.z * mask.z;
+        return temp.x + temp.y + temp.z;
     }
 }
