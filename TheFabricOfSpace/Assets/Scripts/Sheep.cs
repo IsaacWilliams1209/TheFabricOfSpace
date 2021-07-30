@@ -244,7 +244,7 @@ public class Sheep : MonoBehaviour
             {
                 transform.GetChild(0).gameObject.SetActive(true);
                 transform.GetComponentInChildren<Block>().BlockUpdate();
-                gameObject.layer = 1;
+                gameObject.layer = 0;
                 canMove = false;                
                 Vector3 temp = new Vector3(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y), Mathf.Round(transform.position.z));
 
@@ -278,6 +278,7 @@ public class Sheep : MonoBehaviour
             }
             else
             {
+                gameObject.layer = 1;
                 transform.GetChild(0).gameObject.SetActive(false);
                 RaycastHit[] hits = new RaycastHit[4];
                 Vector3[] directions = new Vector3[4];
@@ -302,8 +303,7 @@ public class Sheep : MonoBehaviour
                             hits[i].transform.GetComponentInChildren<Block>().BlockUpdate();
                         }
                     }
-                }
-                gameObject.layer = 1;
+                }                
                 canMove = true;
                 transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
             }
@@ -332,7 +332,7 @@ public class Sheep : MonoBehaviour
 
         Vector3 arP = new Vector3(0, arrivingPos.y, arrivingPos.z);
 
-        Vector3 diff = ((arP - stP) / 2) + transform.up;
+        Vector3 diff = ((arP - stP) / 2) + new Vector3(0,1,0);
         Vector3 vertex = stP + diff;
 
         float x1 = startingPos.z;

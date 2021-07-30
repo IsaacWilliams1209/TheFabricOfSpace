@@ -14,7 +14,7 @@ public class Block : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Awake()
+    void Update()
     {
         jumpTriggers = transform.GetChild(0).GetComponents<BoxCollider>();
         colliders = GetComponents<BoxCollider>();
@@ -27,10 +27,13 @@ public class Block : MonoBehaviour
                 colliders[i].enabled = true;
 
                 RaycastHit hit;
+                Vector3 dir;
+                dir.x = (transform.localToWorldMatrix * colliders[i].center).x - transform.up.x;
+                dir.y = (transform.localToWorldMatrix * colliders[i].center).y - transform.up.y;
+                dir.z = (transform.localToWorldMatrix * colliders[i].center).z - transform.up.z;
+                Debug.DrawRay(transform.position, dir);
 
-                Debug.DrawRay(transform.parent.position, colliders[i].center - transform.up);
-
-                if(Physics.Raycast(transform.parent.position, colliders[i].center - transform.up, out hit, 2))
+                if(Physics.Raycast(transform.position, dir, out hit, 2))
                 {
                     if (hit.distance > 1)
                     {
@@ -53,15 +56,19 @@ public class Block : MonoBehaviour
             if (!traversable[i])
             {
                 RaycastHit hit;
+                Vector3 dir;
+                dir.x = (transform.localToWorldMatrix * colliders[i].center).x - transform.up.x;
+                dir.y = (transform.localToWorldMatrix * colliders[i].center).y - transform.up.y;
+                dir.z = (transform.localToWorldMatrix * colliders[i].center).z - transform.up.z;
 
-                if (Physics.Raycast(transform.parent.position, colliders[i].center - transform.up, out hit, 2))
+                if (Physics.Raycast(transform.parent.position, dir, out hit, 2))
                 {
                     if (hit.distance > 1)
                     {
                         jumpTriggers[i].enabled = true;
                         jumpLandings[i] = hit.transform.position + transform.up;
                         colliders[i].enabled = true;
-                        Debug.DrawRay(transform.parent.position, colliders[i].center - transform.up);
+                        
                     }
                     else
                     {
@@ -69,10 +76,6 @@ public class Block : MonoBehaviour
                         colliders[i].enabled = false;
                     }
                 }
-                
-
-
-                
             }
         }
     }
