@@ -36,10 +36,12 @@ public class Sheep : MonoBehaviour
     bool canMove = true;
 
     int berryIndex = -1;
-
+    
     Shepherd shepherd;
 
     Renderer matChanger;
+
+    float jumpTime = 0;
 
     Vector3 jumpLanding;
     int jumpIndex;
@@ -113,14 +115,23 @@ public class Sheep : MonoBehaviour
             {
                 if (isJumping)
                 {
-                    transform.position = Vector3.Lerp(transform.position, jumpFrames[jumpIndex], 0.1f);
-                    if (transform.position == jumpFrames[jumpIndex] && jumpIndex < jumpFrames.Length - 1)
+                    jumpTime += Time.deltaTime;
+                    float percentDone = jumpTime/ 0.25f;
+                    transform.position = Vector3.Lerp(jumpFrames[jumpIndex], jumpFrames[jumpIndex + 1], percentDone);
+                    if (transform.position == jumpFrames[jumpIndex + 1])
                     {
-                        jumpIndex++;
+                        jumpTime = 0;
+                        if (jumpIndex < jumpFrames.Length - 2)
+                            jumpIndex++;
+                        else
+                        {
+                            isJumping = false;
+                            canMove = true;                            
+                            jumpIndex = 0;
+                        }
                     }
                 }
             }
-
             if (Input.GetButtonDown("Jump"))
             {
                 for (int i = 0; i < sheep.Length; i++)
@@ -132,7 +143,7 @@ public class Sheep : MonoBehaviour
                         awakeSheep.Add(sheep[i]);
                     }
                 }
-                if (!poweredUp)
+                if (berryIndex != -1)
                 {
                     for (int i = 0; i < shepherd.berries.Length; i++)
                     {
@@ -149,8 +160,6 @@ public class Sheep : MonoBehaviour
                 }
 
             }
-
-
             if (Input.GetKeyDown(KeyCode.F))
             {
                 if (berryIndex != -1)
@@ -185,6 +194,7 @@ public class Sheep : MonoBehaviour
 
         }
     }
+
     void LateUpdate()
     {
         if (swap)
@@ -220,14 +230,22 @@ public class Sheep : MonoBehaviour
         }
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Jump")
+            canJump = false;
+    }
+
     private void ActivatePowerUp()
     {
         if (voxel)
         {
             if (poweredUp)
             {
-                canMove = false;
-
+                transform.GetChild(0).gameObject.SetActive(true);
+                transform.GetComponentInChildren<Block>().BlockUpdate();
+                gameObject.layer = 1;
+                canMove = false;                
                 Vector3 temp = new Vector3(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y), Mathf.Round(transform.position.z));
 
                 transform.position = temp;
@@ -251,6 +269,7 @@ public class Sheep : MonoBehaviour
             }
             else
             {
+                transform.GetChild(0).gameObject.SetActive(false);
                 RaycastHit[] hits = new RaycastHit[4];
                 Vector3[] directions = new Vector3[4];
                 directions[0] = transform.parent.forward;
@@ -259,14 +278,23 @@ public class Sheep : MonoBehaviour
                 directions[3] = -transform.parent.right;
                 for (int i = 0; i < hits.Length; i++)
                 {
-                    if (Physics.Raycast(transform.position, directions[i], out hits[i], 1.0f))
+                    if (Physics.Raycast(transform.position, directions[i], out hits[i], 2.0f))
                     {
-                        if (hits[i].transform.tag == "Block" || hits[i].transform.tag == "Slope Upper")
+                        if (hits[i].distance < 1)
                         {
-                            hits[i].transform.GetChild(0).GetComponent<Block>().colliders[(i + 2) % 4].enabled = true;
-                        }
+                            if (hits[i].transform.tag == "Block")
+                            {
+                                hits[i].transform.GetChild(0).GetComponent<Block>().colliders[(i + 2) % 4].enabled = true;
+                                
+                            }
+                            else
+                            {
+                                hits[i].transform.GetComponentInChildren<Block>().BlockUpdate();
+                            }
+                        }                        
                     }
                 }
+                gameObject.layer = 2;
                 canMove = true;
                 transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
             }
@@ -322,8 +350,8 @@ public class Sheep : MonoBehaviour
             newX += z_dist;
             newZ += x_dist;
             float yToBeFound = A * (newX * newX) + B * newX + C;
-            Vector3 temp1 = transform.right * newZ + transform.up * yToBeFound + transform.forward * newX;
-           jumpFrames[i] = temp1;
+            Vector3 temp = transform.right * newZ + transform.up * yToBeFound + transform.forward * newX;
+           jumpFrames[i] = temp;
         }
 
     }

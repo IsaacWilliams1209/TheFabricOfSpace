@@ -17,8 +17,6 @@ public class Block : MonoBehaviour
     void Start()
     {
         jumpTriggers = transform.GetChild(0).GetComponents<BoxCollider>();
-        Debug.Log(jumpTriggers.Length);
-        Debug.Log(jumpTriggers[3].center);
         colliders = GetComponents<BoxCollider>();
 
 
@@ -65,9 +63,6 @@ public class Block : MonoBehaviour
                         jumpTriggers[i].enabled = true;
                     }
                 }
-
-
-
             }
         }
     }
