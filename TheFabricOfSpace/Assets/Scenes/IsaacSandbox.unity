@@ -354,7 +354,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5788419477982923516, guid: 23d40b64b4e74c8428f4b919c71963ec, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5788419477982923516, guid: 23d40b64b4e74c8428f4b919c71963ec, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -371,6 +371,26 @@ PrefabInstance:
     - target: {fileID: 5788419477982923517, guid: 23d40b64b4e74c8428f4b919c71963ec, type: 3}
       propertyPath: m_Name
       value: Grid 9X9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5788419477982923517, guid: 23d40b64b4e74c8428f4b919c71963ec, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5991229910887339379, guid: 23d40b64b4e74c8428f4b919c71963ec, type: 3}
+      propertyPath: m_Center.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5991229910887339379, guid: 23d40b64b4e74c8428f4b919c71963ec, type: 3}
+      propertyPath: m_Center.z
+      value: 4.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 6065196652743531913, guid: 23d40b64b4e74c8428f4b919c71963ec, type: 3}
+      propertyPath: m_Center.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6065196652743531913, guid: 23d40b64b4e74c8428f4b919c71963ec, type: 3}
+      propertyPath: m_Center.x
+      value: -4.55
       objectReference: {fileID: 0}
     - target: {fileID: 7154262774699568365, guid: 23d40b64b4e74c8428f4b919c71963ec, type: 3}
       propertyPath: berries.Array.size
@@ -480,7 +500,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 36.231, y: -0.796, z: 165.955}
 --- !u!1 &1756926738
 GameObject:

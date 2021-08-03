@@ -60,6 +60,7 @@ public class Sheep : MonoBehaviour
         if (active)
         {
             matChanger.material = sheepMaterials[0];
+            shepherd.activeSheep = gameObject;
         }
         else if (awake)
         {
@@ -180,6 +181,15 @@ public class Sheep : MonoBehaviour
                     swap = true;
                 }
             }
+
+            ///////////////////////////////TEMPORARY CODE ////////////////////
+            if (Input.GetKeyDown(KeyCode.T))
+            {
+                shepherd.SwapCams();
+            }
+
+
+
         }
         else if (awake)
         {
@@ -199,6 +209,13 @@ public class Sheep : MonoBehaviour
     {
         if (swap)
         {
+            if (shepherd.isSheepFocus)
+            {
+                transform.GetChild(1).gameObject.SetActive(false);
+                awakeSheep[0].transform.GetChild(1).gameObject.SetActive(true);
+            }
+            
+            shepherd.activeSheep = awakeSheep[0];
             awakeSheep[0].GetComponent<Renderer>().material = sheepMaterials[0];
             awakeSheep[0].GetComponent<Sheep>().active = true;
             awakeSheep.RemoveAt(0);
@@ -244,7 +261,7 @@ public class Sheep : MonoBehaviour
             {
                 transform.GetChild(0).gameObject.SetActive(true);
                 transform.GetComponentInChildren<Block>().BlockUpdate();
-                gameObject.layer = 0;
+                
                 canMove = false;                
                 Vector3 temp = new Vector3(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y), Mathf.Round(transform.position.z));
 
@@ -259,6 +276,7 @@ public class Sheep : MonoBehaviour
                 {
                     if (Physics.Raycast(transform.position, directions[i], out hits[i], 2.0f))
                     {
+                        gameObject.layer = 0;
                         if (hits[i].distance < 1)
                         {
                             if (hits[i].transform.tag == "Block")

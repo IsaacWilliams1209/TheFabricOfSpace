@@ -14,7 +14,7 @@ public class Block : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Update()
+    void Awake()
     {
         jumpTriggers = transform.GetChild(0).GetComponents<BoxCollider>();
         colliders = GetComponents<BoxCollider>();
