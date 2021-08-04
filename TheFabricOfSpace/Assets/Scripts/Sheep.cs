@@ -93,13 +93,13 @@ public class Sheep : MonoBehaviour
                 {
                     movement += transform.parent.up * Physics.gravity.y * Time.deltaTime;
                 }
-                else if (hit.distance < 0.4f)
+                else if (hit.distance < 0.4f && !hit.collider.isTrigger)
                 {
                     movement += transform.parent.up * 0.01f;
 
 
                 }
-                else if (hit.distance > 0.5f)
+                else if (hit.distance > 0.5f && !hit.collider.isTrigger)
                 {
                     movement -= transform.parent.up * 0.01f;
 
@@ -117,8 +117,8 @@ public class Sheep : MonoBehaviour
                 if (isJumping)
                 {
                     jumpTime += Time.deltaTime;
-                    float percentDone = jumpTime/ 0.25f;
-                    transform.position = Vector3.Lerp(jumpFrames[jumpIndex], jumpFrames[jumpIndex + 1], percentDone);
+                    float percentDone = jumpTime/ 0.15f;
+                    transform.position = Vector3.Lerp(jumpFrames[jumpIndex], jumpFrames[jumpIndex + 1], 1);
                     if (transform.position == jumpFrames[jumpIndex + 1])
                     {
                         jumpTime = 0;
@@ -169,7 +169,7 @@ public class Sheep : MonoBehaviour
                     ActivatePowerUp();
                 }
             }
-            if (canJump && Input.GetKeyDown(KeyCode.G))
+            if (canJump && Input.GetKeyDown(KeyCode.G) && !voxel)
             {
                 DoDaJump();
             }
@@ -272,31 +272,19 @@ public class Sheep : MonoBehaviour
                 directions[1] = transform.parent.right;
                 directions[2] = -transform.parent.forward;
                 directions[3] = -transform.parent.right;
+                gameObject.layer = 0;
                 for (int i = 0; i < hits.Length; i++)
                 {
                     if (Physics.Raycast(transform.position, directions[i], out hits[i], 2.0f))
                     {
-                        gameObject.layer = 0;
-                        if (hits[i].distance < 1)
-                        {
-                            if (hits[i].transform.tag == "Block")
-                            {
-                                hits[i].transform.GetChild(0).GetComponent<Block>().colliders[(i + 2) % 4].enabled = true;
-
-                            }                           
-
-                        }
-                        else
-                        {
-                            hits[i].transform.GetComponentInChildren<Block>().BlockUpdate();
-                        }
+                        hits[i].transform.GetComponentInChildren<Block>().BlockUpdate();
                     }
                 }
                 transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
             }
             else
             {
-                gameObject.layer = 1;
+                gameObject.layer = 2;
                 transform.GetChild(0).gameObject.SetActive(false);
                 RaycastHit[] hits = new RaycastHit[4];
                 Vector3[] directions = new Vector3[4];
@@ -308,18 +296,7 @@ public class Sheep : MonoBehaviour
                 {
                     if (Physics.Raycast(transform.position, directions[i], out hits[i], 2.0f))
                     {
-                        if (hits[i].distance < 1)
-                        {
-                            if (hits[i].transform.tag == "Block")
-                            {
-                                hits[i].transform.GetChild(0).GetComponent<Block>().colliders[(i + 2) % 4].enabled = true;
-                                
-                            }                            
-                        }
-                        else
-                        {
-                            hits[i].transform.GetComponentInChildren<Block>().BlockUpdate();
-                        }
+                        hits[i].transform.GetComponentInChildren<Block>().BlockUpdate();
                     }
                 }                
                 canMove = true;
