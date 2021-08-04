@@ -2,22 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-class FaceDirections
-{
-    public Vector4 directionData;
-}
-
 class FaceInformation
 {
-    public Vector3 camPosition;
-    public Vector3 camRotation;
+    //public Vector4 directionData;
+    public int upDir;
+    public int leftDir;
+    public int downDir;
+    public int rightDir;
+    public Vector3 camOrientation;
 }
+
+//class FaceInformation
+//{
+//    public Vector3 camPosition;
+//    public Vector3 camRotation;
+//}
 
 
 public class Camera_Rotation : MonoBehaviour
 {   
-    List<FaceDirections> planetFace = new List<FaceDirections>(6);
-    List<FaceInformation> camInfo = new List<FaceInformation>(6);
+    List<FaceInformation> planetFaces = new List<FaceInformation>(6);
+    //List<FaceInformation> camInfo = new List<FaceInformation>(6);
 
     /// <summary>Allows for the designer to play around with how fair they want the camera from the planet and the code will adapt to the given value </summary>
     [SerializeField]
@@ -41,13 +46,14 @@ public class Camera_Rotation : MonoBehaviour
     private Vector3 camPos = new Vector3(0, 0, 0);
     private Vector3 camRot = new Vector3(0, 0, 0);
     private Vector3 camStartPos = new Vector3(0, 0, 0);
-
-    private float timeOfRotation = 2;
+    private Vector3 camStartRot = new Vector3(0, 0, 0);
 
     private void Start()
     {
         camStartPos.Set(gameObject.transform.parent.position.x, gameObject.transform.parent.position.y + distFromPlanet, gameObject.transform.parent.position.z);
+        camStartRot.Set(0, -cameraRotation, 0);
         transform.position = camStartPos;
+        transform.parent.rotation = Quaternion.Euler(camStartRot);
         currFace = 0;
         FaceSetUp();
     }
@@ -57,33 +63,33 @@ public class Camera_Rotation : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.W) && !isCubeRotating)
         {
             isCubeRotating = true;
-            targetFace = (int)planetFace[currFace].directionData.x;
-            camPos = camInfo[targetFace].camPosition;
-            camRot = camInfo[targetFace].camRotation;
+            targetFace = planetFaces[currFace].upDir;
+            //camPos = camInfo[targetFace].camPosition;
+            camRot = planetFaces[targetFace].camOrientation;
             currFace = targetFace;
         }
         else if (Input.GetKeyDown(KeyCode.A) && !isCubeRotating)
         {
             isCubeRotating = true;
-            targetFace = (int)planetFace[currFace].directionData.y;
-            camPos = camInfo[targetFace].camPosition;
-            camRot = camInfo[targetFace].camRotation;
+            targetFace = planetFaces[currFace].leftDir;
+            //camPos = camInfo[targetFace].camPosition;
+            camRot = planetFaces[targetFace].camOrientation;
             currFace = targetFace;
         }
         else if (Input.GetKeyDown(KeyCode.S) && !isCubeRotating)
         {
             isCubeRotating = true;
-            targetFace = (int)planetFace[currFace].directionData.z;
-            camPos = camInfo[targetFace].camPosition;
-            camRot = camInfo[targetFace].camRotation;
+            targetFace = planetFaces[currFace].downDir;
+            //camPos = camInfo[targetFace].camPosition;
+            camRot = planetFaces[targetFace].camOrientation;
             currFace = targetFace;
         }
         else if (Input.GetKeyDown(KeyCode.D) && !isCubeRotating)
         {
             isCubeRotating = true;
-            targetFace = (int)planetFace[currFace].directionData.w;
-            camPos = camInfo[targetFace].camPosition;
-            camRot = camInfo[targetFace].camRotation;
+            targetFace = planetFaces[currFace].rightDir;
+            //camPos = camInfo[targetFace].camPosition;
+            camRot = planetFaces[targetFace].camOrientation;
             currFace = targetFace;
         }
 
@@ -98,31 +104,16 @@ public class Camera_Rotation : MonoBehaviour
     /// </summary>
     private void PlanetRotation(Vector3 camRotation, Vector3 camPosition)
     {
-        timeOfRotation -= Time.deltaTime;
 
-        float angle = Quaternion.Angle(transform.rotation, Quaternion.Euler(camRotation));
+        float angle = Quaternion.Angle(transform.parent.rotation, Quaternion.Euler(camRotation));
         float timeToComplete = angle / rotSpeed;
         float donePercentage = Mathf.Min(1.0f, Time.deltaTime / timeToComplete);
 
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(camRotation), donePercentage);
-        transform.position = Vector3.Slerp(transform.position, camPosition, donePercentage);
-        transform.LookAt(transform.parent);
-
-        Debug.Log(timeOfRotation);
-        if (timeOfRotation <= 0)
-        {
-            donePercentage = 1.0f;
-            Debug.Log("Should be finished");
-            transform.position = camPos;
-            transform.rotation = Quaternion.Euler(camRot);
-            //rotSpeed = 500;
-            isCubeRotating = false;
-        }
+        transform.parent.rotation = Quaternion.Slerp(transform.parent.rotation, Quaternion.Euler(camRotation), donePercentage);
 
         if (donePercentage >= 1.0f)
         {
             isCubeRotating = false;
-            timeOfRotation = 2;
         }
     }
 
@@ -131,44 +122,48 @@ public class Camera_Rotation : MonoBehaviour
     {
         for (int i = 0; i < 6; i++)
         {
-            FaceDirections newFaceDir = new FaceDirections();
-            FaceInformation newFaceInfo = new FaceInformation(); 
-            planetFace.Add(newFaceDir);
-            camInfo.Add(newFaceInfo);
+            FaceInformation newFace = new FaceInformation();
+            planetFaces.Add(newFace);
         }
-        
-        ///<summary> direction key: x = up , y = left , z = down , w = right 
-        ///          Make sure that when you are entering the direction face that you -1 as we are indexing into a list.</summary>
-        planetFace[0].directionData.Set(4, 1, 5, 3); //Face 01 directions
-        planetFace[1].directionData.Set(0, 4, 2, 5); //Face 02 directions
-        planetFace[2].directionData.Set(5, 1, 4, 3); //Face 03 directions
-        planetFace[3].directionData.Set(0, 5, 2, 4); //Face 04 directions
-        planetFace[4].directionData.Set(0, 3, 2, 1); //Face 05 directions
-        planetFace[5].directionData.Set(0, 1, 2, 3); //Face 06 directions
 
-        //Face 01
-        camInfo[0].camPosition.Set(transform.position.x, distFromPlanet, transform.position.z);
-        camInfo[0].camRotation.Set(cameraRotation, 0 , 0);
 
-        //Face 02
-        camInfo[1].camPosition.Set(-distFromPlanet, transform.position.y - distFromPlanet, transform.position.z);
-        camInfo[1].camRotation.Set(0, cameraRotation, 0);
+        /////<summary> direction key: x = up , y = left , z = down , w = right 
+        /////          Make sure that when you are entering the direction face that you -1 as we are indexing into a list.</summary>
+        planetFaces[0].upDir = 4;
+        planetFaces[0].leftDir = 1;
+        planetFaces[0].downDir = 5;
+        planetFaces[0].rightDir = 3;
+        planetFaces[0].camOrientation.Set(0, -cameraRotation, 0);
 
-        //Face 03
-        camInfo[2].camPosition.Set(transform.position.x, -distFromPlanet, transform.position.z);
-        camInfo[2].camRotation.Set(-cameraRotation, 0, 0);
+        planetFaces[1].upDir = 0;
+        planetFaces[1].leftDir = 4;
+        planetFaces[1].downDir = 2;
+        planetFaces[1].rightDir = 5;
+        planetFaces[1].camOrientation.Set(-cameraRotation, 0, 0);
 
-        //Face 04
-        camInfo[3].camPosition.Set(distFromPlanet, transform.position.y - distFromPlanet, transform.position.z);
-        camInfo[3].camRotation.Set(0, -cameraRotation, 0);
+        planetFaces[2].upDir = 5;
+        planetFaces[2].leftDir = 1;
+        planetFaces[2].downDir = 4;
+        planetFaces[2].rightDir = 3;
+        planetFaces[2].camOrientation.Set(-cameraRotation * 2, -cameraRotation, 0);
 
-        //Face 05
-        camInfo[4].camPosition.Set(transform.position.z, transform.position.y - distFromPlanet, distFromPlanet);
-        camInfo[4].camRotation.Set(0, -cameraRotation * 2, 0);
+        planetFaces[3].upDir = 0;
+        planetFaces[3].leftDir = 5;
+        planetFaces[3].downDir = 2;
+        planetFaces[3].rightDir = 4;
+        planetFaces[3].camOrientation.Set(-cameraRotation, 0, cameraRotation * 2);
 
-        //Face 06
-        camInfo[5].camPosition.Set(transform.position.z, transform.position.y - distFromPlanet, -distFromPlanet);
-        camInfo[5].camRotation.Set(0, 0, 0);
+        planetFaces[4].upDir = 0;
+        planetFaces[4].leftDir = 3;
+        planetFaces[4].downDir = 2;
+        planetFaces[4].rightDir = 1;
+        planetFaces[4].camOrientation.Set(-cameraRotation, 0, cameraRotation);
+
+        planetFaces[5].upDir = 0;
+        planetFaces[5].leftDir = 1;
+        planetFaces[5].downDir = 2;
+        planetFaces[5].rightDir = 3;
+        planetFaces[5].camOrientation.Set(-cameraRotation, 0, 0 - cameraRotation);
 
     }
 
