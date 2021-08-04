@@ -60,6 +60,7 @@ public class Sheep : MonoBehaviour
         if (active)
         {
             matChanger.material = sheepMaterials[0];
+            shepherd.activeSheep = gameObject;
         }
         else if (awake)
         {
@@ -92,13 +93,13 @@ public class Sheep : MonoBehaviour
                 {
                     movement += transform.parent.up * Physics.gravity.y * Time.deltaTime;
                 }
-                else if (hit.distance < 0.4f)
+                else if (hit.distance < 0.4f && !hit.collider.isTrigger)
                 {
                     movement += transform.parent.up * 0.01f;
 
 
                 }
-                else if (hit.distance > 0.5f)
+                else if (hit.distance > 0.5f && !hit.collider.isTrigger)
                 {
                     movement -= transform.parent.up * 0.01f;
 
@@ -116,8 +117,8 @@ public class Sheep : MonoBehaviour
                 if (isJumping)
                 {
                     jumpTime += Time.deltaTime;
-                    float percentDone = jumpTime/ 0.25f;
-                    transform.position = Vector3.Lerp(jumpFrames[jumpIndex], jumpFrames[jumpIndex + 1], percentDone);
+                    float percentDone = jumpTime/ 0.15f;
+                    transform.position = Vector3.Lerp(jumpFrames[jumpIndex], jumpFrames[jumpIndex + 1], 1);
                     if (transform.position == jumpFrames[jumpIndex + 1])
                     {
                         jumpTime = 0;
@@ -168,7 +169,7 @@ public class Sheep : MonoBehaviour
                     ActivatePowerUp();
                 }
             }
-            if (canJump && Input.GetKeyDown(KeyCode.G))
+            if (canJump && Input.GetKeyDown(KeyCode.G) && !voxel)
             {
                 DoDaJump();
             }
@@ -180,6 +181,15 @@ public class Sheep : MonoBehaviour
                     swap = true;
                 }
             }
+
+            ///////////////////////////////TEMPORARY CODE ////////////////////
+            if (Input.GetKeyDown(KeyCode.T))
+            {
+                shepherd.SwapCams();
+            }
+
+
+
         }
         else if (awake)
         {
@@ -199,6 +209,13 @@ public class Sheep : MonoBehaviour
     {
         if (swap)
         {
+            if (shepherd.isSheepFocus)
+            {
+                transform.GetChild(1).gameObject.SetActive(false);
+                awakeSheep[0].transform.GetChild(1).gameObject.SetActive(true);
+            }
+            
+            shepherd.activeSheep = awakeSheep[0];
             awakeSheep[0].GetComponent<Renderer>().material = sheepMaterials[0];
             awakeSheep[0].GetComponent<Sheep>().active = true;
             awakeSheep.RemoveAt(0);
@@ -244,7 +261,7 @@ public class Sheep : MonoBehaviour
             {
                 transform.GetChild(0).gameObject.SetActive(true);
                 transform.GetComponentInChildren<Block>().BlockUpdate();
-                gameObject.layer = 1;
+                
                 canMove = false;                
                 Vector3 temp = new Vector3(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y), Mathf.Round(transform.position.z));
 
@@ -255,20 +272,19 @@ public class Sheep : MonoBehaviour
                 directions[1] = transform.parent.right;
                 directions[2] = -transform.parent.forward;
                 directions[3] = -transform.parent.right;
+                gameObject.layer = 0;
                 for (int i = 0; i < hits.Length; i++)
                 {
-                    if (Physics.Raycast(transform.position, directions[i], out hits[i], 1.0f))
+                    if (Physics.Raycast(transform.position, directions[i], out hits[i], 2.0f))
                     {
-                        if (hits[i].transform.tag == "Block" || hits[i].transform.tag == "Slope Upper")
-                        {
-                            hits[i].transform.GetChild(0).GetComponent<Block>().colliders[(i + 2) % 4].enabled = false;
-                        }
+                        hits[i].transform.GetComponentInChildren<Block>().BlockUpdate();
                     }
                 }
                 transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
             }
             else
             {
+                gameObject.layer = 2;
                 transform.GetChild(0).gameObject.SetActive(false);
                 RaycastHit[] hits = new RaycastHit[4];
                 Vector3[] directions = new Vector3[4];
@@ -280,21 +296,9 @@ public class Sheep : MonoBehaviour
                 {
                     if (Physics.Raycast(transform.position, directions[i], out hits[i], 2.0f))
                     {
-                        if (hits[i].distance < 1)
-                        {
-                            if (hits[i].transform.tag == "Block")
-                            {
-                                hits[i].transform.GetChild(0).GetComponent<Block>().colliders[(i + 2) % 4].enabled = true;
-                                
-                            }
-                            else
-                            {
-                                hits[i].transform.GetComponentInChildren<Block>().BlockUpdate();
-                            }
-                        }                        
+                        hits[i].transform.GetComponentInChildren<Block>().BlockUpdate();
                     }
-                }
-                gameObject.layer = 2;
+                }                
                 canMove = true;
                 transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
             }
@@ -323,7 +327,7 @@ public class Sheep : MonoBehaviour
 
         Vector3 arP = new Vector3(0, arrivingPos.y, arrivingPos.z);
 
-        Vector3 diff = ((arP - stP) / 2) + transform.up;
+        Vector3 diff = ((arP - stP) / 2) + new Vector3(0,1,0);
         Vector3 vertex = stP + diff;
 
         float x1 = startingPos.z;
@@ -363,5 +367,18 @@ public class Sheep : MonoBehaviour
         temp.y = data.y * mask.y;
         temp.z = data.z * mask.z;
         return temp.x + temp.y + temp.z;
+    }
+
+    void OnDrawGizmos()
+    {
+        if (jumpFrames[0] != null)
+        {
+            Gizmos.color = Color.yellow;
+            Vector3[] points = jumpFrames;
+            foreach (Vector3 point in points)
+            {
+                Gizmos.DrawSphere(point, .1f);
+            }
+        }
     }
 }

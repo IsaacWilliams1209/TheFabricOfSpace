@@ -10,6 +10,14 @@ public class Shepherd : MonoBehaviour
 
     public GameObject[] berries = new GameObject[1];
 
+    [SerializeField]
+    Camera mainCamera;
+
+    [HideInInspector]
+    public GameObject activeSheep;
+    [HideInInspector]
+    public bool isSheepFocus = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,5 +29,20 @@ public class Shepherd : MonoBehaviour
         {
             berries[i].GetComponent<Shrubs>().index = i;
         }
+    }
+
+    public void SwapCams()
+    {
+        if (isSheepFocus)
+        {
+            mainCamera.gameObject.SetActive(true);
+            activeSheep.transform.GetChild(1).gameObject.SetActive(false);
+        }
+        else
+        {
+            mainCamera.gameObject.SetActive(false);
+            activeSheep.transform.GetChild(1).gameObject.SetActive(true);
+        }
+        isSheepFocus = !isSheepFocus;
     }
 }
