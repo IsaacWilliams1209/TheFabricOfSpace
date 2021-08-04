@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5145718669839675943}
   m_Layer: 0
   m_Name: Cube (2)
-  m_TagString: Untagged
+  m_TagString: Slope Upper
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -310,7 +310,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
 --- !u!1 &8006944712789600219
@@ -328,7 +328,7 @@ GameObject:
   - component: {fileID: 6803089903986889550}
   m_Layer: 0
   m_Name: Slope Upper
-  m_TagString: Untagged
+  m_TagString: Slope Upper
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -625,7 +625,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
 --- !u!1001 &8956612205722595417
@@ -682,6 +682,22 @@ PrefabInstance:
     - target: {fileID: 5338002661681454394, guid: 9e75e284be15177418736bf46208bfdf, type: 3}
       propertyPath: m_Name
       value: Block
+      objectReference: {fileID: 0}
+    - target: {fileID: 8819390897645234931, guid: 9e75e284be15177418736bf46208bfdf, type: 3}
+      propertyPath: traversable.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8819390897645234931, guid: 9e75e284be15177418736bf46208bfdf, type: 3}
+      propertyPath: traversable.Array.data[1]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8819390897645234931, guid: 9e75e284be15177418736bf46208bfdf, type: 3}
+      propertyPath: traversable.Array.data[2]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8819390897645234931, guid: 9e75e284be15177418736bf46208bfdf, type: 3}
+      propertyPath: traversable.Array.data[3]
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e75e284be15177418736bf46208bfdf, type: 3}

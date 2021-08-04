@@ -369,6 +369,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Block
       objectReference: {fileID: 0}
+    - target: {fileID: 8819390897645234931, guid: 9e75e284be15177418736bf46208bfdf, type: 3}
+      propertyPath: traversable.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8819390897645234931, guid: 9e75e284be15177418736bf46208bfdf, type: 3}
+      propertyPath: traversable.Array.data[3]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8819390897645234931, guid: 9e75e284be15177418736bf46208bfdf, type: 3}
+      propertyPath: traversable.Array.data[2]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8819390897645234931, guid: 9e75e284be15177418736bf46208bfdf, type: 3}
+      propertyPath: traversable.Array.data[1]
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e75e284be15177418736bf46208bfdf, type: 3}
 --- !u!4 &5736819427210276496 stripped
