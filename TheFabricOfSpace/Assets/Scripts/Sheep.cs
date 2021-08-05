@@ -144,11 +144,11 @@ public class Sheep : MonoBehaviour
                         awakeSheep.Add(sheep[i]);
                     }
                 }
-                if (berryIndex != -1)
+                if (berryIndex == -1)
                 {
                     for (int i = 0; i < shepherd.berries.Length; i++)
                     {
-                        if (Vector3.SqrMagnitude(shepherd.berries[i].transform.position - transform.position) < 4.0f)
+                        if (Vector3.SqrMagnitude(shepherd.berries[i].transform.position - transform.position) < 1.0f)
                         {
                             if (shepherd.berries[i].GetComponent<Shrubs>().Eat())
                             {
@@ -161,7 +161,7 @@ public class Sheep : MonoBehaviour
                 }
 
             }
-            if (Input.GetKeyDown(KeyCode.F))
+            if (Input.GetKeyDown(KeyCode.R))
             {
                 if (berryIndex != -1)
                 {
@@ -259,9 +259,8 @@ public class Sheep : MonoBehaviour
         {
             if (poweredUp)
             {
-                transform.GetChild(0).gameObject.SetActive(true);
-                transform.GetComponentInChildren<Block>().BlockUpdate();
-                
+                gameObject.layer = 2;               
+
                 canMove = false;                
                 Vector3 temp = new Vector3(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y), Mathf.Round(transform.position.z));
 
@@ -272,15 +271,25 @@ public class Sheep : MonoBehaviour
                 directions[1] = transform.parent.right;
                 directions[2] = -transform.parent.forward;
                 directions[3] = -transform.parent.right;
-                gameObject.layer = 0;
                 for (int i = 0; i < hits.Length; i++)
                 {
+                    Debug.DrawRay(transform.position, directions[i], Color.blue, 6.0f);
                     if (Physics.Raycast(transform.position, directions[i], out hits[i], 2.0f))
                     {
-                        hits[i].transform.GetComponentInChildren<Block>().BlockUpdate();
+                        
+                        if (hits[i].transform.tag == "Block" || hits[i].transform.tag == "Sheep")
+                        {
+                            gameObject.layer = 0;
+                            hits[i].transform.GetComponentInChildren<Block>().BlockUpdate();
+                            gameObject.layer = 2;
+                        }
+                            
                     }
                 }
                 transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                transform.GetChild(0).gameObject.SetActive(true);
+                transform.GetComponentInChildren<Block>().BlockUpdate();
+                gameObject.layer = 0;
             }
             else
             {
@@ -294,9 +303,13 @@ public class Sheep : MonoBehaviour
                 directions[3] = -transform.parent.right;
                 for (int i = 0; i < hits.Length; i++)
                 {
+                    Debug.DrawRay(transform.position, directions[i], Color.blue, 6.0f);
                     if (Physics.Raycast(transform.position, directions[i], out hits[i], 2.0f))
                     {
-                        hits[i].transform.GetComponentInChildren<Block>().BlockUpdate();
+                        if (hits[i].transform.tag == "Block" || hits[i].transform.tag == "Sheep")
+                        {
+                            hits[i].transform.GetComponentInChildren<Block>().BlockUpdate();
+                        }
                     }
                 }                
                 canMove = true;
