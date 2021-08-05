@@ -958,6 +958,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 120105726}
+    - target: {fileID: 8585304156179798455, guid: 5af7d94e95f8d024f9736ec550f70f28, type: 3}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 1756926740}
     - target: {fileID: 8836727529355767696, guid: 5af7d94e95f8d024f9736ec550f70f28, type: 3}
       propertyPath: m_Mesh
       value: 
