@@ -24,50 +24,63 @@ public class Block : MonoBehaviour
         jumpTriggers = transform.GetChild(0).GetComponents<BoxCollider>();
         colliders = GetComponents<BoxCollider>();
 
-        // Loop through each direction and check, if the jump triggers and/or the colliders should be active
-        for (int i = 0; i < traversable.Length; i++)
+        RaycastHit up;
+
+        if (Physics.Raycast(transform.position, transform.up, out up))
         {
-
-            RaycastHit hit;
-            Vector3 dir;
-            dir.x = (transform.localToWorldMatrix * colliders[i].center).x - transform.up.x;
-            dir.y = (transform.localToWorldMatrix * colliders[i].center).y - transform.up.y;
-            dir.z = (transform.localToWorldMatrix * colliders[i].center).z - transform.up.z;
-            Debug.DrawRay(transform.position, dir, Color.red, 2.0f);
-
-            if (Physics.Raycast(transform.position, dir, out hit, 2.0f))
+            if (up.transform.tag == "Block")
             {
-                if (hit.distance > 1)
+                gameObject.layer = 2;
+            }
+        }
+        else
+        {
+            for (int i = 0; i < traversable.Length; i++)
+            {
+
+                RaycastHit hit;
+                Vector3 dir;
+                dir.x = (transform.localToWorldMatrix * colliders[i].center).x - transform.up.x;
+                dir.y = (transform.localToWorldMatrix * colliders[i].center).y - transform.up.y;
+                dir.z = (transform.localToWorldMatrix * colliders[i].center).z - transform.up.z;
+                Debug.DrawRay(transform.position, dir, Color.red, 2.0f);
+
+                if (Physics.Raycast(transform.position, dir, out hit, 2.0f))
                 {
-                    // Hit distance is greater than 1 so the player can jump
-                    jumpTriggers[i].enabled = true;
-                    jumpLandings[i] = hit.transform.position + transform.up;
-                    traversable[i] = false;
-                    colliders[i].enabled = true;
-                }
-                else if (hit.transform.gameObject.tag == "Block" || hit.transform.gameObject.tag == "Slope Upper")
-                {
-                    // Hit a block adjacent to current block so disable colliders
-                    traversable[i] = true;
-                    colliders[i].enabled = false;
-                    jumpTriggers[i].enabled = false;
+                    if (hit.distance > 1)
+                    {
+                        // Hit distance is greater than 1 so the player can jump
+                        jumpTriggers[i].enabled = true;
+                        jumpLandings[i] = hit.transform.position + transform.up;
+                        traversable[i] = false;
+                        colliders[i].enabled = true;
+                    }
+                    else if (hit.transform.gameObject.tag == "Block" || hit.transform.gameObject.tag == "Slope Upper")
+                    {
+                        // Hit a block adjacent to current block so disable colliders
+                        traversable[i] = true;
+                        colliders[i].enabled = false;
+                        jumpTriggers[i].enabled = false;
+                    }
+                    else
+                    {
+                        // Hit something adjacent other than a block, enable colliders
+                        traversable[i] = false;
+                        colliders[i].enabled = true;
+                        jumpTriggers[i].enabled = false;
+                    }
                 }
                 else
                 {
-                    // Hit something adjacent other than a block, enable colliders
+                    // Hit nothing, enable colliders
+                    jumpTriggers[i].enabled = false;
                     traversable[i] = false;
                     colliders[i].enabled = true;
-                    jumpTriggers[i].enabled = false;
                 }
             }
-            else
-            {
-                // Hit nothing, enable colliders
-                jumpTriggers[i].enabled = false;
-                traversable[i] = false;
-                colliders[i].enabled = true;
-            }
         }
+        // Loop through each direction and check, if the jump triggers and/or the colliders should be active
+        
     }
 
     // BockUpdate is called when conditions near a block changes, for example slab sheep activation
