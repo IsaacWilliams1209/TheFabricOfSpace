@@ -144,7 +144,7 @@ public class Sheep : MonoBehaviour
                         awakeSheep.Add(sheep[i]);
                     }
                 }
-                if (berryIndex != -1)
+                if (berryIndex == -1)
                 {
                     for (int i = 0; i < shepherd.berries.Length; i++)
                     {
