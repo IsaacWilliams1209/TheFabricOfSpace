@@ -352,7 +352,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &185100471
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1448,6 +1448,7 @@ GameObject:
   - component: {fileID: 744381249}
   - component: {fileID: 744381251}
   - component: {fileID: 744381250}
+  - component: {fileID: 744381252}
   m_Layer: 5
   m_Name: Blue_Planet
   m_TagString: Untagged
@@ -1512,6 +1513,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 744381248}
   m_CullTransparentMesh: 0
+--- !u!114 &744381252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 744381248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a7ccf68d92addb45adeda40a418fe47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UI_name: 
 --- !u!1 &749661230
 GameObject:
   m_ObjectHideFlags: 0
@@ -1756,7 +1770,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
+  m_FirstSelected: {fileID: 853872458}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &820673773
@@ -1904,6 +1918,7 @@ GameObject:
   - component: {fileID: 853872459}
   - component: {fileID: 853872461}
   - component: {fileID: 853872460}
+  - component: {fileID: 853872462}
   m_Layer: 5
   m_Name: Green_Planet
   m_TagString: Untagged
@@ -1968,6 +1983,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 853872458}
   m_CullTransparentMesh: 0
+--- !u!114 &853872462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 853872458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a7ccf68d92addb45adeda40a418fe47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UI_name: 
 --- !u!1 &856312656
 GameObject:
   m_ObjectHideFlags: 0
@@ -1979,6 +2007,7 @@ GameObject:
   - component: {fileID: 856312657}
   - component: {fileID: 856312659}
   - component: {fileID: 856312658}
+  - component: {fileID: 856312660}
   m_Layer: 5
   m_Name: Brown_Planet
   m_TagString: Untagged
@@ -2043,6 +2072,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 856312656}
   m_CullTransparentMesh: 0
+--- !u!114 &856312660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 856312656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a7ccf68d92addb45adeda40a418fe47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UI_name: 
 --- !u!1 &898559266
 GameObject:
   m_ObjectHideFlags: 0
@@ -4085,7 +4127,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2055715199
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4223,12 +4265,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 183dedec8dfc94a4f9f17d3bec6a04c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lavishTides: {fileID: 856312658}
-  gustyCliffs: {fileID: 853872460}
-  frostyFields: {fileID: 744381250}
-  plan01Name: Lavish Tides
-  plan02Name: Gutsy Cliffs
-  plan03Name: Frosty Fields
+  lavishTides: {fileID: 856312656}
+  gustyCliffs: {fileID: 853872458}
+  frostyFields: {fileID: 744381248}
+  plan01Name: Lavish Tides Planet
+  plan02Name: Gutsy Cliffs Planet
+  plan03Name: Frosty Fields Planet
 --- !u!1 &2072011537
 GameObject:
   m_ObjectHideFlags: 0
