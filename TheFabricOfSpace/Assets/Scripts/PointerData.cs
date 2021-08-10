@@ -5,10 +5,10 @@ using UnityEngine.EventSystems;
 
 public class PointerData : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-
+    private GameObject currObject;
     public void OnPointerEnter(PointerEventData pointerEventData)
     {
-        UI.testName = name;
+        UI_Manager.currPlanet = name;
     }
 
     public void OnPointerExit(PointerEventData pointerEventData)
