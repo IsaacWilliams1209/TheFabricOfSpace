@@ -4,5 +4,14 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/POC_MainMenu.unity
+    guid: 3f82f04faa1715649bb100675f1aae31
+  - enabled: 1
+    path: Assets/Scenes/IsaacSandbox.unity
+    guid: c09bd5c925fecd74782eeaf7aa02f323
+  - enabled: 1
+    path: Assets/Scenes/MichaelSandBox.unity
+    guid: 2988a4d90707ea247b00bf127b72fff7
   m_configObjects: {}
