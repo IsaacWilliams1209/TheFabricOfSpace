@@ -474,11 +474,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!1 &274274292 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1962500693575283246, guid: 7d751b921e88a0c408a9d7ec87a49194, type: 3}
-  m_PrefabInstance: {fileID: 3376948733780461513}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &274274293 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6029059251709841507, guid: 7d751b921e88a0c408a9d7ec87a49194, type: 3}
@@ -924,20 +919,10 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 434750493}
   m_CullTransparentMesh: 0
---- !u!1 &506200114 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 187466789892522247, guid: 820f3330e3d4eaa429bdef4c802a43ac, type: 3}
-  m_PrefabInstance: {fileID: 9064043433598522891}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &506200115 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3917663838207680634, guid: 820f3330e3d4eaa429bdef4c802a43ac, type: 3}
   m_PrefabInstance: {fileID: 9064043433598522891}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &586240701 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3685382126395561902, guid: 7636aaff4e79aae40b7ff6f040594123, type: 3}
-  m_PrefabInstance: {fileID: 5929969181590925120}
   m_PrefabAsset: {fileID: 0}
 --- !u!224 &586240702 stripped
 RectTransform:
@@ -2830,11 +2815,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1578669484}
   m_CullTransparentMesh: 0
---- !u!1 &1622594880 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6988879207206619693, guid: 9965fbf8696c4fc41af87845605d74da, type: 3}
-  m_PrefabInstance: {fileID: 4976635897877743902}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1622594881 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4404181866857748321, guid: 9965fbf8696c4fc41af87845605d74da, type: 3}
@@ -3002,7 +2982,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2042268814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3142,10 +3122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fab6342d7ddedf41a1767ef504b724c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button01: {fileID: 1622594880}
-  button02: {fileID: 586240701}
-  button03: {fileID: 506200114}
-  button04: {fileID: 274274292}
+  UiElements: []
 --- !u!1 &2055715198
 GameObject:
   m_ObjectHideFlags: 0
@@ -3167,7 +3144,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2055715199
 MonoBehaviour:
   m_ObjectHideFlags: 0
