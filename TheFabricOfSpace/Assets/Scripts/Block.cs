@@ -42,7 +42,7 @@ public class Block : MonoBehaviour
             dir.x = (transform.localToWorldMatrix * colliders[i].center).x - transform.up.x;
             dir.y = (transform.localToWorldMatrix * colliders[i].center).y - transform.up.y;
             dir.z = (transform.localToWorldMatrix * colliders[i].center).z - transform.up.z;
-            //Debug.DrawRay(transform.position, dir, Color.red, 2.0f);
+            Debug.DrawRay(transform.position, dir, Color.red, 2.0f);
 
             if (Physics.Raycast(transform.position, dir, out hit, 2.0f))
             {
@@ -54,7 +54,7 @@ public class Block : MonoBehaviour
                     traversable[i] = false;
                     colliders[i].enabled = true;
                 }
-                else if (hit.transform.gameObject.tag == "Block" || hit.transform.gameObject.tag == "Slope Upper")
+                else if (hit.transform.gameObject.tag == "Block" || hit.transform.gameObject.tag == "Slope Upper" || hit.transform.gameObject.tag == "Geyser")
                 {
                     // Hit a block adjacent to current block so disable colliders
                     traversable[i] = true;
@@ -91,13 +91,11 @@ public class Block : MonoBehaviour
             dir.x = (transform.localToWorldMatrix * colliders[i].center).x - transform.up.x;
             dir.y = (transform.localToWorldMatrix * colliders[i].center).y - transform.up.y;
             dir.z = (transform.localToWorldMatrix * colliders[i].center).z - transform.up.z;
-            //Debug.DrawRay(transform.position, dir, Color.red, 2.0f);
+            //Debug.DrawRay(transform.position, dir, Color.red, 4.0f);
             
 
             if (Physics.Raycast(transform.position, dir, out hit, 2.0f))
             {
-                Debug.Log(transform.parent.name);
-                Debug.Log(hit.transform.name);
                 if (hit.distance > 1.3f)
                 {
                     jumpTriggers[i].enabled = true;
