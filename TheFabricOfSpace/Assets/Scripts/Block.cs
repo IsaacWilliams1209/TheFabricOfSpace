@@ -19,7 +19,7 @@ public class Block : MonoBehaviour
 
     private void Start()
     {
-        Debug.DrawRay(transform.position, transform.up, Color.green, 6.0f);
+        //Debug.DrawRay(transform.position, transform.up, Color.green, 6.0f);
         //gameObject.layer = 2;
         if (!Physics.Raycast(transform.position, transform.up, 1.0f))
         {

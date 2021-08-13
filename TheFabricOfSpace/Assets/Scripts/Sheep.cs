@@ -150,8 +150,8 @@ public class Sheep : MonoBehaviour
                 if (isJumping)
                 {
                     jumpTime += Time.deltaTime;
-                    float percentDone = jumpTime/ 0.15f;
-                    transform.position = Vector3.Lerp(jumpFrames[jumpIndex], jumpFrames[jumpIndex + 1], 1);
+                    float percentDone = jumpTime/ Time.deltaTime * 0.25f;
+                    transform.position = Vector3.Lerp(jumpFrames[jumpIndex], jumpFrames[jumpIndex + 1], percentDone);
                     if (transform.position == jumpFrames[jumpIndex + 1])
                     {
                         jumpTime = 0;
@@ -273,7 +273,7 @@ public class Sheep : MonoBehaviour
             // you win! activate world rotation
             Debug.Log("Good Job!");
         }
-        if (other.gameObject.tag == "Jump")
+        else if (other.gameObject.tag == "Jump")
         {
             Block block = other.gameObject.GetComponentInParent<Block>();
             canJump = true;
@@ -285,6 +285,10 @@ public class Sheep : MonoBehaviour
                 }
             }
         }
+        else if (other.gameObject.tag == "Geyser")
+        {
+            other.gameObject.GetComponent<Geyser>().sheep = this;
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -292,6 +296,10 @@ public class Sheep : MonoBehaviour
         // Remove jump ability when leaving the trigger
         if (other.gameObject.tag == "Jump")
             canJump = false;
+        else if (other.gameObject.tag == "Geyser")
+        {
+            other.gameObject.GetComponent<Geyser>().sheep = null;
+        }
     }
 
     private void ActivatePowerUp()
