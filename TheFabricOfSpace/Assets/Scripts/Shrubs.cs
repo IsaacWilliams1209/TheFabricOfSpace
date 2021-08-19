@@ -7,6 +7,7 @@ public class Shrubs : MonoBehaviour
     // Has the shrub been eaten
     public bool eaten = false;
 
+    // Holds the berries index in the shepherd
     [HideInInspector]
     public int index;
 

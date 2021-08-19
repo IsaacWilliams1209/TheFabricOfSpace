@@ -8,6 +8,8 @@ TagManager:
   - Block
   - Sheep
   - Jump
+  - Slope Upper
+  - Water
   layers:
   - Default
   - TransparentFX
