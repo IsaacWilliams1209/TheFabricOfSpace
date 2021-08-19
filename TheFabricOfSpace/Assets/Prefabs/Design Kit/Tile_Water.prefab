@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4554824513077517781}
   - component: {fileID: 8834129583408295079}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Tile_Water
   m_TagString: Water
   m_Icon: {fileID: 0}
@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 6973280007151516512}
   - component: {fileID: 385499762752698347}
   - component: {fileID: 3693151228050049546}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Quad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -154,7 +154,7 @@ GameObject:
   - component: {fileID: 6403673745519107870}
   - component: {fileID: 158522172939350738}
   - component: {fileID: 2611512415112498818}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Quad (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
