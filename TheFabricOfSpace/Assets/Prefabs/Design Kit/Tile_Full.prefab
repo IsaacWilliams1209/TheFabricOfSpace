@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2287221688518232690}
   - component: {fileID: 7612099728427511551}
+  - component: {fileID: 5979124655428132205}
   m_Layer: 0
   m_Name: Tile_Full
   m_TagString: Block
@@ -57,6 +58,19 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &5979124655428132205
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 164223364478305791}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &558313345800475317
 PrefabInstance:
