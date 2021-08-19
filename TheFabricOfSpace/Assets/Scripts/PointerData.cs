@@ -8,7 +8,7 @@ public class PointerData : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     private GameObject currObject;
     public void OnPointerEnter(PointerEventData pointerEventData)
     {
-        UI_Manager.currPlanet = name;
+        UI_Manager.currLvTitle = name;
     }
 
     public void OnPointerExit(PointerEventData pointerEventData)

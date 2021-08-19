@@ -1,55 +1,101 @@
-﻿using UnityEngine.EventSystems;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
+
 
 public class UI_Manager : MonoBehaviour
 {
-    [SerializeField]
-    GameObject lavishTides;
-    [SerializeField]
-    GameObject gustyCliffs;
-    [SerializeField]
-    GameObject frostyFields;
-    [SerializeField]
-    private string planet01Name;
-    [SerializeField]
-    private string planet02Name;
-    [SerializeField]
-    private string planet03Name;
 
-    private GameObject lvlNameDisplay;
+    [SerializeField]
+    List<GameObject> menuUiElements = new List<GameObject>();
 
-    static public string currPlanet;
-    static public bool isCursorHovering;
-    private Vector3 test = new Vector3(1.3f,1.3f,1.3f);
+    //[SerializeField]
+    //List<GameObject> menus = new List<GameObject>();
+
+    [SerializeField]
+    private float uiEffectSpeed;
+
+    [SerializeField]
+    private Vector3 uiScaleSize;
+
+    [SerializeField]
+    public GameObject mainMenu;
+
+    [SerializeField]
+    public GameObject levelSelection;
+
+    [SerializeField]
+    public GameObject settingsMenu;
+
+    [SerializeField]
+    public GameObject creditsMenu;
+
+    private int currIndex = 0;
+    private Vector3 originalTransform;
+    static public string currLvTitle;
+
+    EventSystem curr;
 
     private void Start()
     {
-        gustyCliffs.name = planet01Name;
-        lavishTides.name = planet02Name;
-        frostyFields.name = planet03Name;
-
-        lvlNameDisplay = transform.GetChild(7).gameObject;
-
+        EventSystem.current.firstSelectedGameObject = menuUiElements[currIndex];
     }
 
     private void Update()
     {
-        LvlTitleUpdate();
-        //LeanTween.cancel(gustyCliffs);
-        if (Input.GetKey(KeyCode.W))
+        
+        if (!LeanTween.isTweening(menuUiElements[currIndex]))
         {
-            gustyCliffs.transform.LeanScale(test, 0.3f).setLoopPingPong();
-
+            PulseEffect();
         }
-
+        currUiElement();
     }
 
-    private void LvlTitleUpdate()
+    private void PulseEffect()
     {
-        lvlNameDisplay.GetComponent<TextMeshProUGUI>().text = currPlanet;
+        originalTransform = menuUiElements[currIndex].gameObject.transform.localScale;
+        LeanTween.scale(menuUiElements[currIndex].gameObject, uiScaleSize, uiEffectSpeed).setLoopPingPong();
+    }
+
+    private int currUiElement()
+    {
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            CancelTween();
+            currIndex = currIndex ==  0 ? currIndex = menuUiElements.Count -1 : currIndex -1;
+            EventSystem.current.SetSelectedGameObject(menuUiElements[currIndex].gameObject);
+        }
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            CancelTween();
+            currIndex = currIndex == menuUiElements.Count - 1 ? currIndex = 0 : currIndex +1;
+            EventSystem.current.SetSelectedGameObject(menuUiElements[currIndex].gameObject);
+        }
+        return currIndex;
+    }
+
+    private void CancelTween()
+    {
+        menuUiElements[currIndex].gameObject.transform.localScale = originalTransform;
+        LeanTween.cancel(menuUiElements[currIndex]); 
+    }
+
+
+    public void GoToMainMenu()
+    {
+        settingsMenu.SetActive(false);
+        mainMenu.SetActive(true);
+    }
+
+    public void GoToSettings()
+    {
+        //curr = EventSystem.current;
+        
+        mainMenu.SetActive(false);
+        settingsMenu.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(menuUiElements[0].gameObject);
     }
 }
