@@ -123,14 +123,14 @@ public class Sheep : MonoBehaviour
                     movement += transform.parent.up * Physics.gravity.y * Time.deltaTime;
                 }
                 // If the raycast hits and is less than .4m move it up
-                else if (hit.distance < 0.4f && !hit.collider.isTrigger)
-                {
-                    movement += transform.parent.up * 0.01f;
-
-
-                }
+                //else if (hit.distance < 0.4f && !hit.collider.isTrigger)
+                //{
+                //    movement += transform.parent.up * 0.01f;
+                //
+                //
+                //}
                 // If the raycast hits and is greater than .5m move it down
-                else if (hit.distance > 0.5f && !hit.collider.isTrigger)
+                else if (hit.distance > 0.001f && !hit.collider.isTrigger)
                 {
                     movement -= transform.parent.up * 0.01f;
 
@@ -193,7 +193,6 @@ public class Sheep : MonoBehaviour
                         }
                     }
                 }
-                
 
             }
             // On R press activate the sheep powerup
@@ -376,7 +375,7 @@ public class Sheep : MonoBehaviour
 
                 // Prevent movement and lock to tile
                 canMove = false;                
-                Vector3 temp = new Vector3(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y), Mathf.Round(transform.position.z));
+                Vector3 temp = new Vector3(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y), Mathf.Round(transform.position.z)) - transform.up * 0.45f;
 
                 transform.position = temp;
                 RaycastHit[] hits = new RaycastHit[4];
@@ -401,8 +400,6 @@ public class Sheep : MonoBehaviour
                             
                     }
                 }
-                // Enlarge sheep
-                transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
                 // Activate block on slab sheep
                 transform.GetChild(0).gameObject.SetActive(true);
                 // Update block for the on the slab sheep
@@ -412,7 +409,7 @@ public class Sheep : MonoBehaviour
             else
             {
                 gameObject.layer = 2;
-                // Set block on slab sheep to inactive
+                // Set block on slab sheep to inactive                
                 transform.GetChild(0).gameObject.SetActive(false);
                 RaycastHit[] hits = new RaycastHit[4];
                 Vector3[] directions = new Vector3[4];
@@ -435,7 +432,6 @@ public class Sheep : MonoBehaviour
                 // Release movement
                 canMove = true;
                 // Shrink sheep
-                transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
             }
         }
     }
