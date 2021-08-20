@@ -123,12 +123,12 @@ public class Sheep : MonoBehaviour
                     movement += transform.parent.up * Physics.gravity.y * Time.deltaTime;
                 }
                 // If the raycast hits and is less than .4m move it up
-                //else if (hit.distance < 0.4f && !hit.collider.isTrigger)
-                //{
-                //    movement += transform.parent.up * 0.01f;
-                //
-                //
-                //}
+                else if (hit.transform.gameObject.tag == "Geyser")
+                {
+                    movement += transform.parent.up * 0.01f;
+                
+                
+                }
                 // If the raycast hits and is greater than .5m move it down
                 else if (hit.distance > 0.001f && !hit.collider.isTrigger)
                 {
@@ -150,8 +150,8 @@ public class Sheep : MonoBehaviour
                 if (isJumping)
                 {
                     jumpTime += Time.deltaTime;
-                    float percentDone = jumpTime/ 0.15f;
-                    transform.position = Vector3.Lerp(jumpFrames[jumpIndex], jumpFrames[jumpIndex + 1], 1);
+                    float percentDone = jumpTime/ Time.deltaTime * 0.25f;
+                    transform.position = Vector3.Lerp(jumpFrames[jumpIndex], jumpFrames[jumpIndex + 1], percentDone);
                     if (transform.position == jumpFrames[jumpIndex + 1])
                     {
                         jumpTime = 0;
@@ -174,8 +174,10 @@ public class Sheep : MonoBehaviour
                     if (i != index && Vector3.SqrMagnitude(sheep[i].transform.position - transform.position) < 4.0f && !sheep[i].GetComponent<Sheep>().awake)
                     {
                         sheep[i].GetComponent<Sheep>().awake = true;
-                        sheep[i].GetComponent<Renderer>().material = sheepMaterials[1];
-                        awakeSheep.Add(sheep[i]);
+                        sheep[i].GetComponent<Renderer>().material = sheepMaterials[0];
+                        awakeSheep.Insert(0, sheep[i]);
+                        swap = true;
+                        return;
                     }
                 }
                 if (berryIndex == -1)
@@ -188,6 +190,7 @@ public class Sheep : MonoBehaviour
                             {
                                 shepherd.berries[i].GetComponent<Shrubs>().GrantPowerUp(gameObject);
                                 berryIndex = i;
+                                poweredUp = false;
 
                             }
                         }
@@ -198,16 +201,8 @@ public class Sheep : MonoBehaviour
             // On R press activate the sheep powerup
             if (Input.GetKeyDown(KeyCode.R))
             {
-                if (berryIndex != -1)
-                {
                     poweredUp = !poweredUp;
                     ActivatePowerUp();
-                }
-            }
-            // On G press start jumping
-            if (canJump && Input.GetKeyDown(KeyCode.G) && !voxel)
-            {
-                DoDaJump();
             }
             // On left shift press, swap to the next active sheep
             if (Input.GetKeyUp(KeyCode.LeftShift))
@@ -238,7 +233,59 @@ public class Sheep : MonoBehaviour
                     hit.transform.GetComponent<Sheep>().poweredUp = false;
                 }
             }
+            Vector3 movement = new Vector3();
+                
+            // Raycast down, on miss move the sheep down
+            if (!Physics.Raycast(transform.position, -transform.parent.up, out hit, 1.0f))
+            {
+                movement += transform.parent.up * Physics.gravity.y * Time.deltaTime;
+            }
+            else if (hit.transform.gameObject.tag == "Geyser")
+            {
+                movement += transform.parent.up * 0.01f;
 
+
+            }
+            // If the raycast hits and is greater than .5m move it down
+            else if (hit.distance > 0.025f && !hit.collider.isTrigger)
+            {
+                movement -= transform.parent.up * 0.01f;
+
+            }
+            // If the raycast hits a voxel sheep set it's powered up state to true, this prevents the sheep being moved while another sheep in ontop of them
+            else if (hit.transform.tag == "Sheep" && hit.transform.GetComponent<Sheep>().voxel)
+            {
+                hit.transform.GetComponent<Sheep>().poweredUp = true;
+            }
+
+
+            controller.Move(movement);
+
+        }
+        else
+        {
+            Vector3 movement = new Vector3();
+            RaycastHit hit;
+
+            // Raycast down, on miss move the sheep down
+            if (!Physics.Raycast(transform.position, -transform.parent.up, out hit, 1.0f))
+            {
+                movement += transform.parent.up * Physics.gravity.y * Time.deltaTime;
+            }
+            // If the raycast hits and is greater than .5m move it down
+            else if (hit.distance > 0.5f && !hit.collider.isTrigger)
+            {
+                movement -= transform.parent.up * 0.01f;
+
+            }
+            // If the raycast hits a voxel sheep set it's powered up state to true, this prevents the sheep being moved while another sheep in ontop of them
+            else if (hit.transform.tag == "Sheep" && hit.transform.GetComponent<Sheep>().voxel)
+            {
+                hit.transform.GetComponent<Sheep>().poweredUp = true;
+            }
+
+
+            controller.Move(movement);
         }
     }
 
@@ -284,6 +331,11 @@ public class Sheep : MonoBehaviour
                 }
             }
         }
+        if (other.gameObject.tag == "Geyser")
+        {
+            Debug.Log("Geyser triggered");
+            other.transform.parent.GetComponent<Geyser>().sheep = this;
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -291,6 +343,11 @@ public class Sheep : MonoBehaviour
         // Remove jump ability when leaving the trigger
         if (other.gameObject.tag == "Jump")
             canJump = false;
+        if (other.gameObject.tag == "Geyser")
+        {
+            
+            other.transform.parent.GetComponent<Geyser>().sheep = null;
+        }
     }
 
     private void ActivatePowerUp()
@@ -305,7 +362,7 @@ public class Sheep : MonoBehaviour
 
                 // Prevent movement and lock to tile
                 canMove = false;                
-                Vector3 temp = new Vector3(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y), Mathf.Round(transform.position.z)) - transform.up * 0.45f;
+                Vector3 temp = new Vector3(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y), Mathf.Round(transform.position.z)) - transform.parent.up * 0.45f;
 
                 transform.position = temp;
                 RaycastHit[] hits = new RaycastHit[4];
@@ -364,6 +421,13 @@ public class Sheep : MonoBehaviour
                 // Shrink sheep
             }
         }
+        else
+        {
+            if (canJump)
+            {
+                DoDaJump();
+            }
+        }
     }
 
     // Calculates the frames the jump
@@ -384,18 +448,18 @@ public class Sheep : MonoBehaviour
 
         // Convert position from forward, up and right, to x,y,z
         Vector3 startingPos;
-        startingPos.x = MaskVector(transform.position, transform.right);
-        startingPos.y = MaskVector(transform.position, transform.up);
-        startingPos.z = MaskVector(transform.position, transform.forward);
+        startingPos.x = MaskVector(transform.position, transform.parent.right);
+        startingPos.y = MaskVector(transform.position, transform.parent.up);
+        startingPos.z = MaskVector(transform.position, transform.parent.forward);
         
         // Lock to z-axis
         Vector3 stP = new Vector3(0, startingPos.y, startingPos.z);
 
         // Convert position from forward, up and right, to x,y,z
         Vector3 arrivingPos;
-        arrivingPos.x = MaskVector(jumpLanding, transform.right);
-        arrivingPos.y = MaskVector(jumpLanding, transform.up);
-        arrivingPos.z = MaskVector(jumpLanding, transform.forward);
+        arrivingPos.x = MaskVector(jumpLanding, transform.parent.right);
+        arrivingPos.y = MaskVector(jumpLanding, transform.parent.up);
+        arrivingPos.z = MaskVector(jumpLanding, transform.parent.forward);
 
         // Lock to z-axis
         Vector3 arP = new Vector3(0, arrivingPos.y, arrivingPos.z);
@@ -430,7 +494,7 @@ public class Sheep : MonoBehaviour
             newX += z_dist;
             newZ += x_dist;
             float yToBeFound = A * (newX * newX) + B * newX + C;
-            Vector3 temp = transform.right * newZ + transform.up * yToBeFound + transform.forward * newX;
+            Vector3 temp = transform.parent.right * newZ + transform.parent.up * yToBeFound + transform.parent.forward * newX;
            jumpFrames[i] = temp;
         }
         ////////////////////// END OF BORROWED CODE //////////////////////////
