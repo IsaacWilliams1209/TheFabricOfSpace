@@ -150,8 +150,8 @@ public class Sheep : MonoBehaviour
                 if (isJumping)
                 {
                     jumpTime += Time.deltaTime;
-                    float percentDone = jumpTime/ 0.15f;
-                    transform.position = Vector3.Lerp(jumpFrames[jumpIndex], jumpFrames[jumpIndex + 1], 1);
+                    float percentDone = jumpTime/ Time.deltaTime * 0.25f;
+                    transform.position = Vector3.Lerp(jumpFrames[jumpIndex], jumpFrames[jumpIndex + 1], percentDone);
                     if (transform.position == jumpFrames[jumpIndex + 1])
                     {
                         jumpTime = 0;
@@ -238,7 +238,67 @@ public class Sheep : MonoBehaviour
                     hit.transform.GetComponent<Sheep>().poweredUp = false;
                 }
             }
+            Vector3 movement = new Vector3();
+                
+            // Raycast down, on miss move the sheep down
+            if (!Physics.Raycast(transform.position, -transform.parent.up, out hit, 1.0f))
+            {
+                movement += transform.parent.up * Physics.gravity.y * Time.deltaTime;
+            }
+            // If the raycast hits and is less than .4m move it up
+            else if (hit.distance < 0.4f && !hit.collider.isTrigger)
+            {
+                movement += transform.parent.up * 0.01f;
 
+
+            }
+            // If the raycast hits and is greater than .5m move it down
+            else if (hit.distance > 0.5f && !hit.collider.isTrigger)
+            {
+                movement -= transform.parent.up * 0.01f;
+
+            }
+            // If the raycast hits a voxel sheep set it's powered up state to true, this prevents the sheep being moved while another sheep in ontop of them
+            else if (hit.transform.tag == "Sheep" && hit.transform.GetComponent<Sheep>().voxel)
+            {
+                hit.transform.GetComponent<Sheep>().poweredUp = true;
+            }
+
+
+            controller.Move(movement);
+
+        }
+        else
+        {
+            Vector3 movement = new Vector3();
+            RaycastHit hit;
+
+            // Raycast down, on miss move the sheep down
+            if (!Physics.Raycast(transform.position, -transform.parent.up, out hit, 1.0f))
+            {
+                movement += transform.parent.up * Physics.gravity.y * Time.deltaTime;
+            }
+            // If the raycast hits and is less than .4m move it up
+            else if (hit.distance < 0.4f && !hit.collider.isTrigger)
+            {
+                movement += transform.parent.up * 0.01f;
+
+
+            }
+            // If the raycast hits and is greater than .5m move it down
+            else if (hit.distance > 0.5f && !hit.collider.isTrigger)
+            {
+                movement -= transform.parent.up * 0.01f;
+
+            }
+            // If the raycast hits a voxel sheep set it's powered up state to true, this prevents the sheep being moved while another sheep in ontop of them
+            else if (hit.transform.tag == "Sheep" && hit.transform.GetComponent<Sheep>().voxel)
+            {
+                hit.transform.GetComponent<Sheep>().poweredUp = true;
+            }
+
+
+            controller.Move(movement);
         }
     }
 
@@ -284,6 +344,11 @@ public class Sheep : MonoBehaviour
                 }
             }
         }
+        if (other.gameObject.tag == "Geyser")
+        {
+            Debug.Log("Geyser triggered");
+            other.transform.parent.GetComponent<Geyser>().sheep = this;
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -291,6 +356,11 @@ public class Sheep : MonoBehaviour
         // Remove jump ability when leaving the trigger
         if (other.gameObject.tag == "Jump")
             canJump = false;
+        if (other.gameObject.tag == "Geyser")
+        {
+            
+            other.transform.parent.GetComponent<Geyser>().sheep = null;
+        }
     }
 
     private void ActivatePowerUp()
