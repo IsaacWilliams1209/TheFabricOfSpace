@@ -35,18 +35,29 @@ public class Geyser : MonoBehaviour
     {
         if (sheep != null)
         {
-            if (sheep.voxel && sheep.poweredUp && !(isMoving || active))
+            if (sheep.voxel && sheep.poweredUp)
+            {
+                if (!(isMoving || active))
+                {
+                    isMoving = true;
+                    for (int i = 0; i < 4; i++)
+                    {
+                        blockLow.traversable[i] = false;
+                        blockLow.colliders[i].enabled = true;
+                    }
+                    // Play animation
+                    GetComponent<BoxCollider>().enabled = false;
+                    to = platform.transform.position + transform.up;
+                    from = platform.transform.position;
+                }                
+            }
+            else if (active && !isMoving)
             {
                 isMoving = true;
-                for (int i = 0; i < 4; i++)
-                {
-                    blockLow.traversable[i] = false;
-                    blockLow.colliders[i].enabled = true;
-                }
-                // Play animation
                 GetComponent<BoxCollider>().enabled = false;
-                to = platform.transform.position + transform.up;
+                to = platform.transform.position - transform.up;
                 from = platform.transform.position;
+                blockLow.BlockUpdate();
             }
         }
         else if (active && !isMoving)
