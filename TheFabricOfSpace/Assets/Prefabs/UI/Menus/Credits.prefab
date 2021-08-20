@@ -87,7 +87,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5096575025158047816
 RectTransform:
   m_ObjectHideFlags: 0
@@ -222,9 +222,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 183dedec8dfc94a4f9f17d3bec6a04c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuUiElements: []
-  uiEffectSpeed: 0
-  uiScaleSize: {x: 0, y: 0, z: 0}
+  menuUiElements:
+  - {fileID: 917790413782884772}
+  uiEffectSpeed: 1
+  uiScaleSize: {x: 0.9, y: 0.9, z: 0.9}
   mainMenu: {fileID: 0}
   levelSelection: {fileID: 0}
   settingsMenu: {fileID: 0}
@@ -733,6 +734,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5096575025158047816}
     m_Modifications:
+    - target: {fileID: 1139486115901281836, guid: 723a44183f55cdb47a986e0a3494d680, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     - target: {fileID: 3685382126395561902, guid: 723a44183f55cdb47a986e0a3494d680, type: 3}
       propertyPath: m_Name
       value: Back_Button
@@ -823,6 +828,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 723a44183f55cdb47a986e0a3494d680, type: 3}
+--- !u!1 &917790413782884772 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3685382126395561902, guid: 723a44183f55cdb47a986e0a3494d680, type: 3}
+  m_PrefabInstance: {fileID: 4582903004623549962}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &4664190479738358530 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 9161226024128118024, guid: 723a44183f55cdb47a986e0a3494d680, type: 3}
