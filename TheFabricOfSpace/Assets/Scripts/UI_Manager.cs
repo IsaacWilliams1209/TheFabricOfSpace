@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 
 public class UI_Manager : MonoBehaviour
@@ -37,7 +38,7 @@ public class UI_Manager : MonoBehaviour
     private Vector3 originalTransform;
     static public string currLvTitle;
 
-    EventSystem curr;
+    private GameObject prevUIElement;
 
     private void Start()
     {
@@ -83,19 +84,38 @@ public class UI_Manager : MonoBehaviour
         LeanTween.cancel(menuUiElements[currIndex]); 
     }
 
-
     public void GoToMainMenu()
     {
         settingsMenu.SetActive(false);
         mainMenu.SetActive(true);
+        EventSystem.current.firstSelectedGameObject = prevUIElement;
+        EventSystem.current.SetSelectedGameObject(prevUIElement);
+    }
+
+    public void GoToLevelSelection()
+    {
+        SceneManager.LoadScene(1);
     }
 
     public void GoToSettings()
     {
-        //curr = EventSystem.current;
-        
+        prevUIElement = EventSystem.current.currentSelectedGameObject;
         mainMenu.SetActive(false);
         settingsMenu.SetActive(true);
         EventSystem.current.SetSelectedGameObject(menuUiElements[0].gameObject);
     }
+
+    public void GoToCredits()
+    {
+        prevUIElement = EventSystem.current.currentSelectedGameObject;
+        mainMenu.SetActive(false);
+        creditsMenu.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(menuUiElements[0].gameObject);
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
+
 }
