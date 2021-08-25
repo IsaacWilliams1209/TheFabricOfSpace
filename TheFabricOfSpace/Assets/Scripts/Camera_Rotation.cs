@@ -12,13 +12,6 @@ class FaceInformation
     public Vector3 camOrientation;
 }
 
-//class FaceInformation
-//{
-//    public Vector3 camPosition;
-//    public Vector3 camRotation;
-//}
-
-
 public class Camera_Rotation : MonoBehaviour
 {   
     List<FaceInformation> planetFaces = new List<FaceInformation>(6);
