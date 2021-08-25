@@ -153,7 +153,6 @@ public class Sheep : MonoBehaviour
 
                 if (rotation != Vector3.zero)
                 {
-                    Debug.Log(rotation.y);
                     Quaternion lookRotaion = Quaternion.LookRotation(rotation, transform.parent.up);
                     
                     transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotaion, rotationSpeed * Time.deltaTime);
@@ -275,7 +274,6 @@ public class Sheep : MonoBehaviour
 
 
             controller.Move(movement);
-
         }
         else
         {
@@ -466,6 +464,9 @@ public class Sheep : MonoBehaviour
         startingPos.x = MaskVector(transform.position, transform.parent.right);
         startingPos.y = MaskVector(transform.position, transform.parent.up);
         startingPos.z = MaskVector(transform.position, transform.parent.forward);
+        Debug.Log("Startpos: " + startingPos.y);
+        Debug.Log("Position: " + transform.position.y);
+        Debug.Log("Up: " +transform.parent.up);
         
         // Lock to z-axis
         Vector3 stP = new Vector3(0, startingPos.y, startingPos.z);
@@ -525,5 +526,16 @@ public class Sheep : MonoBehaviour
         temp.y = data.y * mask.y;
         temp.z = data.z * mask.z;
         return temp.x + temp.y + temp.z;
+    }
+    void OnDrawGizmos()
+    {
+        if (jumpFrames[0] != null)
+        {
+            Gizmos.color = Color.yellow;
+            foreach (Vector3 point in jumpFrames)
+            {
+                Gizmos.DrawSphere(point, .1f);
+            }
+        }
     }
 }
