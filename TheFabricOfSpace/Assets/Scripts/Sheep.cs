@@ -7,6 +7,8 @@ public class Sheep : MonoBehaviour
     // Speed of the sheep
     public float speed;
 
+    public float rotationSpeed;
+
     // Keeps the awake, asleep and active materials for the sheep
     public Material[] sheepMaterials = new Material[3];
 
@@ -123,14 +125,14 @@ public class Sheep : MonoBehaviour
                     movement += transform.parent.up * Physics.gravity.y * Time.deltaTime;
                 }
                 // If the raycast hits and is less than .4m move it up
-                else if (hit.transform.gameObject.tag == "Geyser")
-                {
-                    movement += transform.parent.up * 0.01f;
-                
-                
-                }
+                //else if (hit.transform.gameObject.tag == "Geyser")
+                //{
+                //    movement += transform.parent.up * 0.01f;
+                //
+                //
+                //}
                 // If the raycast hits and is greater than .5m move it down
-                else if (hit.distance > 0.001f && !hit.collider.isTrigger)
+                else if (hit.distance > 0.01f && !hit.collider.isTrigger)
                 {
                     movement -= transform.parent.up * 0.01f;
 
@@ -143,6 +145,19 @@ public class Sheep : MonoBehaviour
 
 
                 controller.Move(movement);
+
+                Vector3 rotation;
+                rotation.x = MaskVector(movement, transform.parent.right);
+                rotation.y = 0;
+                rotation.z = MaskVector(movement, transform.parent.forward);
+
+                if (rotation != Vector3.zero)
+                {
+                    Debug.Log(rotation.y);
+                    Quaternion lookRotaion = Quaternion.LookRotation(rotation, transform.parent.up);
+                    
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotaion, rotationSpeed * Time.deltaTime);
+                }
             }
             else
             {
