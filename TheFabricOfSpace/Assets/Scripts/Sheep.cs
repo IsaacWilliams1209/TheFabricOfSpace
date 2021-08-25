@@ -171,7 +171,7 @@ public class Sheep : MonoBehaviour
             {
                 for (int i = 0; i < sheep.Length; i++)
                 {
-                    if (i != index && Vector3.SqrMagnitude(sheep[i].transform.position - transform.position) < 4.0f && !sheep[i].GetComponent<Sheep>().awake)
+                    if (i != index && Vector3.SqrMagnitude(sheep[i].transform.position - transform.position) < 1.0f && !sheep[i].GetComponent<Sheep>().awake)
                     {
                         sheep[i].GetComponent<Sheep>().awake = true;
                         sheep[i].GetComponent<Renderer>().material = sheepMaterials[0];
