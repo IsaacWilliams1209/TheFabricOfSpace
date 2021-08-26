@@ -7,6 +7,8 @@ public class Sheep : MonoBehaviour
     // Speed of the sheep
     public float speed;
 
+    public float rotationSpeed;
+
     // Keeps the awake, asleep and active materials for the sheep
     public Material[] sheepMaterials = new Material[3];
 
@@ -70,10 +72,16 @@ public class Sheep : MonoBehaviour
     // The character controller
     CharacterController controller;
 
+    Mesh defaultMesh;
+
+    [SerializeField]
+    List<Mesh> meshes = new List<Mesh>();
+
     // Start is called before the first frame update
     void Start()
     {
         // Initalising variables
+        defaultMesh = GetComponent<MeshFilter>().mesh;
         shepherd = transform.parent.GetComponent<Shepherd>();
         sheep = shepherd.sheep;
         awakeSheep = shepherd.awakeSheep;
@@ -123,14 +131,14 @@ public class Sheep : MonoBehaviour
                     movement += transform.parent.up * Physics.gravity.y * Time.deltaTime;
                 }
                 // If the raycast hits and is less than .4m move it up
-                else if (hit.transform.gameObject.tag == "Geyser")
-                {
-                    movement += transform.parent.up * 0.01f;
-                
-                
-                }
+                //else if (hit.transform.gameObject.tag == "Geyser")
+                //{
+                //    movement += transform.parent.up * 0.01f;
+                //
+                //
+                //}
                 // If the raycast hits and is greater than .5m move it down
-                else if (hit.distance > 0.001f && !hit.collider.isTrigger)
+                else if (hit.distance > 0.01f && !hit.collider.isTrigger)
                 {
                     movement -= transform.parent.up * 0.01f;
 
@@ -143,6 +151,18 @@ public class Sheep : MonoBehaviour
 
 
                 controller.Move(movement);
+
+                Vector3 rotation;
+                rotation.x = MaskVector(movement, transform.parent.right);
+                rotation.y = 0;
+                rotation.z = MaskVector(movement, transform.parent.forward);
+
+                if (rotation != Vector3.zero)
+                {
+                    Quaternion lookRotaion = Quaternion.LookRotation(rotation, transform.parent.up);
+                    
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotaion, rotationSpeed * Time.deltaTime);
+                }
             }
             else
             {
@@ -190,6 +210,7 @@ public class Sheep : MonoBehaviour
                             {
                                 shepherd.berries[i].GetComponent<Shrubs>().GrantPowerUp(gameObject);
                                 berryIndex = i;
+                                GetComponent<MeshFilter>().mesh = meshes[0];
                                 poweredUp = false;
 
                             }
@@ -260,7 +281,6 @@ public class Sheep : MonoBehaviour
 
 
             controller.Move(movement);
-
         }
         else
         {
@@ -392,6 +412,7 @@ public class Sheep : MonoBehaviour
                 // Update block for the on the slab sheep
                 transform.GetComponentInChildren<Block>().BlockUpdate();
                 gameObject.layer = 0;
+                GetComponent<MeshFilter>().mesh = meshes[1];
             }
             else
             {
@@ -418,6 +439,7 @@ public class Sheep : MonoBehaviour
                 }              
                 // Release movement
                 canMove = true;
+                GetComponent<MeshFilter>().mesh = meshes[0];
                 // Shrink sheep
             }
         }
@@ -451,6 +473,9 @@ public class Sheep : MonoBehaviour
         startingPos.x = MaskVector(transform.position, transform.parent.right);
         startingPos.y = MaskVector(transform.position, transform.parent.up);
         startingPos.z = MaskVector(transform.position, transform.parent.forward);
+        Debug.Log("StartPos: " + startingPos.y);
+        Debug.Log("Position: " + transform.position.y);
+        Debug.Log("Up: " +transform.parent.up);
         
         // Lock to z-axis
         Vector3 stP = new Vector3(0, startingPos.y, startingPos.z);
@@ -460,7 +485,7 @@ public class Sheep : MonoBehaviour
         arrivingPos.x = MaskVector(jumpLanding, transform.parent.right);
         arrivingPos.y = MaskVector(jumpLanding, transform.parent.up);
         arrivingPos.z = MaskVector(jumpLanding, transform.parent.forward);
-
+        Debug.Log("ArrivePos: " + arrivingPos.y);
         // Lock to z-axis
         Vector3 arP = new Vector3(0, arrivingPos.y, arrivingPos.z);
 
@@ -510,5 +535,16 @@ public class Sheep : MonoBehaviour
         temp.y = data.y * mask.y;
         temp.z = data.z * mask.z;
         return temp.x + temp.y + temp.z;
+    }
+    void OnDrawGizmos()
+    {
+        if (jumpFrames[0] != null)
+        {
+            Gizmos.color = Color.yellow;
+            foreach (Vector3 point in jumpFrames)
+            {
+                Gizmos.DrawSphere(point, .1f);
+            }
+        }
     }
 }
