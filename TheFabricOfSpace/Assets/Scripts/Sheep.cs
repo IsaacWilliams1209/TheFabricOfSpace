@@ -72,10 +72,16 @@ public class Sheep : MonoBehaviour
     // The character controller
     CharacterController controller;
 
+    Mesh defaultMesh;
+
+    [SerializeField]
+    List<Mesh> meshes = new List<Mesh>();
+
     // Start is called before the first frame update
     void Start()
     {
         // Initalising variables
+        defaultMesh = GetComponent<MeshFilter>().mesh;
         shepherd = transform.parent.GetComponent<Shepherd>();
         sheep = shepherd.sheep;
         awakeSheep = shepherd.awakeSheep;
@@ -204,6 +210,7 @@ public class Sheep : MonoBehaviour
                             {
                                 shepherd.berries[i].GetComponent<Shrubs>().GrantPowerUp(gameObject);
                                 berryIndex = i;
+                                GetComponent<MeshFilter>().mesh = meshes[0];
                                 poweredUp = false;
 
                             }
@@ -405,6 +412,7 @@ public class Sheep : MonoBehaviour
                 // Update block for the on the slab sheep
                 transform.GetComponentInChildren<Block>().BlockUpdate();
                 gameObject.layer = 0;
+                GetComponent<MeshFilter>().mesh = meshes[1];
             }
             else
             {
@@ -431,6 +439,7 @@ public class Sheep : MonoBehaviour
                 }              
                 // Release movement
                 canMove = true;
+                GetComponent<MeshFilter>().mesh = meshes[0];
                 // Shrink sheep
             }
         }
@@ -464,7 +473,7 @@ public class Sheep : MonoBehaviour
         startingPos.x = MaskVector(transform.position, transform.parent.right);
         startingPos.y = MaskVector(transform.position, transform.parent.up);
         startingPos.z = MaskVector(transform.position, transform.parent.forward);
-        Debug.Log("Startpos: " + startingPos.y);
+        Debug.Log("StartPos: " + startingPos.y);
         Debug.Log("Position: " + transform.position.y);
         Debug.Log("Up: " +transform.parent.up);
         
@@ -476,7 +485,7 @@ public class Sheep : MonoBehaviour
         arrivingPos.x = MaskVector(jumpLanding, transform.parent.right);
         arrivingPos.y = MaskVector(jumpLanding, transform.parent.up);
         arrivingPos.z = MaskVector(jumpLanding, transform.parent.forward);
-
+        Debug.Log("ArrivePos: " + arrivingPos.y);
         // Lock to z-axis
         Vector3 arP = new Vector3(0, arrivingPos.y, arrivingPos.z);
 
