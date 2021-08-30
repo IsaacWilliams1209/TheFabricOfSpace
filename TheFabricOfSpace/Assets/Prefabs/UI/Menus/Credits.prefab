@@ -80,14 +80,14 @@ GameObject:
   - component: {fileID: 5096575025158047821}
   - component: {fileID: 5096575025158047820}
   - component: {fileID: 5096575025158047811}
-  - component: {fileID: 1139134444858953846}
+  - component: {fileID: 356990931148833307}
   m_Layer: 5
   m_Name: Credits
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5096575025158047816
 RectTransform:
   m_ObjectHideFlags: 0
@@ -210,7 +210,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1139134444858953846
+--- !u!114 &356990931148833307
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -219,17 +219,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5096575025158047810}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 183dedec8dfc94a4f9f17d3bec6a04c1, type: 3}
+  m_Script: {fileID: 11500000, guid: 979afddd4f10bad448addd225bb00fe1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuUiElements:
-  - {fileID: 917790413782884772}
-  uiEffectSpeed: 1
-  uiScaleSize: {x: 0.9, y: 0.9, z: 0.9}
-  mainMenu: {fileID: 0}
-  levelSelection: {fileID: 0}
-  settingsMenu: {fileID: 0}
-  creditsMenu: {fileID: 0}
+  menuType: 3
 --- !u!1 &5096575025296155302
 GameObject:
   m_ObjectHideFlags: 0
@@ -788,11 +781,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9161226024128118024, guid: 723a44183f55cdb47a986e0a3494d680, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 9161226024128118024, guid: 723a44183f55cdb47a986e0a3494d680, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -463
+      value: -436
       objectReference: {fileID: 0}
     - target: {fileID: 9161226024128118024, guid: 723a44183f55cdb47a986e0a3494d680, type: 3}
       propertyPath: m_SizeDelta.x
@@ -826,13 +819,20 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 9161226024128118024, guid: 723a44183f55cdb47a986e0a3494d680, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.86983263
+      objectReference: {fileID: 0}
+    - target: {fileID: 9161226024128118024, guid: 723a44183f55cdb47a986e0a3494d680, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.86983263
+      objectReference: {fileID: 0}
+    - target: {fileID: 9161226024128118024, guid: 723a44183f55cdb47a986e0a3494d680, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.86983263
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 723a44183f55cdb47a986e0a3494d680, type: 3}
---- !u!1 &917790413782884772 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3685382126395561902, guid: 723a44183f55cdb47a986e0a3494d680, type: 3}
-  m_PrefabInstance: {fileID: 4582903004623549962}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &4664190479738358530 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 9161226024128118024, guid: 723a44183f55cdb47a986e0a3494d680, type: 3}
