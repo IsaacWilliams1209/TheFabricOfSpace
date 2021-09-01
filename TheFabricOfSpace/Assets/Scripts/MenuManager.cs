@@ -7,7 +7,7 @@ public enum MenuType
 {
     MainMenu,
     LevelSelection,
-    Settings,
+    SettingsMenu,
     Credits,
     PauseMenu
 }
@@ -25,7 +25,7 @@ public class MenuManager : Singleton<MenuManager>
         SwitchMenu(MenuType.MainMenu);
     }
 
-    private void SwitchMenu(MenuType type)
+    public void SwitchMenu(MenuType type)
     {
         if (lastActiveMenu != null)
         {
@@ -33,30 +33,14 @@ public class MenuManager : Singleton<MenuManager>
         }
 
         MenuController desiredMenu = menus.Find(x => x.menuType == type);
+        Debug.Log(desiredMenu.name);
+
         if (desiredMenu != null)
         {
             desiredMenu.gameObject.SetActive(true);
+            lastActiveMenu = desiredMenu;
         }
         else { Debug.LogWarning("The desired canvas was not found!"); }
     }
-    
-    private void GoToMainMenu()
-    {
 
-    }
-
-    private void GoToSettings()
-    {
-
-    }
-
-    private void GoToCredits()
-    {
-
-    }
-
-    private void GoToLevelSelection()
-    {
-
-    }
 }

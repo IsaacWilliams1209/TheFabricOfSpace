@@ -24,7 +24,7 @@ public abstract class Singleton<T> : MonoBehaviour where T: Component
     /// <returns> Returns the type of instance to the user when called. For example T as a GameObject.</returns>
     public static T GetInstance()
     {
-        if (applicationIsQuitting == true) { return null; }
+        if (applicationIsQuitting) { return null; }
 
         if (instance == null)
         {

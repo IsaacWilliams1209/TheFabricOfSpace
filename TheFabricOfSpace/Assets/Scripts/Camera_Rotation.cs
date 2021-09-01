@@ -4,7 +4,6 @@ using UnityEngine;
 
 class FaceInformation
 {
-    //public Vector4 directionData;
     public int upDir;
     public int leftDir;
     public int downDir;
@@ -15,7 +14,6 @@ class FaceInformation
 public class Camera_Rotation : MonoBehaviour
 {   
     List<FaceInformation> planetFaces = new List<FaceInformation>(6);
-    //List<FaceInformation> camInfo = new List<FaceInformation>(6);
 
     /// <summary>Allows for the designer to play around with how fair they want the camera from the planet and the code will adapt to the given value </summary>
     [SerializeField]
@@ -57,7 +55,6 @@ public class Camera_Rotation : MonoBehaviour
         {
             isCubeRotating = true;
             targetFace = planetFaces[currFace].upDir;
-            //camPos = camInfo[targetFace].camPosition;
             camRot = planetFaces[targetFace].camOrientation;
             currFace = targetFace;
         }
@@ -65,7 +62,6 @@ public class Camera_Rotation : MonoBehaviour
         {
             isCubeRotating = true;
             targetFace = planetFaces[currFace].leftDir;
-            //camPos = camInfo[targetFace].camPosition;
             camRot = planetFaces[targetFace].camOrientation;
             currFace = targetFace;
         }
@@ -73,7 +69,6 @@ public class Camera_Rotation : MonoBehaviour
         {
             isCubeRotating = true;
             targetFace = planetFaces[currFace].downDir;
-            //camPos = camInfo[targetFace].camPosition;
             camRot = planetFaces[targetFace].camOrientation;
             currFace = targetFace;
         }
@@ -81,7 +76,6 @@ public class Camera_Rotation : MonoBehaviour
         {
             isCubeRotating = true;
             targetFace = planetFaces[currFace].rightDir;
-            //camPos = camInfo[targetFace].camPosition;
             camRot = planetFaces[targetFace].camOrientation;
             currFace = targetFace;
         }
