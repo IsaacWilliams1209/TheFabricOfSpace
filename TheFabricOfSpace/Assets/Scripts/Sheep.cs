@@ -337,7 +337,7 @@ public class Sheep : MonoBehaviour
         if (other.gameObject.tag == "Finish")
         {
             Transition transition = other.GetComponent<Transition>();
-            Shepherd tempShepherd = GameObject.Find("Planet Face 6").GetComponent<Shepherd>();
+            Shepherd tempShepherd = GameObject.Find("Planet Face 6/Shepherd").GetComponent<Shepherd>();
             transition.Activate();
             // you win! activate world rotation
             tempShepherd.awakeSheep[0].GetComponent<Sheep>().active = true;
