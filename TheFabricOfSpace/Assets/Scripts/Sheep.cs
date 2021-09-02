@@ -125,7 +125,6 @@ public class Sheep : MonoBehaviour
                 movement += transform.parent.forward * Input.GetAxis("Vertical") * speed * Time.deltaTime;
 
 
-
                 // Move the player left/right
 
                 movement += transform.parent.right * Input.GetAxis("Horizontal") * speed * Time.deltaTime;
@@ -380,17 +379,18 @@ public class Sheep : MonoBehaviour
         if (other.gameObject.tag == "Finish")
         {
             Transition transition = other.GetComponent<Transition>();
-            Shepherd tempShepherd = GameObject.Find("Planet Face 6").transform.GetChild(3).GetComponent<Shepherd>();
+            //Shepherd tempShepherd = GameObject.Find("Planet Face 6").transform.GetChild(3).GetComponent<Shepherd>();
             transition.Activate();
+            return;
             // you win! activate world rotation
-            tempShepherd.awakeSheep[0].GetComponent<Sheep>().active = true;
-            tempShepherd.awakeSheep[0].GetComponent<Renderer>().material = sheepMaterials[0];
-            tempShepherd.activeSheep = tempShepherd.awakeSheep[0];
-            awakeSheep.Insert(0, gameObject);
-            matChanger.material = sheepMaterials[1];
-            active = false;
-            tempShepherd.enabled = true;
-            shepherd.enabled = false;
+            //tempShepherd.awakeSheep[0].GetComponent<Sheep>().active = true;
+            //tempShepherd.awakeSheep[0].GetComponent<Renderer>().material = sheepMaterials[0];
+            //tempShepherd.activeSheep = tempShepherd.awakeSheep[0];
+            //awakeSheep.Insert(0, gameObject);
+            //matChanger.material = sheepMaterials[1];
+            //active = false;
+            //tempShepherd.enabled = true;
+            //shepherd.enabled = false;
         }
         if (other.gameObject.tag == "Jump")
         {

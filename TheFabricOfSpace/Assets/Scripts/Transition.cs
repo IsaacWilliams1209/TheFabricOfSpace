@@ -20,9 +20,11 @@ public class Transition : MonoBehaviour
 
     public void Activate()
     {
-        cameraRotation.up = up;
-        cameraRotation.left = left;
-        cameraRotation.down = down;
-        cameraRotation.right = right;
+        //cameraRotation.up = up;
+        //cameraRotation.left = left;
+        //cameraRotation.down = down;
+        //cameraRotation.right = right;
+        Player player = GameObject.Find("Game Object").GetComponent<Player>();
+        player.playerWon = true;
     }
 }

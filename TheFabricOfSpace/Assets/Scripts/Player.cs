@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     MenuManager menuManager;
-    bool playerWon = false;
+    public bool playerWon = false;
 
     private void Start()
     {

@@ -140,6 +140,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraRotation: {fileID: 0}
+  up: 0
+  left: 0
+  down: 1
+  right: 0
   nextFace: Planet Face 6
 --- !u!65 &7171706630597805782
 BoxCollider:
@@ -9719,6 +9723,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3992646476725238539}
     m_Modifications:
+    - target: {fileID: 3775415181029175268, guid: 9cf63a690f0b96d4aa37dd9bd1ff5451, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5233081855458523258, guid: 9cf63a690f0b96d4aa37dd9bd1ff5451, type: 3}
       propertyPath: m_Name
       value: Sheep
@@ -9737,15 +9745,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5233081855458523260, guid: 9cf63a690f0b96d4aa37dd9bd1ff5451, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.711
+      value: 2.838
       objectReference: {fileID: 0}
     - target: {fileID: 5233081855458523260, guid: 9cf63a690f0b96d4aa37dd9bd1ff5451, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.58
+      value: 0.597
       objectReference: {fileID: 0}
     - target: {fileID: 5233081855458523260, guid: 9cf63a690f0b96d4aa37dd9bd1ff5451, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -8.015
+      value: -3.802
       objectReference: {fileID: 0}
     - target: {fileID: 5233081855458523260, guid: 9cf63a690f0b96d4aa37dd9bd1ff5451, type: 3}
       propertyPath: m_LocalRotation.x
