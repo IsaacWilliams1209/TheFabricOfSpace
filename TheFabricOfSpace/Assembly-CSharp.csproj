@@ -60,12 +60,13 @@
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\GeneralBasics2d.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\TestingUnitTests.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\PathBezier2d.cs" />
+    <Compile Include="Assets\Scripts\Singleton.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\PathSpline2d.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\GeneralCameraShake.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\GeneralSimpleUI.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\PathSpline.cs" />
-    <Compile Include="Assets\Scripts\Menu_Manager.cs" />
+    <Compile Include="Assets\Scripts\MenuManager.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\GeneralEasingTypes.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\Following.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\PathSplineEndless.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Assets\Scripts\PointerData.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\PathSplineTrack.cs" />
+    <Compile Include="Assets\Scripts\Transition.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\TestingZLegacy.cs" />
     <Compile Include="Assets\Scripts\Shepherd.cs" />
@@ -122,6 +124,7 @@
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
     <Compile Include="Assets\Scripts\Planet_Generation.cs" />
     <Compile Include="Assets\Scripts\Camera_Rotation.cs" />
+    <Compile Include="Assets\Scripts\MenuController.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Framework\LeanTweenExt.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Framework\LTDescrOptional.cs" />
@@ -130,10 +133,12 @@
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\PathSplines.cs" />
+    <Compile Include="Assets\Scripts\ButtonContoller.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\GeneralUISpace.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\GeneralEventsListeners.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Framework\LTDescr.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Archived\OldGUIExamplesCS.cs" />
+    <Compile Include="Assets\Scripts\Player.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\UnityPackages\TextMesh Pro\Shaders\TMPro.cginc" />

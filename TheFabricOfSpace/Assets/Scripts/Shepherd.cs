@@ -37,7 +37,8 @@ public class Shepherd : MonoBehaviour
         {
             berries[i].GetComponent<Shrubs>().index = i;
         }
-        mainCamera = transform.parent.parent.GetChild(0).GetChild(0).GetComponent<Camera>();
+        //mainCamera = transform.parent.parent.GetChild(0).GetChild(0).GetComponent<Camera>();
+        mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
     }
 
     // Swaps camera between main camera to camera attached to the currently active sheep
