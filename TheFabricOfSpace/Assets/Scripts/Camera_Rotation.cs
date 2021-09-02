@@ -45,9 +45,9 @@ public class Camera_Rotation : MonoBehaviour
     private void Awake()
     {
         camStartPos.Set(gameObject.transform.parent.position.x, gameObject.transform.parent.position.y + distFromPlanet, gameObject.transform.parent.position.z);
-        camStartRot.Set(0, -cameraRotation, 0);
+        //camStartRot.Set(0, -cameraRotation, 0);
         transform.position = camStartPos;
-        transform.parent.rotation = Quaternion.Euler(camStartRot);
+        //transform.parent.rotation = Quaternion.Euler(camStartRot);
         currFace = 0;
         FaceSetUp();
     }

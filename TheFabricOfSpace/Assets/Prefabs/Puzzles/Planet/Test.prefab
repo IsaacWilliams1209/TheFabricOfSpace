@@ -224,8 +224,7 @@ MonoBehaviour:
   - {fileID: 5429916428300816120}
   - {fileID: 9092122545696690604}
   - {fileID: 4643334627130041561}
-  awakeSheep:
-  - {fileID: 5429916428300816120}
+  awakeSheep: []
   berries:
   - {fileID: 367783569953651388}
   - {fileID: 8440343303884015772}
@@ -247,7 +246,7 @@ GameObject:
   - component: {fileID: 1704180829823059854}
   - component: {fileID: 3360207609589307605}
   m_Layer: 0
-  m_Name: Planet_1_Lvl_2 1
+  m_Name: Test
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
