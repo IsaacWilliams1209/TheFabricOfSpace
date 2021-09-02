@@ -152,10 +152,7 @@ public class Sheep : MonoBehaviour
 
                 controller.Move(movement);
 
-                Vector3 rotation;
-                rotation.x = MaskVector(movement, transform.parent.right);
-                rotation.y = 0;
-                rotation.z = MaskVector(movement, transform.parent.forward);
+                Vector3 rotation = MaskVector(movement, (transform.parent.forward + transform.parent.right));
 
                 if (rotation != Vector3.zero)
                 {
@@ -337,7 +334,7 @@ public class Sheep : MonoBehaviour
         if (other.gameObject.tag == "Finish")
         {
             Transition transition = other.GetComponent<Transition>();
-            Shepherd tempShepherd = GameObject.Find("Planet Face 6").GetComponent<Shepherd>();
+            Shepherd tempShepherd = GameObject.Find("Planet Face 6").transform.GetChild(3).GetComponent<Shepherd>();
             transition.Activate();
             // you win! activate world rotation
             tempShepherd.awakeSheep[0].GetComponent<Sheep>().active = true;
@@ -480,9 +477,9 @@ public class Sheep : MonoBehaviour
 
         // Convert position from forward, up and right, to x,y,z
         Vector3 startingPos;
-        startingPos.x = MaskVector(transform.position, transform.parent.right);
-        startingPos.y = MaskVector(transform.position, transform.parent.up);
-        startingPos.z = MaskVector(transform.position, transform.parent.forward);
+        startingPos.x = MaskVectorAsFloat(transform.position, transform.parent.right);
+        startingPos.y = MaskVectorAsFloat(transform.position, transform.parent.up);
+        startingPos.z = MaskVectorAsFloat(transform.position, transform.parent.forward);
         Debug.Log("StartPos: " + startingPos.y);
         Debug.Log("Position: " + transform.position.y);
         Debug.Log("Up: " +transform.parent.up);
@@ -492,9 +489,9 @@ public class Sheep : MonoBehaviour
 
         // Convert position from forward, up and right, to x,y,z
         Vector3 arrivingPos;
-        arrivingPos.x = MaskVector(jumpLanding, transform.parent.right);
-        arrivingPos.y = MaskVector(jumpLanding, transform.parent.up);
-        arrivingPos.z = MaskVector(jumpLanding, transform.parent.forward);
+        arrivingPos.x = MaskVectorAsFloat(jumpLanding, transform.parent.right);
+        arrivingPos.y = MaskVectorAsFloat(jumpLanding, transform.parent.up);
+        arrivingPos.z = MaskVectorAsFloat(jumpLanding, transform.parent.forward);
         Debug.Log("ArrivePos: " + arrivingPos.y);
         // Lock to z-axis
         Vector3 arP = new Vector3(0, arrivingPos.y, arrivingPos.z);
@@ -538,13 +535,21 @@ public class Sheep : MonoBehaviour
     // Masks a vector so only the desired elements are carried on,
     // for example data may be (2.4, 4, 1) and mask may be (0,1,0)
     // the resulting vector would be (0,4,0)
-    float MaskVector(Vector3 data, Vector3 mask)
+    float MaskVectorAsFloat(Vector3 data, Vector3 mask)
     {
         Vector3 temp;
         temp.x = data.x * mask.x;
         temp.y = data.y * mask.y;
         temp.z = data.z * mask.z;
         return temp.x + temp.y + temp.z;
+    }
+
+    Vector3 MaskVector(Vector3 data, Vector3 mask)
+    {
+        data.x *= mask.x;
+        data.y *= mask.y;
+        data.z *= mask.z;
+        return data;
     }
     void OnDrawGizmos()
     {

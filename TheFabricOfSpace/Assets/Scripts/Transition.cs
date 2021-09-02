@@ -7,7 +7,7 @@ public class Transition : MonoBehaviour
 
     public Camera_Rotation cameraRotation;
 
-
+    public bool up, left, down, right;
 
     public string nextFace;
     
@@ -20,6 +20,9 @@ public class Transition : MonoBehaviour
 
     public void Activate()
     {
-        cameraRotation.down = true;
+        cameraRotation.up = up;
+        cameraRotation.left = left;
+        cameraRotation.down = down;
+        cameraRotation.right = right;
     }
 }

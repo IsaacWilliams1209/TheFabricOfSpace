@@ -348,6 +348,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   distFromPlanet: 25
   rotSpeed: 100
+  up: 0
+  down: 0
+  left: 0
+  right: 0
 --- !u!114 &689017822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -413,9 +417,9 @@ MonoBehaviour:
   face03: {fileID: 5788419477982923517, guid: 23d40b64b4e74c8428f4b919c71963ec, type: 3}
   face04: {fileID: 5788419477982923517, guid: 23d40b64b4e74c8428f4b919c71963ec, type: 3}
   face05: {fileID: 5788419477982923517, guid: 23d40b64b4e74c8428f4b919c71963ec, type: 3}
-  face06: {fileID: 4476006358367083433, guid: 5b0d0c2aacd6f0b479163dc54ceee6a5, type: 3}
+  face06: {fileID: 5008113620486622432, guid: c6e7403c6ff5c03448b68299e315b3e8, type: 3}
   spawnOrigin: {x: 0, y: 0, z: 0}
-  gridSize: 9
+  gridSize: 11
 --- !u!4 &749539751
 Transform:
   m_ObjectHideFlags: 0
@@ -787,6 +791,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Planet_1_Lvl_2
       objectReference: {fileID: 0}
+    - target: {fileID: 4476006358367083433, guid: 5b0d0c2aacd6f0b479163dc54ceee6a5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b0d0c2aacd6f0b479163dc54ceee6a5, type: 3}
 --- !u!1 &1020387360 stripped
@@ -1007,14 +1015,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1553548623}
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 689017820}
   m_Father: {fileID: 749539751}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1789326091
 GameObject:
   m_ObjectHideFlags: 0
