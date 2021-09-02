@@ -336,7 +336,9 @@ public class Sheep : MonoBehaviour
     {
         if (other.gameObject.tag == "Finish")
         {
-            Shepherd tempShepherd = GameObject.Find("Test").GetComponent<Shepherd>();
+            Transition transition = other.GetComponent<Transition>();
+            Shepherd tempShepherd = GameObject.Find(transition.nextFace).GetComponent<Shepherd>();
+            transition.Activate();
             // you win! activate world rotation
             tempShepherd.awakeSheep[0].GetComponent<Sheep>().active = true;
             tempShepherd.awakeSheep[0].GetComponent<Renderer>().material = sheepMaterials[0];
@@ -344,6 +346,8 @@ public class Sheep : MonoBehaviour
             awakeSheep.Insert(0, gameObject);
             matChanger.material = sheepMaterials[1];
             active = false;
+            tempShepherd.enabled = true;
+            shepherd.enabled = false;
         }
         if (other.gameObject.tag == "Jump")
         {
