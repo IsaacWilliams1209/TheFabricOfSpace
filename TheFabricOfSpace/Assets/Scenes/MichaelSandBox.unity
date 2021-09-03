@@ -588,7 +588,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4def08d3fb1d2e4a8b5092fa5c7d89f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distFromPlanet: 25
+  distFromPlanet: 18
   rotSpeed: 100
   up: 0
   down: 0
@@ -991,6 +991,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6aa7cd78b645329458e5f21b74f94f03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerWon: 0
 --- !u!4 &1000685468
 Transform:
   m_ObjectHideFlags: 0
