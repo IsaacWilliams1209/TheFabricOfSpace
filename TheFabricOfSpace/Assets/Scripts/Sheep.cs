@@ -7,6 +7,8 @@ public class Sheep : MonoBehaviour
     // Speed of the sheep
     public float speed;
 
+    public float rotationSpeed;
+
     // Keeps the awake, asleep and active materials for the sheep
     public Material[] sheepMaterials = new Material[3];
 
@@ -70,10 +72,16 @@ public class Sheep : MonoBehaviour
     // The character controller
     CharacterController controller;
 
+    Mesh defaultMesh;
+
+    [SerializeField]
+    List<Mesh> meshes = new List<Mesh>();
+
     // Start is called before the first frame update
     void Start()
     {
         // Initalising variables
+        defaultMesh = GetComponent<MeshFilter>().mesh;
         shepherd = transform.parent.GetComponent<Shepherd>();
         sheep = shepherd.sheep;
         awakeSheep = shepherd.awakeSheep;
@@ -107,42 +115,96 @@ public class Sheep : MonoBehaviour
         if (active)
         {
             if (canMove)
+
             {
+
                 Vector3 movement = Vector3.zero;
+
                 // Move the player forward/backward
+
                 movement += transform.parent.forward * Input.GetAxis("Vertical") * speed * Time.deltaTime;
 
+
                 // Move the player left/right
+
                 movement += transform.parent.right * Input.GetAxis("Horizontal") * speed * Time.deltaTime;
+
                                 
+
                 RaycastHit hit;
+
                 
+
                 // Raycast down, on miss move the sheep down
+
                 if (!Physics.Raycast(transform.position, -transform.parent.up, out hit, 1.0f))
+
                 {
+
                     movement += transform.parent.up * Physics.gravity.y * Time.deltaTime;
-                }
-                // If the raycast hits and is less than .4m move it up
-                else if (hit.transform.gameObject.tag == "Geyser")
-                {
-                    movement += transform.parent.up * 0.01f;
-                
-                
-                }
-                // If the raycast hits and is greater than .5m move it down
-                else if (hit.distance > 0.001f && !hit.collider.isTrigger)
-                {
-                    movement -= transform.parent.up * 0.01f;
 
                 }
-                // If the raycast hits a voxel sheep set it's powered up state to true, this prevents the sheep being moved while another sheep in ontop of them
-                else if (hit.transform.tag == "Sheep" && hit.transform.GetComponent<Sheep>().voxel)
+
+                // If the raycast hits and is less than .4m move it up
+
+                //else if (hit.transform.gameObject.tag == "Geyser")
+
+                //{
+
+                //    movement += transform.parent.up * 0.01f;
+
+                //
+
+                //
+
+                //}
+
+                // If the raycast hits and is greater than .5m move it down
+
+                else if (hit.distance > 0.01f && !hit.collider.isTrigger)
+
                 {
-                    hit.transform.GetComponent<Sheep>().poweredUp = true;
+
+                    movement -= transform.parent.up * 0.01f;
+
+
+
                 }
+
+                // If the raycast hits a voxel sheep set it's powered up state to true, this prevents the sheep being moved while another sheep in ontop of them
+
+                else if (hit.transform.tag == "Sheep" && hit.transform.GetComponent<Sheep>().voxel)
+
+                {
+
+                    hit.transform.GetComponent<Sheep>().poweredUp = true;
+
+                }
+
+
+
 
 
                 controller.Move(movement);
+
+
+
+                Vector3 rotation = MaskVector(movement, (transform.parent.forward + transform.parent.right));
+
+
+
+                if (rotation != Vector3.zero)
+
+                {
+
+                    Quaternion lookRotaion = Quaternion.LookRotation(rotation, transform.parent.up);
+
+                    
+
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotaion, rotationSpeed * Time.deltaTime);
+
+                }
+
             }
             else
             {
@@ -190,6 +252,7 @@ public class Sheep : MonoBehaviour
                             {
                                 shepherd.berries[i].GetComponent<Shrubs>().GrantPowerUp(gameObject);
                                 berryIndex = i;
+                                GetComponent<MeshFilter>().mesh = meshes[0];
                                 poweredUp = false;
 
                             }
@@ -260,7 +323,6 @@ public class Sheep : MonoBehaviour
 
 
             controller.Move(movement);
-
         }
         else
         {
@@ -316,8 +378,19 @@ public class Sheep : MonoBehaviour
     {
         if (other.gameObject.tag == "Finish")
         {
+            Transition transition = other.GetComponent<Transition>();
+            //Shepherd tempShepherd = GameObject.Find("Planet Face 6").transform.GetChild(3).GetComponent<Shepherd>();
+            transition.Activate();
+            return;
             // you win! activate world rotation
-            Debug.Log("Good Job!");
+            //tempShepherd.awakeSheep[0].GetComponent<Sheep>().active = true;
+            //tempShepherd.awakeSheep[0].GetComponent<Renderer>().material = sheepMaterials[0];
+            //tempShepherd.activeSheep = tempShepherd.awakeSheep[0];
+            //awakeSheep.Insert(0, gameObject);
+            //matChanger.material = sheepMaterials[1];
+            //active = false;
+            //tempShepherd.enabled = true;
+            //shepherd.enabled = false;
         }
         if (other.gameObject.tag == "Jump")
         {
@@ -392,6 +465,7 @@ public class Sheep : MonoBehaviour
                 // Update block for the on the slab sheep
                 transform.GetComponentInChildren<Block>().BlockUpdate();
                 gameObject.layer = 0;
+                GetComponent<MeshFilter>().mesh = meshes[1];
             }
             else
             {
@@ -418,6 +492,7 @@ public class Sheep : MonoBehaviour
                 }              
                 // Release movement
                 canMove = true;
+                GetComponent<MeshFilter>().mesh = meshes[0];
                 // Shrink sheep
             }
         }
@@ -432,83 +507,191 @@ public class Sheep : MonoBehaviour
 
     // Calculates the frames the jump
     private void DoDaJump()
+
     {
+
         // Disable movement and jump ability
+
         canMove = false;
+
         canJump = false;
 
+
+
         // Activate jumping bool
+
         isJumping = true;
 
+
+
         /////////////////////////////////   REPLACE WITH ACTUAL FRAME COUNT ///////////////////////////
+
         int numFrames = 30;
+
+
+
 
 
         jumpFrames = new Vector3[numFrames];
 
+
+
         // Convert position from forward, up and right, to x,y,z
+
         Vector3 startingPos;
-        startingPos.x = MaskVector(transform.position, transform.parent.right);
-        startingPos.y = MaskVector(transform.position, transform.parent.up);
-        startingPos.z = MaskVector(transform.position, transform.parent.forward);
+
+        startingPos.x = MaskVectorAsFloat(transform.position, transform.parent.right);
+
+        startingPos.y = MaskVectorAsFloat(transform.position, transform.parent.up);
+
+        startingPos.z = MaskVectorAsFloat(transform.position, transform.parent.forward);
+
+        Debug.Log("StartPos: " + startingPos.y);
+
+        Debug.Log("Position: " + transform.position.y);
+
+        Debug.Log("Up: " +transform.parent.up);
+
         
+
         // Lock to z-axis
+
         Vector3 stP = new Vector3(0, startingPos.y, startingPos.z);
 
+
+
         // Convert position from forward, up and right, to x,y,z
+
         Vector3 arrivingPos;
-        arrivingPos.x = MaskVector(jumpLanding, transform.parent.right);
-        arrivingPos.y = MaskVector(jumpLanding, transform.parent.up);
-        arrivingPos.z = MaskVector(jumpLanding, transform.parent.forward);
+
+        arrivingPos.x = MaskVectorAsFloat(jumpLanding, transform.parent.right);
+
+        arrivingPos.y = MaskVectorAsFloat(jumpLanding, transform.parent.up);
+
+        arrivingPos.z = MaskVectorAsFloat(jumpLanding, transform.parent.forward);
+
+        Debug.Log("ArrivePos: " + arrivingPos.y);
 
         // Lock to z-axis
+
         Vector3 arP = new Vector3(0, arrivingPos.y, arrivingPos.z);
+
+
+
 
 
         ////////////////////// THIS IS NOT MY CODE, ORIGIONAL CODE FOUND AT https://gamedev.stackexchange.com/questions/133794/parabolic-movement-of-a-gameobject-in-unity ////////////////
 
+
+
         Vector3 diff = ((arP - stP) / 2) + new Vector3(0,1,0);
+
         Vector3 vertex = stP + diff;
 
+
+
         float x1 = startingPos.z;
+
         float y1 = startingPos.y;
+
         float x2 = arrivingPos.z;
+
         float y2 = arrivingPos.y;
+
         float x3 = vertex.z;
+
         float y3 = vertex.y;
+
+
 
         float denom = (x1 - x2) * (x1 - x3) * (x2 - x3);
 
+
+
         var z_dist = (arrivingPos.z - startingPos.z) / numFrames;
+
         var x_dist = (arrivingPos.x - startingPos.x) / numFrames;
 
+
+
         float A = (x3 * (y2 - y1) + x2 * (y1 - y3) + x1 * (y3 - y2)) / denom;
+
         float B = (float)(System.Math.Pow(x3, 2) * (y1 - y2) + System.Math.Pow(x2, 2) * (y3 - y1) + System.Math.Pow(x1, 2) * (y2 - y3)) / denom;
+
         float C = (x2 * x3 * (x2 - x3) * y1 + x3 * x1 * (x3 - x1) * y2 + x1 * x2 * (x1 - x2) * y3) / denom;
 
+
+
         float newX = startingPos.z;
+
         float newZ = startingPos.x;
 
+
+
         for (int i = 0; i < numFrames; i++)
+
         {
+
             newX += z_dist;
+
             newZ += x_dist;
+
             float yToBeFound = A * (newX * newX) + B * newX + C;
+
             Vector3 temp = transform.parent.right * newZ + transform.parent.up * yToBeFound + transform.parent.forward * newX;
+
            jumpFrames[i] = temp;
+
         }
+
         ////////////////////// END OF BORROWED CODE //////////////////////////
+
     }
 
     // Masks a vector so only the desired elements are carried on,
     // for example data may be (2.4, 4, 1) and mask may be (0,1,0)
     // the resulting vector would be (0,4,0)
-    float MaskVector(Vector3 data, Vector3 mask)
+    float MaskVectorAsFloat(Vector3 data, Vector3 mask)
+
     {
+
         Vector3 temp;
+
         temp.x = data.x * mask.x;
+
         temp.y = data.y * mask.y;
+
         temp.z = data.z * mask.z;
+
         return temp.x + temp.y + temp.z;
+
+    }
+
+
+
+    Vector3 MaskVector(Vector3 data, Vector3 mask)
+
+    {
+
+        data.x *= mask.x;
+
+        data.y *= mask.y;
+
+        data.z *= mask.z;
+
+        return data;
+
+    }
+
+    void OnDrawGizmos()
+    {
+        if (jumpFrames[0] != null)
+        {
+            Gizmos.color = Color.yellow;
+            foreach (Vector3 point in jumpFrames)
+            {
+                Gizmos.DrawSphere(point, .1f);
+            }
+        }
     }
 }
