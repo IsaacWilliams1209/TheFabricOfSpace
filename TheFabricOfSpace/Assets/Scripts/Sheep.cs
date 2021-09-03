@@ -70,7 +70,7 @@ public class Sheep : MonoBehaviour
     Vector3[] jumpFrames = new Vector3[1];
 
     // The character controller
-    CharacterController controller;
+    SheepController controller;
 
     Mesh defaultMesh;
 
@@ -86,7 +86,7 @@ public class Sheep : MonoBehaviour
         sheep = shepherd.sheep;
         awakeSheep = shepherd.awakeSheep;
         matChanger = GetComponent<Renderer>();
-        controller = GetComponent<CharacterController>();
+        controller = GetComponent<SheepController>();
 
         // Set apropriate materials for the sheep
         if (active)
@@ -116,53 +116,8 @@ public class Sheep : MonoBehaviour
         {
             if (canMove)
             {
-                Vector3 movement = Vector3.zero;
-                // Move the player forward/backward
-                movement += transform.parent.forward * Input.GetAxis("Vertical") * speed * Time.deltaTime;
 
-                // Move the player left/right
-                movement += transform.parent.right * Input.GetAxis("Horizontal") * speed * Time.deltaTime;
-                                
-                RaycastHit hit;
-                
-                // Raycast down, on miss move the sheep down
-                if (!Physics.Raycast(transform.position, -transform.parent.up, out hit, 1.0f))
-                {
-                    movement += transform.parent.up * Physics.gravity.y * Time.deltaTime;
-                }
-                // If the raycast hits and is less than .4m move it up
-                //else if (hit.transform.gameObject.tag == "Geyser")
-                //{
-                //    movement += transform.parent.up * 0.01f;
-                //
-                //
-                //}
-                // If the raycast hits and is greater than .5m move it down
-                else if (hit.distance > 0.01f && !hit.collider.isTrigger)
-                {
-                    movement -= transform.parent.up * 0.01f;
-
-                }
-                // If the raycast hits a voxel sheep set it's powered up state to true, this prevents the sheep being moved while another sheep in ontop of them
-                else if (hit.transform.tag == "Sheep" && hit.transform.GetComponent<Sheep>().voxel)
-                {
-                    hit.transform.GetComponent<Sheep>().poweredUp = true;
-                }
-
-
-                controller.Move(movement);
-
-                Vector3 rotation;
-                rotation.x = MaskVector(movement, transform.parent.right);
-                rotation.y = 0;
-                rotation.z = MaskVector(movement, transform.parent.forward);
-
-                if (rotation != Vector3.zero)
-                {
-                    Quaternion lookRotaion = Quaternion.LookRotation(rotation, transform.parent.up);
-                    
-                    transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotaion, rotationSpeed * Time.deltaTime);
-                }
+                controller.Move();
             }
             else
             {
@@ -278,9 +233,6 @@ public class Sheep : MonoBehaviour
             {
                 hit.transform.GetComponent<Sheep>().poweredUp = true;
             }
-
-
-            controller.Move(movement);
         }
         else
         {
@@ -303,9 +255,6 @@ public class Sheep : MonoBehaviour
             {
                 hit.transform.GetComponent<Sheep>().poweredUp = true;
             }
-
-
-            controller.Move(movement);
         }
     }
 
@@ -551,6 +500,18 @@ public class Sheep : MonoBehaviour
             {
                 Gizmos.DrawSphere(point, .1f);
             }
+            Vector3 temp = transform.position;
+            temp += MaskVector2(new Vector3(-0.05f,-0.05f,-0.05f), transform.forward);
+            Gizmos.DrawWireCube(temp, Vector3.one * 0.5f);
         }
+    }
+
+    Vector3 MaskVector2(Vector3 data, Vector3 mask)
+    {
+        Vector3 temp;
+        temp.x = data.x * mask.x;
+        temp.y = data.y * mask.y;
+        temp.z = data.z * mask.z;
+        return temp;
     }
 }
