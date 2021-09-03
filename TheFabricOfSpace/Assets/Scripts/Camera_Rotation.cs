@@ -4,7 +4,6 @@ using UnityEngine;
 
 class FaceInformation
 {
-    //public Vector4 directionData;
     public int upDir;
     public int leftDir;
     public int downDir;
@@ -15,15 +14,11 @@ class FaceInformation
 public class Camera_Rotation : MonoBehaviour
 {   
     List<FaceInformation> planetFaces = new List<FaceInformation>(6);
-    //List<FaceInformation> camInfo = new List<FaceInformation>(6);
 
     /// <summary>Allows for the designer to play around with how fair they want the camera from the planet and the code will adapt to the given value </summary>
     [SerializeField]
     private float distFromPlanet;
 
-    /// <summary>Allows for the designer to play around with what angle they want the camera and the code will adapt to the given value </summary>
-    [SerializeField]
-    private float cameraRotation;
 
     /// <summary> Will change the speed of how fast the camera interpolates between planet faces. The higher it is the faster it is</summary>
     [SerializeField]
@@ -33,69 +28,43 @@ public class Camera_Rotation : MonoBehaviour
     private bool isCubeRotating = false;
 
     ///<summary> Tells the update method to rotate/move the camera around the planet on request until interpolation is finished.</summary>
-    private int currFace;
-    private int targetFace;
+    private int currFace = 0;
+    private int targetFace = 0;
 
+    private float cameraRotation = 90.0f;
     private Vector3 camPos = new Vector3(0, 0, 0);
     private Vector3 camRot = new Vector3(0, 0, 0);
     private Vector3 camStartPos = new Vector3(0, 0, 0);
     private Vector3 camStartRot = new Vector3(0, 0, 0);
 
-    private void Start()
+    public bool up = false;
+    public bool down = false;
+    public bool left = false;
+    public bool right = false;
+
+    private void Awake()
     {
         camStartPos.Set(gameObject.transform.parent.position.x, gameObject.transform.parent.position.y + distFromPlanet, gameObject.transform.parent.position.z);
-        camStartRot.Set(0, -cameraRotation, 0);
         transform.position = camStartPos;
-        transform.parent.rotation = Quaternion.Euler(camStartRot);
-        currFace = 0;
         FaceSetUp();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.W) && !isCubeRotating)
-        {
-            isCubeRotating = true;
-            targetFace = planetFaces[currFace].upDir;
-            //camPos = camInfo[targetFace].camPosition;
-            camRot = planetFaces[targetFace].camOrientation;
-            currFace = targetFace;
-        }
-        else if (Input.GetKeyDown(KeyCode.A) && !isCubeRotating)
-        {
-            isCubeRotating = true;
-            targetFace = planetFaces[currFace].leftDir;
-            //camPos = camInfo[targetFace].camPosition;
-            camRot = planetFaces[targetFace].camOrientation;
-            currFace = targetFace;
-        }
-        else if (Input.GetKeyDown(KeyCode.S) && !isCubeRotating)
-        {
-            isCubeRotating = true;
-            targetFace = planetFaces[currFace].downDir;
-            //camPos = camInfo[targetFace].camPosition;
-            camRot = planetFaces[targetFace].camOrientation;
-            currFace = targetFace;
-        }
-        else if (Input.GetKeyDown(KeyCode.D) && !isCubeRotating)
-        {
-            isCubeRotating = true;
-            targetFace = planetFaces[currFace].rightDir;
-            //camPos = camInfo[targetFace].camPosition;
-            camRot = planetFaces[targetFace].camOrientation;
-            currFace = targetFace;
-        }
+        if (Input.GetKeyDown(KeyCode.I)) { up = true; }
+        else if (Input.GetKeyDown(KeyCode.J)) { left = true; }
+        else if (Input.GetKeyDown(KeyCode.K)) { down = true; }
+        else if (Input.GetKeyDown(KeyCode.L)) { right = true; }
 
-        if (isCubeRotating)
-        {
-            PlanetRotation(camRot, camPos);
-        }
+        CheckRotateDirection();
+
+        if (isCubeRotating) { PlanetRotation(camRot); }
     }
 
     /// <summary> Will rotate and position the camera to the correct face of the planet dependent on user request by Slerping between the 
     /// cameras current rotation/position and the target rotation/position
     /// </summary>
-    private void PlanetRotation(Vector3 camRotation, Vector3 camPosition)
+    private void PlanetRotation(Vector3 camRotation)
     {
 
         float angle = Quaternion.Angle(transform.parent.rotation, Quaternion.Euler(camRotation));
@@ -119,46 +88,89 @@ public class Camera_Rotation : MonoBehaviour
             planetFaces.Add(newFace);
         }
 
-
         /////<summary> direction key: x = up , y = left , z = down , w = right 
         /////          Make sure that when you are entering the direction face that you -1 as we are indexing into a list.</summary>
+        //Planet Face 01:
         planetFaces[0].upDir = 4;
         planetFaces[0].leftDir = 1;
         planetFaces[0].downDir = 5;
         planetFaces[0].rightDir = 3;
-        planetFaces[0].camOrientation.Set(0, -cameraRotation, 0);
+        planetFaces[0].camOrientation.Set(0, 0, 0);
 
+        //Planet Face 02:
         planetFaces[1].upDir = 0;
         planetFaces[1].leftDir = 4;
         planetFaces[1].downDir = 2;
         planetFaces[1].rightDir = 5;
-        planetFaces[1].camOrientation.Set(-cameraRotation, 0, 0);
-
+        planetFaces[1].camOrientation.Set(-cameraRotation, 0, cameraRotation);
+        
+        //Planet Face 03:
         planetFaces[2].upDir = 5;
         planetFaces[2].leftDir = 1;
         planetFaces[2].downDir = 4;
         planetFaces[2].rightDir = 3;
-        planetFaces[2].camOrientation.Set(-cameraRotation * 2, -cameraRotation, 0);
+        planetFaces[2].camOrientation.Set(-cameraRotation * 2, 0, 0);
 
+        //Planet Face 04:
         planetFaces[3].upDir = 0;
         planetFaces[3].leftDir = 5;
         planetFaces[3].downDir = 2;
         planetFaces[3].rightDir = 4;
-        planetFaces[3].camOrientation.Set(-cameraRotation, 0, cameraRotation * 2);
+        planetFaces[3].camOrientation.Set(-cameraRotation, 0, -cameraRotation);
 
+        //Planet Face 05:
         planetFaces[4].upDir = 0;
         planetFaces[4].leftDir = 3;
         planetFaces[4].downDir = 2;
         planetFaces[4].rightDir = 1;
-        planetFaces[4].camOrientation.Set(-cameraRotation, 0, cameraRotation);
+        planetFaces[4].camOrientation.Set(-cameraRotation, cameraRotation, cameraRotation);
 
+        //Planet Face 06:
         planetFaces[5].upDir = 0;
         planetFaces[5].leftDir = 1;
         planetFaces[5].downDir = 2;
         planetFaces[5].rightDir = 3;
-        planetFaces[5].camOrientation.Set(-cameraRotation, 0, 0 - cameraRotation);
+        planetFaces[5].camOrientation.Set(-cameraRotation, 0, 0);
 
     }
 
-
+    /// <summary> Currently works by having 4 public booleans each tied to a face direction the player can travel to (up,down,left,right)
+    /// that when set to true will correctly index to the face connected to that direction and than call the rotation function to rotate to that
+    /// direction.
+    /// </summary>
+    private void CheckRotateDirection()
+    {
+        if (up)
+        {
+            up = false;
+            isCubeRotating = true;
+            targetFace = planetFaces[currFace].upDir;
+            camRot = planetFaces[targetFace].camOrientation;
+            currFace = targetFace;
+        }
+        else if (down)
+        {
+            down = false;
+            isCubeRotating = true;
+            targetFace = planetFaces[currFace].downDir;
+            camRot = planetFaces[targetFace].camOrientation;
+            currFace = targetFace;
+        }
+        else if (left)
+        {
+            left = false;
+            isCubeRotating = true;
+            targetFace = planetFaces[currFace].leftDir;
+            camRot = planetFaces[targetFace].camOrientation;
+            currFace = targetFace;
+        }
+        else if (right)
+        {
+            right = false;
+            isCubeRotating = true;
+            targetFace = planetFaces[currFace].rightDir;
+            camRot = planetFaces[targetFace].camOrientation;
+            currFace = targetFace;
+        }
+    }
 }
