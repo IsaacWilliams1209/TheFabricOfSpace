@@ -10,10 +10,12 @@ public class Player : MonoBehaviour
     private void Start()
     {
         menuManager = MenuManager.GetInstance();
+        
     }
 
     private void Update()
     {
+       
         if (Input.GetKeyDown(KeyCode.P)) { playerWon = true; }
 
         if (playerWon) {
