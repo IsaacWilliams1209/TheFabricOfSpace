@@ -33,22 +33,64 @@ static float sobelYMatrix[9] = {
 //		float Thickness: A thickness value to define the sample distance of the convolution matrix.
 //		float Out: This is the final value that we will output after getting the length of the vector from the horizontal and vertical matrix results
 //		squared.
-void DepthSobel_float(float2 UV, float Thickness, out float Out) {
+void DepthSobel_float(float2 UV, float Thickness, out float depthDiff, out float3 debugValue) {
 	float2 sobel = 0;
 	float aspectRatio = _ScreenParams.x / _ScreenParams.y;
+	debugValue = float3(1, 0, 0);
+
+	//Campus soble coordinates. [NOTE] : See if this can be moved out of the function.
+	float depthNorthW = SHADERGRAPH_SAMPLE_SCENE_DEPTH(UV + float2(sobelSamplePoints[0].x / aspectRatio, sobelSamplePoints[0].y) * Thickness);
+	float depthNorth  = SHADERGRAPH_SAMPLE_SCENE_DEPTH(UV + float2(sobelSamplePoints[1].x / aspectRatio, sobelSamplePoints[1].y) * Thickness);
+	float depthNorthE = SHADERGRAPH_SAMPLE_SCENE_DEPTH(UV + float2(sobelSamplePoints[2].x / aspectRatio, sobelSamplePoints[2].y) * Thickness);
+	float depthWest   = SHADERGRAPH_SAMPLE_SCENE_DEPTH(UV + float2(sobelSamplePoints[3].x / aspectRatio, sobelSamplePoints[3].y) * Thickness);
+	float depthCenter = SHADERGRAPH_SAMPLE_SCENE_DEPTH(UV + float2(sobelSamplePoints[4].x / aspectRatio, sobelSamplePoints[4].y) * Thickness);
+	float depthEast   =	SHADERGRAPH_SAMPLE_SCENE_DEPTH(UV + float2(sobelSamplePoints[5].x / aspectRatio, sobelSamplePoints[5].y) * Thickness);
+	float depthSouthW = SHADERGRAPH_SAMPLE_SCENE_DEPTH(UV + float2(sobelSamplePoints[6].x / aspectRatio, sobelSamplePoints[6].y) * Thickness);
+	float depthSouth  =	SHADERGRAPH_SAMPLE_SCENE_DEPTH(UV + float2(sobelSamplePoints[7].x / aspectRatio, sobelSamplePoints[7].y) * Thickness);
+	float depthSouthE = SHADERGRAPH_SAMPLE_SCENE_DEPTH(UV + float2(sobelSamplePoints[8].x / aspectRatio, sobelSamplePoints[8].y) * Thickness);
+
+	sobel += depthNorthW * float2(sobelXMatrix[0], sobelYMatrix[0]);
+	sobel += depthNorth  * float2(sobelXMatrix[1], sobelYMatrix[1]);
+	sobel += depthNorthE * float2(sobelXMatrix[2], sobelYMatrix[2]);
+	sobel += depthWest   * float2(sobelXMatrix[3], sobelYMatrix[3]);
+	sobel += depthCenter * float2(sobelXMatrix[4], sobelYMatrix[4]);
+	sobel += depthEast   * float2(sobelXMatrix[5], sobelYMatrix[5]);
+	sobel += depthSouthW * float2(sobelXMatrix[6], sobelYMatrix[6]);
+	sobel += depthSouth  * float2(sobelXMatrix[7], sobelYMatrix[7]);
+	sobel += depthSouthE * float2(sobelXMatrix[8], sobelYMatrix[8]);
+
+	float horizontal = (depthNorth + depthSouth) / 2;
+	float vertical = (depthWest + depthEast) / 2;
+
+	if (abs(horizontal - depthCenter) > 0.000001) {
+		debugValue = float3(0, 0, 1);
+		depthDiff = length(sobel);
+	}
+	depthDiff = length(sobel);
+
+	////Horizontal Detection (1, 4, 7):
+	//float2 horizontalMeanVec = { (depthNorth.x + centerDepth.x + depthSouth.x) / 3 , (depthNorth.y + centerDepth.y + depthSouth.y) / 3 };
+
+	////Vertical Detection (3, 4, 5):
+	//float2 verticalMeanVec = { (depthWest.x + centerDepth.x + depthEast.x) / 3, (depthWest.y + centerDepth.y + depthEast.y) / 3 };
+
 	//We can unroll this loop to make it more efficient. The compiler is also smart enough to remove the 1=4 iteration which is always zero.
 	//The loop works as follows:
 	//	To read the depth texture shader graph defines the 'SHADERGRAPH_SAMPLE_SCENE_DEPTH' macro for us. We than compute the sample UV by adding by the
 	//	matrix offset than multiply the depth value by the horizontal and vertical matrix weights. Make sure that before you return you grab the length
 	//	of the sobel vector.
-	[unroll] for (int i = 0; i < 9; i++) {
-		float2 thisUVs = sobelSamplePoints[i];
-		thisUVs.x /= aspectRatio;
-		float depth = SHADERGRAPH_SAMPLE_SCENE_DEPTH(UV + thisUVs * Thickness);
-		sobel += depth * float2(sobelXMatrix[i], sobelYMatrix[i]);
-	}
+	//[unroll] for (int i = 0; i < 9; i++) {
+	//	if (length(verticalMeanVec) < 0.5) {
+	//		float2 thisUVs = sobelSamplePoints[i];
+	//		thisUVs.x /= aspectRatio;
+	//		float depth = SHADERGRAPH_SAMPLE_SCENE_DEPTH(UV + thisUVs * Thickness);
+	//		sobel += depth * float2(sobelXMatrix[i], sobelYMatrix[i]);
+	//	}
+
+	//}
 	//Get the final sobel value
-	Out = length(sobel);
+	//depthDiff = length(sobel);
+	//corner = verticalMeanVec;
 }
 
 //This function runs the sobel algorithm over the opaque texture
