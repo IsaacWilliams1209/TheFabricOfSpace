@@ -79,6 +79,7 @@
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
+    <Compile Include="Assets\Scripts\SheepController.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Framework\LeanSmooth.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\PathSplinePerformance.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Framework\LeanTest.cs" />
