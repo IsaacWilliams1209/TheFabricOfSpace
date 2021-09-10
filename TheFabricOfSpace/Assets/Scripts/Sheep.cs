@@ -23,6 +23,8 @@ public class Sheep : MonoBehaviour
     // Array of sheep on the face
     GameObject[] sheep = new GameObject[1];
 
+    GameObject closestSheep;
+
     // Is the sheep awake
     [SerializeField]
     bool awake = false;
@@ -150,6 +152,23 @@ public class Sheep : MonoBehaviour
                     }
                 }
             }
+            if (canEat && shepherd.berries[berryIndex].GetComponent<Shrubs>().Eat())
+            {
+                shepherd.berries[berryIndex].GetComponent<Shrubs>().GrantPowerUp(gameObject);
+                transform.GetChild(2).GetComponent<MeshFilter>().mesh = meshes[0];
+                poweredUp = false;
+            }
+
+            if (Input.GetButtonDown("Jump"))
+            {
+                closestSheep.GetComponent<Sheep>().awake = true;
+                closestSheep.transform.GetChild(2).GetComponent<Renderer>().material = sheepMaterials[0];
+                awakeSheep.Insert(0, closestSheep);
+                swap = true;
+            }
+
+
+
             // On R press activate the sheep powerup
             if (Input.GetKeyDown(KeyCode.R))
             {
@@ -244,10 +263,12 @@ public class Sheep : MonoBehaviour
         if (other.gameObject.tag == "Sheep")
         {
             canWake = true;
+            closestSheep = other.gameObject;
         }
         if (other.gameObject.tag == "Reg")
         {
             canEat = true;
+            berryIndex = other.GetComponent<Shrubs>().index;
         }
     }
 
@@ -263,16 +284,16 @@ public class Sheep : MonoBehaviour
                 swap = true;
             }
         }
-        else if (other.gameObject.tag == "Reg" && active)
-        {
-            if (Input.GetButtonDown("Jump") && other.gameObject.GetComponent<Shrubs>().Eat())
-            {
-                other.gameObject.GetComponent<Shrubs>().GrantPowerUp(gameObject);
-                berryIndex = other.GetComponent<Shrubs>().index;
-                transform.GetChild(2).GetComponent<MeshFilter>().mesh = meshes[0];
-                poweredUp = false;
-            }
-        }
+        //else if (other.gameObject.tag == "Reg" && active)
+        //{
+        //    if (Input.GetButtonDown("Jump") && other.gameObject.GetComponent<Shrubs>().Eat())
+        //    {
+        //        other.gameObject.GetComponent<Shrubs>().GrantPowerUp(gameObject);
+        //        berryIndex = other.GetComponent<Shrubs>().index;
+        //        transform.GetChild(2).GetComponent<MeshFilter>().mesh = meshes[0];
+        //        poweredUp = false;
+        //    }
+        //}
     }
 
     private void OnTriggerExit(Collider other)
@@ -288,10 +309,15 @@ public class Sheep : MonoBehaviour
         if (other.gameObject.tag == "Sheep")
         {
             canWake = false;
+            closestSheep = null;
         }
         if (other.gameObject.tag == "Reg")
         {
             canEat = false;
+            if (!voxel)
+            {
+                berryIndex = -1;
+            }
         }
     }
 
