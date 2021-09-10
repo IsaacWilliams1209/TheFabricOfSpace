@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class Sheep : MonoBehaviour
 {
-    // Speed of the sheep
-    public float speed;
-
-    public float rotationSpeed;
-
     // Keeps the awake, asleep and active materials for the sheep
     public Material[] sheepMaterials = new Material[3];
 
@@ -72,6 +67,8 @@ public class Sheep : MonoBehaviour
     // The character controller
     SheepController controller;
 
+    BoxCollider collider;
+
     Mesh defaultMesh;
 
     [SerializeField]
@@ -81,12 +78,13 @@ public class Sheep : MonoBehaviour
     void Start()
     {
         // Initalising variables
-        defaultMesh = GetComponent<MeshFilter>().mesh;
+        defaultMesh = transform.GetChild(2).GetComponent<MeshFilter>().mesh;
         shepherd = transform.parent.GetComponent<Shepherd>();
         sheep = shepherd.sheep;
         awakeSheep = shepherd.awakeSheep;
-        matChanger = GetComponent<Renderer>();
+        matChanger = transform.GetChild(2).GetComponent<Renderer>();
         controller = GetComponent<SheepController>();
+        collider = GetComponent<BoxCollider>();
 
         // Set apropriate materials for the sheep
         if (active)
@@ -149,7 +147,7 @@ public class Sheep : MonoBehaviour
                     if (i != index && Vector3.SqrMagnitude(sheep[i].transform.position - transform.position) < 1.0f && !sheep[i].GetComponent<Sheep>().awake)
                     {
                         sheep[i].GetComponent<Sheep>().awake = true;
-                        sheep[i].GetComponent<Renderer>().material = sheepMaterials[0];
+                        sheep[i].transform.GetChild(2).GetComponent<Renderer>().material = sheepMaterials[0];
                         awakeSheep.Insert(0, sheep[i]);
                         swap = true;
                         return;
@@ -165,7 +163,7 @@ public class Sheep : MonoBehaviour
                             {
                                 shepherd.berries[i].GetComponent<Shrubs>().GrantPowerUp(gameObject);
                                 berryIndex = i;
-                                GetComponent<MeshFilter>().mesh = meshes[0];
+                                transform.GetChild(2).GetComponent<MeshFilter>().mesh = meshes[0];
                                 poweredUp = false;
 
                             }
@@ -263,6 +261,7 @@ public class Sheep : MonoBehaviour
         // Swap to the next sheep
         if (swap)
         {
+            Debug.Log("SWAP");
             if (shepherd.isSheepFocus)
             {
                 transform.GetChild(1).gameObject.SetActive(false);
@@ -270,7 +269,7 @@ public class Sheep : MonoBehaviour
             }
             
             shepherd.activeSheep = awakeSheep[0];
-            awakeSheep[0].GetComponent<Renderer>().material = sheepMaterials[0];
+            awakeSheep[0].transform.GetChild(2).GetComponent<Renderer>().material = sheepMaterials[0];
             awakeSheep[0].GetComponent<Sheep>().active = true;
             awakeSheep.RemoveAt(0);
             awakeSheep.Add(gameObject);
@@ -333,7 +332,8 @@ public class Sheep : MonoBehaviour
             if (poweredUp)
             {
                 // Move to ignore raycast layer
-                gameObject.layer = 2;               
+                gameObject.layer = 2;
+                collider.enabled = true;
 
                 // Prevent movement and lock to tile
                 canMove = false;                
@@ -367,11 +367,13 @@ public class Sheep : MonoBehaviour
                 // Update block for the on the slab sheep
                 transform.GetComponentInChildren<Block>().BlockUpdate();
                 gameObject.layer = 0;
-                GetComponent<MeshFilter>().mesh = meshes[1];
+                transform.GetChild(0).gameObject.layer = 0;
+                transform.GetChild(2).GetComponent<MeshFilter>().mesh = meshes[1];
             }
             else
             {
                 gameObject.layer = 2;
+                transform.GetChild(0).gameObject.layer = 2;
                 // Set block on slab sheep to inactive                
                 transform.GetChild(0).gameObject.SetActive(false);
                 RaycastHit[] hits = new RaycastHit[4];
@@ -394,8 +396,8 @@ public class Sheep : MonoBehaviour
                 }              
                 // Release movement
                 canMove = true;
-                GetComponent<MeshFilter>().mesh = meshes[0];
-                // Shrink sheep
+                transform.GetChild(2).GetComponent<MeshFilter>().mesh = meshes[0];
+                collider.enabled = false;
             }
         }
         else
