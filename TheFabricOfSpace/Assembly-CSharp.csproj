@@ -79,6 +79,7 @@
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
+    <Compile Include="Assets\Scripts\SheepController.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Framework\LeanSmooth.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\PathSplinePerformance.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Framework\LeanTest.cs" />
@@ -90,8 +91,10 @@
     <Compile Include="Assets\UnityPackages\LeanTween\Framework\LeanAudio.cs" />
     <Compile Include="Assets\Scripts\Geyser.cs" />
     <Compile Include="Assets\Scripts\PointerData.cs" />
+    <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\PathSplineTrack.cs" />
+    <Compile Include="Assets\Scripts\Transition.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\TestingZLegacy.cs" />
     <Compile Include="Assets\Scripts\Shepherd.cs" />
@@ -132,11 +135,11 @@
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\PathSplines.cs" />
+    <Compile Include="Assets\Scripts\ButtonContoller.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\GeneralUISpace.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\GeneralEventsListeners.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Framework\LTDescr.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Archived\OldGUIExamplesCS.cs" />
-    <Compile Include="Assets\Scripts\ButtonContoller.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\UnityPackages\TextMesh Pro\Shaders\TMPro.cginc" />
