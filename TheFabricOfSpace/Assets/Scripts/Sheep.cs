@@ -37,6 +37,10 @@ public class Sheep : MonoBehaviour
     // Is the sheep able to jump
     public bool canJump;
 
+    public bool canEat;
+
+    public bool canWake;
+
     // Is the sheep currently jumping
     bool isJumping;
 
@@ -45,6 +49,8 @@ public class Sheep : MonoBehaviour
 
     // Index of eaten berry in the Shepherd's Berry array, -1 means no berry eaten
     int berryIndex = -1;
+
+
     
     // Refers to the shepherd of this face
     Shepherd shepherd;
@@ -67,7 +73,9 @@ public class Sheep : MonoBehaviour
     // The character controller
     SheepController controller;
 
-    BoxCollider collider;
+    BoxCollider mainCollider;
+
+    BoxCollider wakingTrigger;
 
     Mesh defaultMesh;
 
@@ -84,18 +92,21 @@ public class Sheep : MonoBehaviour
         awakeSheep = shepherd.awakeSheep;
         matChanger = transform.GetChild(2).GetComponent<Renderer>();
         controller = GetComponent<SheepController>();
-        collider = GetComponent<BoxCollider>();
+        mainCollider = GetComponents<BoxCollider>()[0];
+        wakingTrigger = GetComponents<BoxCollider>()[1];
 
         // Set apropriate materials for the sheep
         if (active)
         {
             matChanger.material = sheepMaterials[0];
             shepherd.activeSheep = gameObject;
+            wakingTrigger.enabled = false;
         }
         else if (awake)
         {
             matChanger.material = sheepMaterials[1];
             awakeSheep.Add(gameObject);
+            wakingTrigger.enabled = false;
         }
         else
         {
@@ -139,39 +150,6 @@ public class Sheep : MonoBehaviour
                     }
                 }
             }
-            // On spacebar press awaken nearby sheep or eat nearby berry
-            if (Input.GetButtonDown("Jump"))
-            {
-                for (int i = 0; i < sheep.Length; i++)
-                {
-                    if (i != index && Vector3.SqrMagnitude(sheep[i].transform.position - transform.position) < 1.0f && !sheep[i].GetComponent<Sheep>().awake)
-                    {
-                        sheep[i].GetComponent<Sheep>().awake = true;
-                        sheep[i].transform.GetChild(2).GetComponent<Renderer>().material = sheepMaterials[0];
-                        awakeSheep.Insert(0, sheep[i]);
-                        swap = true;
-                        return;
-                    }
-                }
-                if (berryIndex == -1)
-                {
-                    for (int i = 0; i < shepherd.berries.Length; i++)
-                    {
-                        if (Vector3.SqrMagnitude(shepherd.berries[i].transform.position - transform.position) < 1.0f)
-                        {
-                            if (shepherd.berries[i].GetComponent<Shrubs>().Eat())
-                            {
-                                shepherd.berries[i].GetComponent<Shrubs>().GrantPowerUp(gameObject);
-                                berryIndex = i;
-                                transform.GetChild(2).GetComponent<MeshFilter>().mesh = meshes[0];
-                                poweredUp = false;
-
-                            }
-                        }
-                    }
-                }
-
-            }
             // On R press activate the sheep powerup
             if (Input.GetKeyDown(KeyCode.R))
             {
@@ -207,52 +185,6 @@ public class Sheep : MonoBehaviour
                     hit.transform.GetComponent<Sheep>().poweredUp = false;
                 }
             }
-            Vector3 movement = new Vector3();
-                
-            // Raycast down, on miss move the sheep down
-            if (!Physics.Raycast(transform.position, -transform.parent.up, out hit, 1.0f))
-            {
-                movement += transform.parent.up * Physics.gravity.y * Time.deltaTime;
-            }
-            else if (hit.transform.gameObject.tag == "Geyser")
-            {
-                movement += transform.parent.up * 0.01f;
-
-
-            }
-            // If the raycast hits and is greater than .5m move it down
-            else if (hit.distance > 0.025f && !hit.collider.isTrigger)
-            {
-                movement -= transform.parent.up * 0.01f;
-
-            }
-            // If the raycast hits a voxel sheep set it's powered up state to true, this prevents the sheep being moved while another sheep in ontop of them
-            else if (hit.transform.tag == "Sheep" && hit.transform.GetComponent<Sheep>().voxel)
-            {
-                hit.transform.GetComponent<Sheep>().poweredUp = true;
-            }
-        }
-        else
-        {
-            Vector3 movement = new Vector3();
-            RaycastHit hit;
-
-            // Raycast down, on miss move the sheep down
-            if (!Physics.Raycast(transform.position, -transform.parent.up, out hit, 1.0f))
-            {
-                movement += transform.parent.up * Physics.gravity.y * Time.deltaTime;
-            }
-            // If the raycast hits and is greater than .5m move it down
-            else if (hit.distance > 0.5f && !hit.collider.isTrigger)
-            {
-                movement -= transform.parent.up * 0.01f;
-
-            }
-            // If the raycast hits a voxel sheep set it's powered up state to true, this prevents the sheep being moved while another sheep in ontop of them
-            else if (hit.transform.tag == "Sheep" && hit.transform.GetComponent<Sheep>().voxel)
-            {
-                hit.transform.GetComponent<Sheep>().poweredUp = true;
-            }
         }
     }
 
@@ -261,7 +193,6 @@ public class Sheep : MonoBehaviour
         // Swap to the next sheep
         if (swap)
         {
-            Debug.Log("SWAP");
             if (shepherd.isSheepFocus)
             {
                 transform.GetChild(1).gameObject.SetActive(false);
@@ -310,6 +241,38 @@ public class Sheep : MonoBehaviour
             Debug.Log("Geyser triggered");
             other.transform.parent.GetComponent<Geyser>().sheep = this;
         }
+        if (other.gameObject.tag == "Sheep")
+        {
+            canWake = true;
+        }
+        if (other.gameObject.tag == "Reg")
+        {
+            canEat = true;
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.tag == "Sheep" && active)
+        {
+            if (Input.GetButtonDown("Jump"))
+            {
+                other.gameObject.GetComponent<Sheep>().awake = true;
+                other.gameObject.transform.GetChild(2).GetComponent<Renderer>().material = sheepMaterials[0];
+                awakeSheep.Insert(0, other.gameObject);
+                swap = true;
+            }
+        }
+        else if (other.gameObject.tag == "Reg" && active)
+        {
+            if (Input.GetButtonDown("Jump") && other.gameObject.GetComponent<Shrubs>().Eat())
+            {
+                other.gameObject.GetComponent<Shrubs>().GrantPowerUp(gameObject);
+                berryIndex = other.GetComponent<Shrubs>().index;
+                transform.GetChild(2).GetComponent<MeshFilter>().mesh = meshes[0];
+                poweredUp = false;
+            }
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -322,6 +285,14 @@ public class Sheep : MonoBehaviour
             
             other.transform.parent.GetComponent<Geyser>().sheep = null;
         }
+        if (other.gameObject.tag == "Sheep")
+        {
+            canWake = false;
+        }
+        if (other.gameObject.tag == "Reg")
+        {
+            canEat = false;
+        }
     }
 
     private void ActivatePowerUp()
@@ -333,7 +304,7 @@ public class Sheep : MonoBehaviour
             {
                 // Move to ignore raycast layer
                 gameObject.layer = 2;
-                collider.enabled = true;
+                mainCollider.enabled = true;
 
                 // Prevent movement and lock to tile
                 canMove = false;                
@@ -397,7 +368,7 @@ public class Sheep : MonoBehaviour
                 // Release movement
                 canMove = true;
                 transform.GetChild(2).GetComponent<MeshFilter>().mesh = meshes[0];
-                collider.enabled = false;
+                mainCollider.enabled = false;
             }
         }
         else
