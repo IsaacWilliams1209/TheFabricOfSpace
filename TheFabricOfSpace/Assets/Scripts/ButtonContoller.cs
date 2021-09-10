@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public enum ButtonType
 {
@@ -32,6 +33,10 @@ public class ButtonContoller : MonoBehaviour
     {
         switch (buttonType) 
         {
+            case ButtonType.StartLevel:
+                Time.timeScale = 1.0f;
+                menuManager.TurnMenusOff();
+                break;
             case ButtonType.GoToMainMenu:
                 menuManager.SwitchMenu(MenuType.MainMenu);
                 break;
