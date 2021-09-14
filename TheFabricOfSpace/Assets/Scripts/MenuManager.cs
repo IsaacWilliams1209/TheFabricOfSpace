@@ -10,7 +10,8 @@ public enum MenuType
     SettingsMenu,
     Credits,
     PauseMenu,
-    WinScreen
+    WinScreen,
+    GUI
 }
 
 public class MenuManager : Singleton<MenuManager>
