@@ -9,7 +9,9 @@ public enum MenuType
     LevelSelection,
     SettingsMenu,
     Credits,
-    PauseMenu
+    PauseMenu,
+    WinScreen,
+    GUI
 }
 
 public class MenuManager : Singleton<MenuManager>
@@ -20,6 +22,7 @@ public class MenuManager : Singleton<MenuManager>
     protected override void Awake()
     {
         base.Awake();
+        Time.timeScale = 0.0f;
         menus = GetComponentsInChildren<MenuController>().ToList(); 
         menus.ForEach(x => x.gameObject.SetActive(false));
         SwitchMenu(MenuType.MainMenu);
@@ -33,7 +36,6 @@ public class MenuManager : Singleton<MenuManager>
         }
 
         MenuController desiredMenu = menus.Find(x => x.menuType == type);
-        Debug.Log(desiredMenu.name);
 
         if (desiredMenu != null)
         {
@@ -41,6 +43,11 @@ public class MenuManager : Singleton<MenuManager>
             lastActiveMenu = desiredMenu;
         }
         else { Debug.LogWarning("The desired canvas was not found!"); }
+    }
+
+    public void TurnMenusOff()
+    {
+        menus.ForEach(x => x.gameObject.SetActive(false));
     }
 
 }
