@@ -66,7 +66,7 @@
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\GeneralCameraShake.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\GeneralSimpleUI.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\PathSpline.cs" />
-    <Compile Include="Assets\Scripts\MenuManager.cs" />
+    <Compile Include="Assets\Scripts\UI\MenuManager.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\GeneralEasingTypes.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\Following.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\PathSplineEndless.cs" />
@@ -115,6 +115,7 @@
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark04.cs" />
+    <Compile Include="Assets\Scripts\GUI_Manager.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
     <Compile Include="Assets\Scripts\UI_Manager.cs" />
@@ -122,11 +123,10 @@
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
     <Compile Include="Assets\Scripts\Sheep.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\VertexColorCycler.cs" />
-    <Compile Include="Assets\Scripts\Menu.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
     <Compile Include="Assets\Scripts\Planet_Generation.cs" />
     <Compile Include="Assets\Scripts\Camera_Rotation.cs" />
-    <Compile Include="Assets\Scripts\MenuController.cs" />
+    <Compile Include="Assets\Scripts\UI\MenuController.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Framework\LeanTweenExt.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Framework\LTDescrOptional.cs" />
@@ -140,6 +140,8 @@
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\GeneralEventsListeners.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Framework\LTDescr.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Archived\OldGUIExamplesCS.cs" />
+    <Compile Include="Assets\Scripts\GUI\PopUp_Manager.cs" />
+    <Compile Include="Assets\Scripts\GUI\PopUpController.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\UnityPackages\TextMesh Pro\Shaders\TMPro.cginc" />
