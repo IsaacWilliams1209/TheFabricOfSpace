@@ -151,20 +151,24 @@ public class Sheep : MonoBehaviour
                         }
                     }
                 }
-            }
-            if (canEat && shepherd.berries[berryIndex].GetComponent<Shrubs>().Eat())
-            {
-                shepherd.berries[berryIndex].GetComponent<Shrubs>().GrantPowerUp(gameObject);
-                transform.GetChild(2).GetComponent<MeshFilter>().mesh = meshes[0];
-                poweredUp = false;
-            }
+            }          
 
             if (Input.GetButtonDown("Jump"))
             {
-                closestSheep.GetComponent<Sheep>().awake = true;
-                closestSheep.transform.GetChild(2).GetComponent<Renderer>().material = sheepMaterials[0];
-                awakeSheep.Insert(0, closestSheep);
-                swap = true;
+                if (canWake)
+                {
+                    closestSheep.GetComponent<Sheep>().awake = true;
+                    closestSheep.transform.GetChild(2).GetComponent<Renderer>().material = sheepMaterials[0];
+                    awakeSheep.Insert(0, closestSheep);
+                    swap = true;
+                }
+
+                if (canEat && shepherd.berries[berryIndex].GetComponent<Shrubs>().Eat())
+                {
+                    shepherd.berries[berryIndex].GetComponent<Shrubs>().GrantPowerUp(gameObject);
+                    transform.GetChild(2).GetComponent<MeshFilter>().mesh = meshes[0];
+                    poweredUp = false;
+                }
             }
 
 
