@@ -393,7 +393,8 @@ MonoBehaviour:
   - {fileID: 2220611279400297510}
   - {fileID: 3145332515093265266}
   - {fileID: 1584055632226913799}
-  awakeSheep: []
+  awakeSheep:
+  - {fileID: 2220611279400297510}
   berries:
   - {fileID: 2652257129195630137}
   - {fileID: 2353655880527274562}
@@ -7145,7 +7146,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5233081855458523259, guid: 9cf63a690f0b96d4aa37dd9bd1ff5451, type: 3}
       propertyPath: active
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5233081855458523260, guid: 9cf63a690f0b96d4aa37dd9bd1ff5451, type: 3}
       propertyPath: m_LocalPosition.x

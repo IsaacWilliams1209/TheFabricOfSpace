@@ -354,7 +354,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7814234201245423551}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 984833f9c60062d47891e18eda15a114, type: 3}
   m_Name: 
@@ -364,7 +364,8 @@ MonoBehaviour:
   - {fileID: 5521360715162436587}
   - {fileID: 1421014184799455358}
   - {fileID: 7060308284793166420}
-  awakeSheep: []
+  awakeSheep:
+  - {fileID: 7290073552792051722}
   berries:
   - {fileID: 7215717638751467988}
   - {fileID: 6062072740541096493}
@@ -3281,7 +3282,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5233081855458523259, guid: 9cf63a690f0b96d4aa37dd9bd1ff5451, type: 3}
       propertyPath: active
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5233081855458523259, guid: 9cf63a690f0b96d4aa37dd9bd1ff5451, type: 3}
       propertyPath: awake

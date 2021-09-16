@@ -996,11 +996,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   face01: {fileID: 4476006358367083433, guid: 5b0d0c2aacd6f0b479163dc54ceee6a5, type: 3}
-  face02: {fileID: 5788419477982923517, guid: 23d40b64b4e74c8428f4b919c71963ec, type: 3}
-  face03: {fileID: 5788419477982923517, guid: 23d40b64b4e74c8428f4b919c71963ec, type: 3}
-  face04: {fileID: 5788419477982923517, guid: 23d40b64b4e74c8428f4b919c71963ec, type: 3}
-  face05: {fileID: 5008113620486622432, guid: c6e7403c6ff5c03448b68299e315b3e8, type: 3}
-  face06: {fileID: 5008113620486622432, guid: c6e7403c6ff5c03448b68299e315b3e8, type: 3}
+  face02: {fileID: 3151514799957109885, guid: d0f06519372585d43ae5f36cb57603b2, type: 3}
+  face03: {fileID: 2113716623239083355, guid: 2d1635261b6133143bca2d0964bedc40, type: 3}
+  face04: {fileID: 1156201091166791230, guid: 7555ed67bd604bc42ba6d3fdf683708b, type: 3}
+  face05: {fileID: 3203389806501290974, guid: c38422d36dd5c19469944428d7b5da84, type: 3}
+  face06: {fileID: 2777796043624085211, guid: 77f1e2fddd1e5bb43acfcd07beaca03f, type: 3}
   spawnOrigin: {x: 0, y: 0, z: 0}
   gridSize: 11
 --- !u!4 &749539751
