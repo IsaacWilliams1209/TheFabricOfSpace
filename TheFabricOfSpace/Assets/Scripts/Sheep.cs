@@ -94,6 +94,9 @@ public class Sheep : MonoBehaviour
 
     Mesh defaultMesh;
 
+    [HideInInspector]
+    public Animator animator;
+
     [SerializeField]
     List<Mesh> meshes = new List<Mesh>();
 
@@ -101,6 +104,7 @@ public class Sheep : MonoBehaviour
     void Start()
     {
         // Initalising variables
+        animator = GetComponent<Animator>();
         defaultMesh = transform.GetChild(2).GetComponent<MeshFilter>().mesh;
         shepherd = transform.parent.GetComponent<Shepherd>();
         sheep = shepherd.sheep;
@@ -145,11 +149,7 @@ public class Sheep : MonoBehaviour
         if (active)
         {
             if (canMove)
-
             {
-
-
-
                 controller.Move();
 
             }

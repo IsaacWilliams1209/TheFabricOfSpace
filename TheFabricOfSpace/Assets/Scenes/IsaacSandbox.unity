@@ -191,16 +191,64 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 409873284602578661, guid: 5b0d0c2aacd6f0b479163dc54ceee6a5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 936868427879382457, guid: 5b0d0c2aacd6f0b479163dc54ceee6a5, type: 3}
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 1756926740}
+    - target: {fileID: 2445661197984776563, guid: 5b0d0c2aacd6f0b479163dc54ceee6a5, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3052449743598396534, guid: 5b0d0c2aacd6f0b479163dc54ceee6a5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3257580907080766295, guid: 5b0d0c2aacd6f0b479163dc54ceee6a5, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -2432090755550338912, guid: ef9175f505bb2c944a30b4d439c3f623, type: 3}
+    - target: {fileID: 3514897761396267440, guid: 5b0d0c2aacd6f0b479163dc54ceee6a5, type: 3}
+      propertyPath: meshes.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3514897761396267440, guid: 5b0d0c2aacd6f0b479163dc54ceee6a5, type: 3}
       propertyPath: awake
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3514897761396267440, guid: 5b0d0c2aacd6f0b479163dc54ceee6a5, type: 3}
       propertyPath: active
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3514897761396267440, guid: 5b0d0c2aacd6f0b479163dc54ceee6a5, type: 3}
+      propertyPath: canWake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3514897761396267440, guid: 5b0d0c2aacd6f0b479163dc54ceee6a5, type: 3}
+      propertyPath: meshes.Array.data[0]
+      value: 
+      objectReference: {fileID: -2432090755550338912, guid: 3ee0d52b7710b544b84905e439bfcb0b, type: 3}
+    - target: {fileID: 3514897761396267440, guid: 5b0d0c2aacd6f0b479163dc54ceee6a5, type: 3}
+      propertyPath: meshes.Array.data[1]
+      value: 
+      objectReference: {fileID: -2432090755550338912, guid: e2fac84b4e0f61a40a36f6f528d349d8, type: 3}
+    - target: {fileID: 3514897761396267441, guid: 5b0d0c2aacd6f0b479163dc54ceee6a5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3798034045710386570, guid: 5b0d0c2aacd6f0b479163dc54ceee6a5, type: 3}
+      propertyPath: m_Center.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3992646476725238539, guid: 5b0d0c2aacd6f0b479163dc54ceee6a5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 4318368069809468304, guid: 5b0d0c2aacd6f0b479163dc54ceee6a5, type: 3}
+      propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4476006358367083432, guid: 5b0d0c2aacd6f0b479163dc54ceee6a5, type: 3}
@@ -251,9 +299,66 @@ PrefabInstance:
       propertyPath: m_Name
       value: Planet_1_Lvl_2
       objectReference: {fileID: 0}
+    - target: {fileID: 6228404305091098259, guid: 5b0d0c2aacd6f0b479163dc54ceee6a5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7663347506607944820, guid: 5b0d0c2aacd6f0b479163dc54ceee6a5, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7780261688147472126, guid: 5b0d0c2aacd6f0b479163dc54ceee6a5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7780261688147472127, guid: 5b0d0c2aacd6f0b479163dc54ceee6a5, type: 3}
+      propertyPath: awake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7780261688147472127, guid: 5b0d0c2aacd6f0b479163dc54ceee6a5, type: 3}
+      propertyPath: active
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 2445661197984776563, guid: 5b0d0c2aacd6f0b479163dc54ceee6a5, type: 3}
+    - {fileID: 6905849856787218222, guid: 5b0d0c2aacd6f0b479163dc54ceee6a5, type: 3}
+    - {fileID: 3606354871299498978, guid: 5b0d0c2aacd6f0b479163dc54ceee6a5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 5b0d0c2aacd6f0b479163dc54ceee6a5, type: 3}
+--- !u!1 &1267942484 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3863600454527479992, guid: 5b0d0c2aacd6f0b479163dc54ceee6a5, type: 3}
+  m_PrefabInstance: {fileID: 980040262}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1267942488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1267942484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
 --- !u!1 &1502060349
 GameObject:
   m_ObjectHideFlags: 0
@@ -357,7 +462,6 @@ GameObject:
   - component: {fileID: 1756926741}
   - component: {fileID: 1756926740}
   - component: {fileID: 1756926739}
-  - component: {fileID: 1756926742}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
