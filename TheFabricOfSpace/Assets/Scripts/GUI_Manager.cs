@@ -9,7 +9,7 @@ public class GUI_Manager : MonoBehaviour
     Vector3 originalTransform;
     GameObject defaultSheepIcon;
     GameObject voxelSheepIcon;
-    Vector3 uiScaleSize = new Vector3(1.4f, 1.4f, 1.4f);
+    Vector3 uiScaleSize = new Vector3(2.4f, 2.4f, 2.4f);
     float uiEffectSpeed = 0.8f;
     PopUp_Manager popUpManager;
     Camera camera;
