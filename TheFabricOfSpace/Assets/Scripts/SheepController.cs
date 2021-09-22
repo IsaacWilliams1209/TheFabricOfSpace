@@ -37,7 +37,7 @@ public class SheepController : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
-            if (hit.distance < 0.41f  || hit.transform.tag == "Sheep")
+            if (hit.distance < 0.55f  || hit.transform.tag == "Sheep")
                 grounded = true;
             else
                 grounded = false;
