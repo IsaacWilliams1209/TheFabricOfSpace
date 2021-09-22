@@ -36,7 +36,7 @@ public class GUI_Manager : MonoBehaviour
 
     void IconUpdater()
     {
-        if (currSheepType.activeSheep.GetComponent<Sheep>().voxel)
+        if (currSheepType.activeSheep.GetComponent<Sheep>().sheepType == SheepType.Slab)
         {
             if (!LeanTween.isTweening(voxelSheepIcon))
             {

@@ -2,6 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum SheepType
+{
+    Sheared,
+    Slab,
+    Snowball,
+    Static
+}
 public class Shepherd : MonoBehaviour
 {
     // List of sheep on the face
