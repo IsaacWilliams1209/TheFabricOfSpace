@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class StaticSheep : Sheep
 {
-    /// <summary> Works by attaching sheep to one side when pressing button and than follows the sheep around until deattached.
-    /// </summary>
-    /// <param name="sheep"></param>
-    public void ActivePowerUp(Sheep sheep)
+
+    Shepherd sheepList; //Use this to ask the faces shepherd what sheep is around the static sheep. 
+
+    public void ActivatePowerUp(Sheep sheep)
+    {
+        
+    }
+
+    public void SheepInRange()
     {
 
     }

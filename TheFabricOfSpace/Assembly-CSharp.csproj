@@ -79,17 +79,17 @@
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
-    <Compile Include="Assets\Scripts\SheepController.cs" />
+    <Compile Include="Assets\Scripts\Sheep\SheepController.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Framework\LeanSmooth.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\PathSplinePerformance.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Framework\LeanTest.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Framework\LeanTween.cs" />
-    <Compile Include="Assets\Scripts\Block.cs" />
+    <Compile Include="Assets\Scripts\Environment\Block.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Archived\TestingPunch.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Framework\LeanAudio.cs" />
-    <Compile Include="Assets\Scripts\Geyser.cs" />
+    <Compile Include="Assets\Scripts\Environment\Geyser.cs" />
     <Compile Include="Assets\Scripts\PointerData.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
@@ -98,10 +98,10 @@
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
     <Compile Include="Assets\Scripts\GUI\PopUpController.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\TestingZLegacy.cs" />
-    <Compile Include="Assets\Scripts\Shepherd.cs" />
+    <Compile Include="Assets\Scripts\Sheep\Shepherd.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\ObjectSpin.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_DigitValidator.cs" />
-    <Compile Include="Assets\Scripts\Shrubs.cs" />
+    <Compile Include="Assets\Scripts\Environment\Shrubs.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Archived\TestingRigidbodyCS.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\TextConsoleSimulator.cs" />
@@ -120,9 +120,10 @@
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
     <Compile Include="Assets\Scripts\UI_Manager.cs" />
+    <Compile Include="Assets\Scripts\Sheep\SlabSheep.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
-    <Compile Include="Assets\Scripts\Sheep.cs" />
+    <Compile Include="Assets\Scripts\Sheep\Sheep.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\VertexColorCycler.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
     <Compile Include="Assets\Scripts\Planet_Generation.cs" />
@@ -133,6 +134,7 @@
     <Compile Include="Assets\UnityPackages\LeanTween\Framework\LTDescrOptional.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\TeleType.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
+    <Compile Include="Assets\Scripts\StaticSheep.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\PathSplines.cs" />
@@ -142,7 +144,6 @@
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\GeneralEventsListeners.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Framework\LTDescr.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Archived\OldGUIExamplesCS.cs" />
-    <Compile Include="Assets\Scripts\StaticSheep.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\UnityPackages\TextMesh Pro\Shaders\TMPro.cginc" />
