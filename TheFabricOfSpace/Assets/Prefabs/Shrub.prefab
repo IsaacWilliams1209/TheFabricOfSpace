@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5801305067906492181}
   - component: {fileID: 5801305067906492186}
   - component: {fileID: 5243151752211357206}
+  - component: {fileID: 8875208724587392449}
   m_Layer: 2
   m_Name: Shrub
   m_TagString: Reg
@@ -28,8 +29,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5801305067906492187}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 30.7, y: 1.2600005, z: 2.750001}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 75, y: 75, z: 75}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -41,7 +42,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5801305067906492187}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 5534696963207097293, guid: ddb64db4fb7f3c24bb56cea9fce972b3, type: 3}
 --- !u!23 &5801305067906492181
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -94,7 +95,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 0.01, y: 0.01, z: 0.01}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5243151752211357206
 MonoBehaviour:
@@ -110,3 +111,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eaten: 0
   index: 0
+--- !u!65 &8875208724587392449
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5801305067906492187}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.025, y: 0.01, z: 0.025}
+  m_Center: {x: 0, y: 0, z: 0}

@@ -35,7 +35,7 @@ public class ButtonContoller : MonoBehaviour
         {
             case ButtonType.StartLevel:
                 Time.timeScale = 1.0f;
-                menuManager.TurnMenusOff();
+                menuManager.SwitchMenu(MenuType.GUI);
                 break;
             case ButtonType.GoToMainMenu:
                 menuManager.SwitchMenu(MenuType.MainMenu);

@@ -62,11 +62,12 @@ void DepthSobel_float(float2 UV, float Thickness, out float depthDiff, out float
 	float horizontal = (depthNorth + depthSouth) / 2;
 	float vertical = (depthWest + depthEast) / 2;
 
-	if (abs(horizontal - depthCenter) > 0.000001) {
-		debugValue = float3(0, 0, 1);
-		depthDiff = length(sobel);
+	if (abs(horizontal - depthCenter) < 0.00001) {
+		debugValue = float3(0, sobel.y, 0);
+		depthDiff = length(debugValue);
 	}
 	depthDiff = length(sobel);
+
 
 	////Horizontal Detection (1, 4, 7):
 	//float2 horizontalMeanVec = { (depthNorth.x + centerDepth.x + depthSouth.x) / 3 , (depthNorth.y + centerDepth.y + depthSouth.y) / 3 };

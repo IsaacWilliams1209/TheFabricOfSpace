@@ -24,7 +24,7 @@ public class Transition : MonoBehaviour
         //cameraRotation.left = left;
         //cameraRotation.down = down;
         //cameraRotation.right = right;
-        Player player = GameObject.Find("Game Object").GetComponent<Player>();
+        Player player = GameObject.Find("/GameObject").GetComponent<Player>();
         player.playerWon = true;
     }
 }
