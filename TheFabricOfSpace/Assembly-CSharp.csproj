@@ -134,7 +134,7 @@
     <Compile Include="Assets\UnityPackages\LeanTween\Framework\LTDescrOptional.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\TeleType.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
-    <Compile Include="Assets\Scripts\StaticSheep.cs" />
+    <Compile Include="Assets\Scripts\Sheep\StaticSheep.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\PathSplines.cs" />

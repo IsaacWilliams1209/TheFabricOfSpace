@@ -138,19 +138,24 @@ public class Sheep : MonoBehaviour
                 // If the player can't move and is jump cycle through the jumpFrames
                 if (isJumping)
                 {
-                    jumpTime += Time.deltaTime;
-                    float percentDone = jumpTime / Time.deltaTime * 0.25f;
-                    transform.position = Vector3.Lerp(jumpFrames[jumpIndex], jumpFrames[jumpIndex + 1], percentDone);
+                    jumpTime += Time.deltaTime;
+
+                    float percentDone = jumpTime / Time.deltaTime * 0.25f;
+
+                    transform.position = Vector3.Lerp(jumpFrames[jumpIndex], jumpFrames[jumpIndex + 1], percentDone);
+
                     if (transform.position == jumpFrames[jumpIndex + 1])
                     {
-                        jumpTime = 0;
+                        jumpTime = 0;
+
                         if (jumpIndex < jumpFrames.Length - 2)
                         {
                             jumpIndex++;
                         }
                         else
                         {
-                            isJumping = false;
+                            isJumping = false;
+
                             canMove = true;
 
                             jumpIndex = 0;
@@ -162,19 +167,26 @@ public class Sheep : MonoBehaviour
             {
                 if (canWake)
                 {
-                    closestSheep.GetComponent<Sheep>().awake = true;
-                    closestSheep.transform.GetChild(2).GetComponent<Renderer>().material = sheepMaterials[0];
-                    awakeSheep.Insert(0, closestSheep);
-                    swap = true;
+                    closestSheep.GetComponent<Sheep>().awake = true;
+
+                    closestSheep.transform.GetChild(2).GetComponent<Renderer>().material = sheepMaterials[0];
+
+                    awakeSheep.Insert(0, closestSheep);
+
+                    swap = true;
+
                 }
                 if (canEat && shepherd.berries[berryIndex].GetComponent<Shrubs>().Eat())
                 {
-                    shepherd.berries[berryIndex].GetComponent<Shrubs>().GrantPowerUp(gameObject);
-                    transform.GetChild(2).GetComponent<MeshFilter>().mesh = meshes[0];
+                    shepherd.berries[berryIndex].GetComponent<Shrubs>().GrantPowerUp(gameObject);
+
+                    transform.GetChild(2).GetComponent<MeshFilter>().mesh = meshes[0];
+
                     poweredUp = false;
                 }
             }
-            // On R press activate the sheep powerup
+            // On R press activate the sheep powerup
+
             if (Input.GetKeyDown(KeyCode.R))
             {
                 poweredUp = !poweredUp;
@@ -193,10 +205,12 @@ public class Sheep : MonoBehaviour
                     case SheepType.Snowball:
                         break;
                     case SheepType.Static:
+                        GetComponent<StaticSheep>().ActivatePowerUp(this);
                         break;
                     default:
                         break;
-                }
+                }
+
             }
             // On left shift press, swap to the next active sheep
             if (Input.GetKeyUp(KeyCode.LeftShift))
