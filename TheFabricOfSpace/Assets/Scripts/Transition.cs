@@ -9,8 +9,11 @@ public class Transition : MonoBehaviour
 
     public bool up, left, down, right;
 
+
+
     public string nextFace;
-    
+
+    int thingo;
     void Start()
     {
         //cameraRotation = transform.parent.parent.GetChild(0).GetChild(0).GetComponent<Camera_Rotation>();
