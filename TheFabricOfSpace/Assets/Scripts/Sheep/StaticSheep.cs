@@ -12,6 +12,11 @@ public class StaticSheep : Sheep
         grabbedSheep.transform.position = sheep.transform.position + transform.up;
     }
 
+    public void DeActivatePowerUp(Sheep sheep)
+    {
+
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag == "Sheep")
