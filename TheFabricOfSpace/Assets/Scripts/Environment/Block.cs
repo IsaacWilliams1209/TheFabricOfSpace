@@ -43,10 +43,10 @@ public class Block : MonoBehaviour
             dir.y = (transform.localToWorldMatrix * colliders[i].center).y - transform.up.y;
             dir.z = (transform.localToWorldMatrix * colliders[i].center).z - transform.up.z;
             Debug.DrawRay(transform.position, dir, Color.red, 2.0f);
-
-            if (Physics.Raycast(transform.position, dir, out hit, 2.0f))
+            int mask = 1;
+            if (Physics.Raycast(transform.position, dir, out hit, 2.0f, mask))
             {
-                if (hit.distance > 1)
+                if (hit.distance > 1 && (hit.transform.tag == "Block" || hit.transform.tag == "Sheep"))
                 {
                     // Hit distance is greater than 1 so the player can jump
                     jumpTriggers[i].enabled = true;
@@ -92,9 +92,9 @@ public class Block : MonoBehaviour
             dir.y = (transform.localToWorldMatrix * colliders[i].center).y - transform.up.y;
             dir.z = (transform.localToWorldMatrix * colliders[i].center).z - transform.up.z;
             //Debug.DrawRay(transform.position, dir, Color.red, 4.0f);
-            
 
-            if (Physics.Raycast(transform.position, dir, out hit, 2.0f))
+            int mask = 1;
+            if (Physics.Raycast(transform.position, dir, out hit, 2.0f, mask))
             {
                 if (hit.distance > 1.3f)
                 {

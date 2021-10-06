@@ -45,7 +45,7 @@ public class SheepController : MonoBehaviour
 
         if (grounded)
         {
-            transform.position = VectorMask(transform.position, transform.parent.forward) + VectorMask(hit.point, transform.parent.up) + VectorMask(transform.position, transform.parent.right);
+            transform.position = Sheep.MaskVector(transform.position, transform.parent.forward) + Sheep.MaskVector(hit.point, transform.parent.up) + Sheep.MaskVector(transform.position, transform.parent.right);
             currentGravity = Vector3.zero;
         }
         else
@@ -72,7 +72,7 @@ public class SheepController : MonoBehaviour
     {
         transform.position += transform.TransformDirection(movementVector + currentGravity);
 
-        Vector3 rotation = VectorMask(movementVector, transform.parent.right) + VectorMask(movementVector, transform.parent.up) + VectorMask(movementVector, transform.parent.forward);
+        Vector3 rotation = Sheep.MaskVector(movementVector, transform.parent.right) + Sheep.MaskVector(movementVector, transform.parent.up) + Sheep.MaskVector(movementVector, transform.parent.forward);
         
         if (rotation != Vector3.zero)
         {
@@ -122,14 +122,6 @@ public class SheepController : MonoBehaviour
             return hit;
         }
         return hit;
-    }
-
-    Vector3 VectorMask(Vector3 data, Vector3 mask)
-    {
-        data.x *= mask.x;
-        data.y *= mask.y;
-        data.z *= mask.z;
-        return data;
     }
 
     void OnDrawGizmos()

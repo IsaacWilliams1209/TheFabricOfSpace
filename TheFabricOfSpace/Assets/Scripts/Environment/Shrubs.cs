@@ -7,6 +7,9 @@ public class Shrubs : MonoBehaviour
     // Has the shrub been eaten
     public bool eaten = false;
 
+    [SerializeField]
+    SheepType shrubType = SheepType.Slab;
+
     // Holds the berries index in the shepherd
     [HideInInspector]
     public int index;
@@ -17,6 +20,7 @@ public class Shrubs : MonoBehaviour
         if (!eaten)
         {
             transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
+            
             eaten = true;
             return true;
         }
@@ -33,10 +37,19 @@ public class Shrubs : MonoBehaviour
     // Activates the shrubs power up
     public void GrantPowerUp(GameObject sheep)
     {
-        if (tag == "Reg")
+        switch (shrubType)
         {
-            //sheep.transform.localScale = new Vector3(0.95f, 0.9f, 0.95f);
-            sheep.GetComponent<Sheep>().sheepType = SheepType.Slab;
+            case SheepType.Slab:
+                transform.parent.GetComponent<Shepherd>().AddPowerToSheep(SheepType.Slab);
+                break;
+            case SheepType.Snowball:
+                transform.parent.GetComponent<Shepherd>().AddPowerToSheep(SheepType.Snowball);
+                break;
+            default:
+                Debug.Log("Something went wrong L47 shrub.cs");
+                break;
+
+
         }
     }
 }

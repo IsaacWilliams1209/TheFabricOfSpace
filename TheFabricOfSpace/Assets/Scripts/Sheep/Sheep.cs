@@ -78,7 +78,8 @@ public class Sheep : MonoBehaviour
     [HideInInspector]
     public BoxCollider mainCollider;
 
-    BoxCollider wakingTrigger;
+    [HideInInspector]
+    public BoxCollider wakingTrigger;
 
     Mesh defaultMesh;
 
@@ -107,6 +108,7 @@ public class Sheep : MonoBehaviour
             matChanger.material = sheepMaterials[0];
             shepherd.activeSheep = gameObject;
             wakingTrigger.enabled = false;
+            wakingTrigger.enabled = false;
         }
         else if (awake)
         {
@@ -129,7 +131,7 @@ public class Sheep : MonoBehaviour
     {
         if (active)
         {
-            if (canMove)
+            if (canMove && sheepType != SheepType.Snowball)
             {
                 controller.Move();
             }
@@ -163,14 +165,23 @@ public class Sheep : MonoBehaviour
                 if (canWake)
                 {
                     closestSheep.GetComponent<Sheep>().awake = true;
-                    closestSheep.transform.GetChild(2).GetComponent<Renderer>().material = sheepMaterials[0];
+                    closestSheep.transform.GetChild(2).GetComponent<Renderer>().material = sheepMaterials[0];                    closestSheep.GetComponent<Sheep>().wakingTrigger.enabled = false;
                     awakeSheep.Insert(0, closestSheep);
                     swap = true;
                 }
                 if (canEat && shepherd.berries[berryIndex].GetComponent<Shrubs>().Eat())
                 {
-                    shepherd.berries[berryIndex].GetComponent<Shrubs>().GrantPowerUp(gameObject);
-                    transform.GetChild(2).GetComponent<MeshFilter>().mesh = meshes[0];
+                    shepherd.berries[berryIndex].GetComponent<Shrubs>().GrantPowerUp(gameObject);                    switch (sheepType)
+                    {
+                        case SheepType.Slab:
+                            transform.GetChild(2).GetComponent<MeshFilter>().mesh = meshes[0];
+                            break;
+                        case SheepType.Snowball:
+                            transform.GetChild(2).GetComponent<MeshFilter>().mesh = meshes[2];
+                            break;
+                        default:
+                            break;
+                    }
                     poweredUp = false;
                 }
             }
@@ -419,7 +430,7 @@ public class Sheep : MonoBehaviour
     // Masks a vector so only the desired elements are carried on,
     // for example data may be (2.4, 4, 1) and mask may be (0,0,1)
     // the resulting float would be (0, 4, 0)
-    protected Vector3 MaskVector(Vector3 data, Vector3 mask)
+    static public Vector3 MaskVector(Vector3 data, Vector3 mask)
     {
         Vector3 temp;
         temp.x = data.x * mask.x;

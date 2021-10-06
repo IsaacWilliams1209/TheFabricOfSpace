@@ -63,4 +63,27 @@ public class Shepherd : MonoBehaviour
         }
         isSheepFocus = !isSheepFocus;
     }
+
+    public void AddPowerToSheep(SheepType type)
+    {
+        switch (type)
+        {
+            case SheepType.Slab:
+                activeSheep.AddComponent<SlabSheep>();
+                activeSheep.GetComponent<Sheep>().sheepType = SheepType.Slab;
+                break;
+
+            case SheepType.Snowball:
+                activeSheep.AddComponent<SnowballSheep>();
+                activeSheep.GetComponent<Sheep>().sheepType = SheepType.Snowball;
+                break;
+
+            case SheepType.Static:
+                break;
+
+            default:
+                break;
+        }
+
+    }
 }
