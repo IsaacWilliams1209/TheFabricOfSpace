@@ -40,7 +40,7 @@ public class SnowballSheep : MonoBehaviour
             {
                 if (hit.transform.tag == "Tree")
                 {
-                    hit.transform.GetComponent<OldTree>().Fall(direction);
+                    hit.transform.parent.GetComponent<OldTree>().Fall(direction);
                     GetComponent<Sheep>().sheepType = SheepType.Sheared;
                     GetComponent<Sheep>().berryIndex = -1;
                     transform.GetChild(2);
