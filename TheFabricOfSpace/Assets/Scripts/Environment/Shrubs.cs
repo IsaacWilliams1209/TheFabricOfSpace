@@ -36,7 +36,7 @@ public class Shrubs : MonoBehaviour
         if (tag == "Reg")
         {
             //sheep.transform.localScale = new Vector3(0.95f, 0.9f, 0.95f);
-            sheep.GetComponent<Sheep>().sheepType = SheepType.Slab;
+            sheep.GetComponent<Sheep>().sheepType = SheepType.Static;
         }
     }
 }
