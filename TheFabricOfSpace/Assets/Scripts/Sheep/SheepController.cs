@@ -126,9 +126,4 @@ public class SheepController : MonoBehaviour
         }
         return hit;
     }
-
-    void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(mesh.TransformPoint(sensorPos), 0.1f);
-    }
 }
