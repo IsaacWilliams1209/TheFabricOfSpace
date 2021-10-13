@@ -21,7 +21,7 @@ public class SheepController : MonoBehaviour
     bool grounded;
     Vector3 movementVector;
 
-    private void Start()
+    void Start()
     {
         mesh = transform.GetChild(1);
         startRotation = mesh.rotation;
@@ -125,10 +125,5 @@ public class SheepController : MonoBehaviour
             return hit;
         }
         return hit;
-    }
-
-    void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(mesh.TransformPoint(sensorPos), 0.1f);
     }
 }

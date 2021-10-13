@@ -54,12 +54,12 @@ public class Shepherd : MonoBehaviour
         if (isSheepFocus)
         {
             mainCamera.gameObject.SetActive(true);
-            activeSheep.transform.GetChild(1).gameObject.SetActive(false);
+            activeSheep.transform.GetChild(4).gameObject.SetActive(false);
         }
         else
         {
             mainCamera.gameObject.SetActive(false);
-            activeSheep.transform.GetChild(1).gameObject.SetActive(true);
+            activeSheep.transform.GetChild(4).gameObject.SetActive(true);
         }
         isSheepFocus = !isSheepFocus;
     }
