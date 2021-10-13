@@ -21,7 +21,7 @@ public class SheepController : MonoBehaviour
     bool grounded;
     Vector3 movementVector;
 
-    private void Start()
+    void Start()
     {
         mesh = transform.GetChild(1);
         startRotation = mesh.rotation;
