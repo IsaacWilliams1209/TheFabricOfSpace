@@ -2,6 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum SheepType
+{
+    Sheared,
+    Slab,
+    Snowball,
+    Static
+}
 public class Shepherd : MonoBehaviour
 {
     // List of sheep on the face
@@ -55,5 +62,30 @@ public class Shepherd : MonoBehaviour
             activeSheep.transform.GetChild(1).gameObject.SetActive(true);
         }
         isSheepFocus = !isSheepFocus;
+    }
+
+    public void AddPowerToSheep(SheepType type)
+    {
+        switch (type)
+        {
+            case SheepType.Slab:
+                activeSheep.AddComponent<SlabSheep>();
+                activeSheep.GetComponent<Sheep>().sheepType = SheepType.Slab;
+                break;
+
+            case SheepType.Snowball:
+                activeSheep.AddComponent<SnowballSheep>();
+                activeSheep.GetComponent<Sheep>().sheepType = SheepType.Snowball;
+                break;
+
+            case SheepType.Static:
+                //activeSheep.AddComponent<StaticSheep>();
+                activeSheep.GetComponent<Sheep>().sheepType = SheepType.Static;
+                break;
+
+            default:
+                break;
+        }
+
     }
 }

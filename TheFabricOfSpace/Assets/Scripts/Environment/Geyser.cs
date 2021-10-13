@@ -35,7 +35,7 @@ public class Geyser : MonoBehaviour
     {
         if (sheep != null)
         {
-            if (sheep.voxel && sheep.poweredUp)
+            if (sheep.sheepType == SheepType.Slab && sheep.poweredUp)
             {
                 if (!(isMoving || active))
                 {
