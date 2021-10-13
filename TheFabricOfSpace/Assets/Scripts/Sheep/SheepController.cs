@@ -36,7 +36,7 @@ public class SheepController : MonoBehaviour
 
     void Gravity()
     {
-        Ray ray = new Ray(transform.TransformPoint(sensorPos), -transform.parent.up);
+        Ray ray = new Ray(mesh.TransformPoint(sensorPos), -transform.parent.up);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
@@ -88,7 +88,7 @@ public class SheepController : MonoBehaviour
     Vector3 CollisionCheck(Vector3 dir)
     {
         Vector3 d = transform.TransformDirection(dir);
-        Vector3 l = transform.TransformPoint(sensorPos);
+        Vector3 l = mesh.TransformPoint(sensorPos);
 
         Ray ray = new Ray(l, d);
 
