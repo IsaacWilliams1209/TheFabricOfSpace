@@ -93,11 +93,11 @@ public class Sheep : MonoBehaviour
     {
         // Initalising variables
         animator = GetComponent<Animator>();
-        defaultMesh = transform.GetChild(2).GetComponent<SkinnedMeshRenderer>().sharedMesh;
+        defaultMesh = transform.GetChild(1).GetComponent<SkinnedMeshRenderer>().sharedMesh;
         shepherd = transform.parent.GetComponent<Shepherd>();
         sheep = shepherd.sheep;
         awakeSheep = shepherd.awakeSheep;
-        matChanger = transform.GetChild(2).GetComponent<SkinnedMeshRenderer>();
+        matChanger = transform.GetChild(1).GetComponent<SkinnedMeshRenderer>();
         controller = GetComponent<SheepController>();
         mainCollider = GetComponents<BoxCollider>()[0];
         wakingTrigger = GetComponents<BoxCollider>()[1];
@@ -167,7 +167,7 @@ public class Sheep : MonoBehaviour
                 if (canWake)
                 {
                     closestSheep.GetComponent<Sheep>().awake = true;
-                    closestSheep.transform.GetChild(2).GetComponent<Renderer>().material = sheepMaterials[0];                    closestSheep.GetComponent<Sheep>().wakingTrigger.enabled = false;
+                    closestSheep.transform.GetChild(1).GetComponent<Renderer>().material = sheepMaterials[0];                    closestSheep.GetComponent<Sheep>().wakingTrigger.enabled = false;
                     awakeSheep.Insert(0, closestSheep);
                     swap = true;
                 }
@@ -176,10 +176,10 @@ public class Sheep : MonoBehaviour
                     shepherd.berries[berryIndex].GetComponent<Shrubs>().GrantPowerUp(gameObject);                    switch (sheepType)
                     {
                         case SheepType.Slab:
-                            transform.GetChild(2).GetComponent<SkinnedMeshRenderer>().sharedMesh = meshes[0];
+                            transform.GetChild(1).GetComponent<SkinnedMeshRenderer>().sharedMesh = meshes[0];
                             break;
                         case SheepType.Snowball:
-                            transform.GetChild(2).GetComponent<SkinnedMeshRenderer>().sharedMesh = meshes[2];
+                            transform.GetChild(1).GetComponent<SkinnedMeshRenderer>().sharedMesh = meshes[2];
                             break;
                         default:
                             break;
@@ -262,12 +262,12 @@ public class Sheep : MonoBehaviour
         {
             if (shepherd.isSheepFocus)
             {
-                transform.GetChild(1).gameObject.SetActive(false);
-                awakeSheep[0].transform.GetChild(1).gameObject.SetActive(true);
+                transform.GetChild(2).GetChild(0).gameObject.SetActive(false);
+                awakeSheep[0].transform.GetChild(2).GetChild(0).gameObject.SetActive(true);
             }
 
             shepherd.activeSheep = awakeSheep[0];
-            awakeSheep[0].transform.GetChild(2).GetComponent<Renderer>().material = sheepMaterials[0];
+            awakeSheep[0].transform.GetChild(1).GetComponent<Renderer>().material = sheepMaterials[0];
             awakeSheep[0].GetComponent<Sheep>().active = true;
             awakeSheep.RemoveAt(0);
             awakeSheep.Add(gameObject);
