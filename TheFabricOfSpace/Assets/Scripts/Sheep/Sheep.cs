@@ -93,11 +93,11 @@ public class Sheep : MonoBehaviour
     {
         // Initalising variables
         animator = GetComponent<Animator>();
-        defaultMesh = transform.GetChild(2).GetComponent<MeshFilter>().mesh;
+        defaultMesh = transform.GetChild(2).GetComponent<SkinnedMeshRenderer>().sharedMesh;
         shepherd = transform.parent.GetComponent<Shepherd>();
         sheep = shepherd.sheep;
         awakeSheep = shepherd.awakeSheep;
-        matChanger = transform.GetChild(2).GetComponent<Renderer>();
+        matChanger = transform.GetChild(2).GetComponent<SkinnedMeshRenderer>();
         controller = GetComponent<SheepController>();
         mainCollider = GetComponents<BoxCollider>()[0];
         wakingTrigger = GetComponents<BoxCollider>()[1];
@@ -105,20 +105,20 @@ public class Sheep : MonoBehaviour
         // Set apropriate materials for the sheep
         if (active)
         {
-            matChanger.material = sheepMaterials[0];
+            matChanger.materials[2] = sheepMaterials[0];
             shepherd.activeSheep = gameObject;
             wakingTrigger.enabled = false;
             wakingTrigger.enabled = false;
         }
         else if (awake)
         {
-            matChanger.material = sheepMaterials[1];
+            matChanger.materials[2] = sheepMaterials[1];
             awakeSheep.Add(gameObject);
             wakingTrigger.enabled = false;
         }
         else
         {
-            matChanger.material = sheepMaterials[2];
+            matChanger.materials[2] = sheepMaterials[2];
         }
         if (sheepType == SheepType.Slab)
         {
@@ -174,10 +174,10 @@ public class Sheep : MonoBehaviour
                     shepherd.berries[berryIndex].GetComponent<Shrubs>().GrantPowerUp(gameObject);                    switch (sheepType)
                     {
                         case SheepType.Slab:
-                            transform.GetChild(2).GetComponent<MeshFilter>().mesh = meshes[0];
+                            transform.GetChild(2).GetComponent<SkinnedMeshRenderer>().sharedMesh = meshes[0];
                             break;
                         case SheepType.Snowball:
-                            transform.GetChild(2).GetComponent<MeshFilter>().mesh = meshes[2];
+                            transform.GetChild(2).GetComponent<SkinnedMeshRenderer>().sharedMesh = meshes[2];
                             break;
                         default:
                             break;

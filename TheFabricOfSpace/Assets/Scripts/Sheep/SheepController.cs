@@ -12,6 +12,8 @@ public class SheepController : MonoBehaviour
 
     public Vector3 sensorPos;
 
+    Quaternion startRotation;
+
     Transform mesh;
 
     Vector3 currentGravity;
@@ -21,7 +23,8 @@ public class SheepController : MonoBehaviour
 
     private void Start()
     {
-        mesh = transform.GetChild(2);
+        mesh = transform.GetChild(1);
+        startRotation = mesh.rotation;
     }
 
     public void Move()
@@ -76,7 +79,7 @@ public class SheepController : MonoBehaviour
         
         if (rotation != Vector3.zero)
         {
-            Quaternion lookRotaion = Quaternion.LookRotation(rotation, transform.parent.up);
+            Quaternion lookRotaion = Quaternion.LookRotation(rotation, transform.parent.up) * startRotation;
         
             mesh.rotation = Quaternion.RotateTowards(mesh.rotation, lookRotaion, rotationSpeed * Time.deltaTime);
         }
@@ -126,6 +129,6 @@ public class SheepController : MonoBehaviour
 
     void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(transform.TransformPoint(sensorPos), 0.1f);
+        Gizmos.DrawWireSphere(mesh.TransformPoint(sensorPos), 0.1f);
     }
 }
