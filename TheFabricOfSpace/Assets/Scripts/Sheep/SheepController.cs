@@ -66,10 +66,8 @@ public class SheepController : MonoBehaviour
 
         // Move the player left/right
         movement += transform.parent.right * Input.GetAxis("Horizontal") * speed * Time.deltaTime;
-        Debug.Log("Movement pre collision" + movement * 100);
             
         movementVector = CollisionCheck(movement);
-        Debug.Log("Movement post collision" + movement * 100);
 
 
     }
