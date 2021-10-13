@@ -36,8 +36,16 @@ public class SnowballSheep : MonoBehaviour
         else
         {
             RaycastHit hit;
-            if (Physics.Raycast(transform.position + (transform.up * 0.45f), direction, 0.5f))
+            if (Physics.Raycast(transform.position + (transform.up * 0.45f), direction, out hit, 0.5f))
             {
+                if (hit.transform.tag == "Tree")
+                {
+                    hit.transform.GetComponent<OldTree>().Fall(direction);
+                    GetComponent<Sheep>().sheepType = SheepType.Sheared;
+                    GetComponent<Sheep>().berryIndex = -1;
+                    transform.GetChild(2);
+                    Destroy(this);
+                }
                 if (Physics.Raycast(transform.position + (transform.up * 0.45f), direction - (transform.up * 0.45f), out hit, 1.5f, 1 << 4))
                 {
                     hit.transform.gameObject.layer = 0;

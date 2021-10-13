@@ -50,7 +50,7 @@ public class Sheep : MonoBehaviour
     public bool canMove = true;
 
     // Index of eaten berry in the Shepherd's Berry array, -1 means no berry eaten
-    int berryIndex = -1;
+    public int berryIndex = -1;
 
 
 
