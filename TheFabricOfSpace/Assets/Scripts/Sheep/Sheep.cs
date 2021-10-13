@@ -141,7 +141,7 @@ public class Sheep : MonoBehaviour
                 if (isJumping)
                 {
                     jumpTime += Time.deltaTime;
-                    float percentDone = jumpTime / Time.deltaTime * 0.25f;
+                    float percentDone = jumpTime * 10;
                     transform.position = Vector3.Lerp(jumpFrames[jumpIndex], jumpFrames[jumpIndex + 1], percentDone);
                     if (transform.position == jumpFrames[jumpIndex + 1])
                     {
@@ -217,6 +217,19 @@ public class Sheep : MonoBehaviour
                     swap = true;
                 }
             }
+
+            RaycastHit hit;
+            if (sheepType != SheepType.Sheared && sheepType != SheepType.Snowball && Physics.Raycast(transform.position + transform.up * 0.3f, -transform.up, out hit, 1.0f, 1))
+            {
+                Debug.Log(hit.transform.name);
+                Debug.DrawRay(transform.position + transform.up * 0.3f, -transform.up, Color.red, 4);
+                if (hit.transform.tag == "Water")
+                {
+                    DestroyIceLily(hit.transform);
+                }
+            }
+
+
             ///////////////////////////////TEMPORARY CODE ////////////////////
             if (Input.GetKeyDown(KeyCode.T))
             {
@@ -295,7 +308,7 @@ public class Sheep : MonoBehaviour
             Debug.Log("Geyser triggered");
             other.transform.parent.GetComponent<Geyser>().sheep = this;
         }
-        if (other.gameObject.tag == "Sheep")
+        if (other.gameObject.tag == "Sheep" && !other.GetComponent<Sheep>().awake)
         {
             canWake = true;
 
@@ -437,5 +450,29 @@ public class Sheep : MonoBehaviour
         temp.y = data.y * mask.y;
         temp.z = data.z * mask.z;
         return temp;
-    }    
+    }  
+    
+    void DestroyIceLily(Transform lily)
+    {
+        lily.gameObject.layer = 4;
+        Vector3[] directions = new Vector3[4];
+
+        directions[0] = lily.forward;
+        directions[1] = lily.right;
+        directions[2] = -lily.forward;
+        directions[3] = -lily.right;
+
+        RaycastHit hit;
+
+        for (int i = 0; i < 4; i++)
+        {
+            if (Physics.Raycast(lily.position - lily.up * 0.4f, directions[i], out hit, 1.0f, 1))
+            {
+                if (hit.transform.tag == "Block" || hit.transform.tag == "Sheep" || hit.transform.tag == "Water")
+                {
+                    hit.transform.GetComponentInChildren<Block>().BlockUpdate();
+                }
+            }
+        }
+    }
 }

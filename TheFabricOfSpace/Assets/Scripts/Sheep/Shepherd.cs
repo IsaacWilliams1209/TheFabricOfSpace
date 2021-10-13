@@ -79,6 +79,8 @@ public class Shepherd : MonoBehaviour
                 break;
 
             case SheepType.Static:
+                //activeSheep.AddComponent<StaticSheep>();
+                activeSheep.GetComponent<Sheep>().sheepType = SheepType.Static;
                 break;
 
             default:

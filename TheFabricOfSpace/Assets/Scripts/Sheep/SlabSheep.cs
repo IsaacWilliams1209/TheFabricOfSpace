@@ -54,7 +54,6 @@ public class SlabSheep : MonoBehaviour
                     {
 
                         // Update nearby blocks
-                        Debug.Log(hits[i].transform.name);
                         gameObject.layer = 0;
 
                         hits[i].transform.GetComponentInChildren<Block>().BlockUpdate();

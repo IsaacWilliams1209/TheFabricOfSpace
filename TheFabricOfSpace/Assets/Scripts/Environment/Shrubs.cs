@@ -45,6 +45,9 @@ public class Shrubs : MonoBehaviour
             case SheepType.Snowball:
                 transform.parent.GetComponent<Shepherd>().AddPowerToSheep(SheepType.Snowball);
                 break;
+            case SheepType.Static:
+                transform.parent.GetComponent<Shepherd>().AddPowerToSheep(SheepType.Static);
+                break;
             default:
                 Debug.Log("Something went wrong L47 shrub.cs");
                 break;
