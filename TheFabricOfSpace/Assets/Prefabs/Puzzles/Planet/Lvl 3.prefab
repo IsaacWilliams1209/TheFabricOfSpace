@@ -424,7 +424,7 @@ MonoBehaviour:
   - {fileID: 2563832039955543765}
   - {fileID: 3732115791970243882}
   awakeSheep:
-  - {fileID: 0}
+  - {fileID: 120573270206172125}
   berries:
   - {fileID: 7215717638751467988}
   - {fileID: 6062072740541096493}
@@ -1233,7 +1233,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3402083336555788401, guid: ec31c2b230fbe4148b310b10985c5445, type: 3}
       propertyPath: sheepType
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec31c2b230fbe4148b310b10985c5445, type: 3}
@@ -2188,7 +2188,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3402083336555788401, guid: ec31c2b230fbe4148b310b10985c5445, type: 3}
       propertyPath: sheepType
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec31c2b230fbe4148b310b10985c5445, type: 3}
@@ -3169,6 +3169,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3402083336555788401, guid: ec31c2b230fbe4148b310b10985c5445, type: 3}
       propertyPath: sheepType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3402083336555788401, guid: ec31c2b230fbe4148b310b10985c5445, type: 3}
+      propertyPath: awake
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -4936,7 +4940,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3402083336555788401, guid: ec31c2b230fbe4148b310b10985c5445, type: 3}
       propertyPath: sheepType
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec31c2b230fbe4148b310b10985c5445, type: 3}

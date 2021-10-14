@@ -216,8 +216,7 @@ MonoBehaviour:
   - {fileID: 1121482694601542779}
   - {fileID: 8745700813262952747}
   - {fileID: 9141805636754620220}
-  awakeSheep:
-  - {fileID: 1121482694601542779}
+  awakeSheep: []
   berries: []
   mainCamera: {fileID: 0}
   activeSheep: {fileID: 0}
@@ -388,6 +387,18 @@ Transform:
   m_Father: {fileID: 3151514799957109884}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2490361577379294882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9141805636754620220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2f759fc2a6a8944a9a9a1af27024388, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &136652546066923910
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8372,14 +8383,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec31c2b230fbe4148b310b10985c5445, type: 3}
---- !u!1 &8745700813262952747 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3038127317310476542, guid: ec31c2b230fbe4148b310b10985c5445, type: 3}
-  m_PrefabInstance: {fileID: 6014381652230375893}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8220520817383064465 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2405564445997910596, guid: ec31c2b230fbe4148b310b10985c5445, type: 3}
+  m_PrefabInstance: {fileID: 6014381652230375893}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8745700813262952747 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3038127317310476542, guid: ec31c2b230fbe4148b310b10985c5445, type: 3}
   m_PrefabInstance: {fileID: 6014381652230375893}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6122555149889023938
