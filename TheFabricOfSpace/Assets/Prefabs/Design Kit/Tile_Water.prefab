@@ -305,6 +305,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 474a63c7dab1cb64ebd51bceebafeb19, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 14eab428678ef9143ae6ae926cc80c0b, type: 2}
+    - target: {fileID: -5754084199372789682, guid: 474a63c7dab1cb64ebd51bceebafeb19, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -2104777123871347495, guid: 2845ec4d21cbf0842b1de9ee5afe7b96, type: 3}
     - target: {fileID: 919132149155446097, guid: 474a63c7dab1cb64ebd51bceebafeb19, type: 3}
       propertyPath: m_Name
       value: IceLily
