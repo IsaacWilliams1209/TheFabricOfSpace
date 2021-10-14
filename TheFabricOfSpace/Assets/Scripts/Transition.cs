@@ -9,8 +9,6 @@ public class Transition : MonoBehaviour
 
     public bool up, left, down, right;
 
-    public string nextFace;
-
     bool isComplete = false;
     
     void Start()
