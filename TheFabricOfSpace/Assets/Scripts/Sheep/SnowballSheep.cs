@@ -7,10 +7,16 @@ public class SnowballSheep : MonoBehaviour
     bool currentlyMoving;
     Vector3 direction;
 
+    Sheep sheep;
+
+    void Start()
+    {
+        sheep = GetComponent<Sheep>();
+    }
 
     private void Update()
     {
-        if (!currentlyMoving)
+        if (!currentlyMoving && sheep.active)
         {
             if (Input.GetKeyDown(KeyCode.W))
             {
@@ -41,9 +47,14 @@ public class SnowballSheep : MonoBehaviour
                 if (hit.transform.tag == "Tree")
                 {
                     hit.transform.parent.GetComponent<OldTree>().Fall(direction);
-                    GetComponent<Sheep>().sheepType = SheepType.Sheared;
-                    GetComponent<Sheep>().berryIndex = -1;
-                    transform.GetChild(2);
+                    sheep.sheepType = SheepType.Sheared;
+                    sheep.berryIndex = -1;
+                    Destroy(this);
+                }
+                if (hit.transform.tag == "Sheep")
+                {
+                    sheep.sheepType = SheepType.Sheared;
+                    sheep.berryIndex = -1;
                     Destroy(this);
                 }
                 if (Physics.Raycast(transform.position + (transform.up * 0.45f), direction - (transform.up * 0.45f), out hit, 1.5f, 1 << 4))

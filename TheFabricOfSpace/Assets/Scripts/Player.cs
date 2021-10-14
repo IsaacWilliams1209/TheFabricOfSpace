@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     MenuManager menuManager;
+    public int sidesCompleted;
     public bool playerWon = false;
 
     private void Start()
@@ -14,7 +15,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P)) { playerWon = true; }
+        if (sidesCompleted == 6) { playerWon = true; }
 
         if (playerWon) {
             playerWon = false;

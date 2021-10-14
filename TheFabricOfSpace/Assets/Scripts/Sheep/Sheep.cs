@@ -29,8 +29,7 @@ public class Sheep : MonoBehaviour
     bool awake = false;
 
     // Is the Sheep active
-    [SerializeField]
-    bool active = false;
+    public bool active = false;
 
     // Will the sheep be swapped this frame
     bool swap = false;
@@ -257,8 +256,8 @@ public class Sheep : MonoBehaviour
         {
             if (shepherd.isSheepFocus)
             {
-                transform.GetChild(2).GetChild(0).gameObject.SetActive(false);
-                awakeSheep[0].transform.GetChild(2).GetChild(0).gameObject.SetActive(true);
+                transform.GetChild(2).GetChild(1).gameObject.SetActive(false);
+                awakeSheep[0].transform.GetChild(2).GetChild(1).gameObject.SetActive(true);
             }
 
             shepherd.activeSheep = awakeSheep[0];
