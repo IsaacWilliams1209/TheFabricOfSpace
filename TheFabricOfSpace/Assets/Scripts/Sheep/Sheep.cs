@@ -54,10 +54,12 @@ public class Sheep : MonoBehaviour
     float jumpLength = 0.7857143f + 0.7413793f - 0.25f;
 
     // Refers to the shepherd of this face
-    Shepherd shepherd;
+    [HideInInspector]
+    public Shepherd shepherd;
 
     // Used to cahnge materials for the sheep being awake/asleep/active
-    Renderer matChanger;
+    [HideInInspector]
+    public Renderer matChanger;
 
     // Time taken for the sheep to jump
     float jumpTime = 0;
@@ -309,7 +311,7 @@ public class Sheep : MonoBehaviour
         {
             Transition transition = other.GetComponent<Transition>();
             //Shepherd tempShepherd = GameObject.Find("Planet Face 6").transform.GetChild(3).GetComponent<Shepherd>();
-            transition.Activate();
+            transition.Activate(this);
             return;
             // you win! activate world rotation
             //tempShepherd.awakeSheep[0].GetComponent<Sheep>().active = true;
