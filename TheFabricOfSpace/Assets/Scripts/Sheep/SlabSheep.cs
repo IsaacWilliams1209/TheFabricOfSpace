@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SlabSheep : Sheep
+public class SlabSheep : MonoBehaviour
 {
     public void ActivatePowerUp(Sheep sheep)
     {
@@ -24,8 +24,8 @@ public class SlabSheep : Sheep
             Vector3 temp = transform.parent.right + transform.parent.forward;
 
             //Vector3 temp = new Vector3(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y), Mathf.Round(transform.position.z)) + transform.parent.up;
-            Vector3 newPos = MaskVector(new Vector3(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y), Mathf.Round(transform.position.z)), temp);
-            newPos += MaskVector(new Vector3(Mathf.Floor(transform.position.x), Mathf.Floor(transform.position.y), Mathf.Floor(transform.position.z)), transform.parent.up) + transform.parent.up * 0.5f;
+            Vector3 newPos = Sheep.MaskVector(new Vector3(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y), Mathf.Round(transform.position.z)), temp);
+            newPos += Sheep.MaskVector(new Vector3(Mathf.Floor(transform.position.x), Mathf.Floor(transform.position.y), Mathf.Floor(transform.position.z)), transform.parent.up) + transform.parent.up * 0.5f;
 
 
 
@@ -54,7 +54,6 @@ public class SlabSheep : Sheep
                     {
 
                         // Update nearby blocks
-                        Debug.Log(hits[i].transform.name);
                         gameObject.layer = 0;
 
                         hits[i].transform.GetComponentInChildren<Block>().BlockUpdate();
@@ -67,7 +66,7 @@ public class SlabSheep : Sheep
 
             // Activate block on slab sheep
 
-            sheep.transform.GetChild(0).gameObject.SetActive(true);
+            sheep.transform.GetChild(2).GetChild(0).gameObject.SetActive(true);
 
             // Update block for the on the slab sheep
 
@@ -75,9 +74,9 @@ public class SlabSheep : Sheep
 
             gameObject.layer = 0;
 
-            sheep.transform.GetChild(0).gameObject.layer = 0;
+            sheep.transform.GetChild(2).GetChild(0).gameObject.layer = 0;
 
-            sheep.transform.GetChild(2).GetComponent<MeshFilter>().mesh = sheep.meshes[1];
+            //sheep.transform.GetChild(2).GetComponent<SkinnedMeshRenderer>().sharedMesh = sheep.meshes[1];
 
         }
         else
@@ -85,11 +84,11 @@ public class SlabSheep : Sheep
 
             gameObject.layer = 2;
 
-            transform.GetChild(0).gameObject.layer = 2;
+            transform.GetChild(2).GetChild(0).gameObject.layer = 2;
 
             // Set block on slab sheep to inactive                
 
-            transform.GetChild(0).gameObject.SetActive(false);
+            transform.GetChild(2).GetChild(0).gameObject.SetActive(false);
 
             RaycastHit[] hits = new RaycastHit[4];
 
@@ -125,7 +124,7 @@ public class SlabSheep : Sheep
 
             sheep.canMove = true;
 
-            transform.GetChild(2).GetComponent<MeshFilter>().mesh = sheep.meshes[0];
+            //transform.GetChild(2).GetComponent<SkinnedMeshRenderer>().sharedMesh = sheep.meshes[0];
 
             sheep.mainCollider.enabled = false;
         }

@@ -12,6 +12,8 @@ public class SheepController : MonoBehaviour
 
     public Vector3 sensorPos;
 
+    Quaternion startRotation;
+
     Transform mesh;
 
     Vector3 currentGravity;
@@ -19,9 +21,10 @@ public class SheepController : MonoBehaviour
     bool grounded;
     Vector3 movementVector;
 
-    private void Start()
+    void Start()
     {
-        mesh = transform.GetChild(2);
+        mesh = transform.GetChild(0);
+        startRotation = mesh.rotation;
     }
 
     public void Move()
@@ -35,7 +38,7 @@ public class SheepController : MonoBehaviour
     {
         Ray ray = new Ray(transform.TransformPoint(sensorPos), -transform.parent.up);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity) && !hit.collider.isTrigger)
         {
             if (hit.distance < 0.55f  || hit.transform.tag == "Sheep")
                 grounded = true;
@@ -45,7 +48,7 @@ public class SheepController : MonoBehaviour
 
         if (grounded)
         {
-            transform.position = VectorMask(transform.position, transform.parent.forward) + VectorMask(hit.point, transform.parent.up) + VectorMask(transform.position, transform.parent.right);
+            transform.position = Sheep.MaskVector(transform.position, transform.parent.forward) + Sheep.MaskVector(hit.point, transform.parent.up) + Sheep.MaskVector(transform.position, transform.parent.right);
             currentGravity = Vector3.zero;
         }
         else
@@ -63,22 +66,27 @@ public class SheepController : MonoBehaviour
 
         // Move the player left/right
         movement += transform.parent.right * Input.GetAxis("Horizontal") * speed * Time.deltaTime;
+            
         movementVector = CollisionCheck(movement);
-       
-        
+
+
     }
 
     void FinalMovement()
     {
         transform.position += transform.TransformDirection(movementVector + currentGravity);
 
-        Vector3 rotation = VectorMask(movementVector, transform.parent.right) + VectorMask(movementVector, transform.parent.up) + VectorMask(movementVector, transform.parent.forward);
+        Vector3 rotation = Sheep.MaskVector(movementVector, transform.parent.right) + Sheep.MaskVector(movementVector, transform.parent.up) + Sheep.MaskVector(movementVector, transform.parent.forward);
         
         if (rotation != Vector3.zero)
         {
             Quaternion lookRotaion = Quaternion.LookRotation(rotation, transform.parent.up);
-        
+            
             mesh.rotation = Quaternion.RotateTowards(mesh.rotation, lookRotaion, rotationSpeed * Time.deltaTime);
+
+            //Quaternion lookRotaion = Quaternion.LookRotation(rotation, transform.parent.up);
+            //
+            //transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotaion, rotationSpeed * Time.deltaTime);
         }
     }
 
@@ -91,7 +99,7 @@ public class SheepController : MonoBehaviour
 
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, 2))
+        if (Physics.Raycast(ray, out hit, 2) && !hit.collider.isTrigger)
         {
             if (hit.distance < 0.4f)
             {
@@ -117,23 +125,15 @@ public class SheepController : MonoBehaviour
         Ray ray = new Ray(l, dir);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, 0.1f))
+        if (Physics.Raycast(ray, out hit, 0.1f) && !hit.collider.isTrigger)
         {
             return hit;
         }
         return hit;
     }
 
-    Vector3 VectorMask(Vector3 data, Vector3 mask)
-    {
-        data.x *= mask.x;
-        data.y *= mask.y;
-        data.z *= mask.z;
-        return data;
-    }
-
     void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(transform.TransformPoint(sensorPos), 0.1f);
+        Gizmos.DrawWireCube(transform.TransformPoint(sensorPos), new Vector3(0.1f, 0.1f, 0.1f));
     }
 }

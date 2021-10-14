@@ -17,7 +17,7 @@ public class Sheep : MonoBehaviour
     public SheepType sheepType = SheepType.Sheared;
 
     // List of awake sheep on the face
-    List<GameObject> awakeSheep = new List<GameObject>();
+    public List<GameObject> awakeSheep = new List<GameObject>();
 
     // Array of sheep on the face
     GameObject[] sheep = new GameObject[1];
@@ -29,8 +29,7 @@ public class Sheep : MonoBehaviour
     bool awake = false;
 
     // Is the Sheep active
-    [SerializeField]
-    bool active = false;
+    public bool active = false;
 
     // Will the sheep be swapped this frame
     bool swap = false;
@@ -50,7 +49,7 @@ public class Sheep : MonoBehaviour
     public bool canMove = true;
 
     // Index of eaten berry in the Shepherd's Berry array, -1 means no berry eaten
-    int berryIndex = -1;
+    public int berryIndex = -1;
 
 
 
@@ -78,7 +77,8 @@ public class Sheep : MonoBehaviour
     [HideInInspector]
     public BoxCollider mainCollider;
 
-    BoxCollider wakingTrigger;
+    [HideInInspector]
+    public BoxCollider wakingTrigger;
 
     Mesh defaultMesh;
 
@@ -87,16 +87,18 @@ public class Sheep : MonoBehaviour
 
     public List<Mesh> meshes = new List<Mesh>();
 
+    public bool staticHoldingSheep = false;
+
     // Start is called before the first frame update
     void Start()
     {
         // Initalising variables
         animator = GetComponent<Animator>();
-        defaultMesh = transform.GetChild(2).GetComponent<MeshFilter>().mesh;
+        defaultMesh = transform.GetChild(1).GetComponent<SkinnedMeshRenderer>().sharedMesh;
         shepherd = transform.parent.GetComponent<Shepherd>();
         sheep = shepherd.sheep;
         awakeSheep = shepherd.awakeSheep;
-        matChanger = transform.GetChild(2).GetComponent<Renderer>();
+        matChanger = transform.GetChild(1).GetComponent<SkinnedMeshRenderer>();
         controller = GetComponent<SheepController>();
         mainCollider = GetComponents<BoxCollider>()[0];
         wakingTrigger = GetComponents<BoxCollider>()[1];
@@ -104,19 +106,20 @@ public class Sheep : MonoBehaviour
         // Set apropriate materials for the sheep
         if (active)
         {
-            matChanger.material = sheepMaterials[0];
+            matChanger.materials[2] = sheepMaterials[0];
             shepherd.activeSheep = gameObject;
+            wakingTrigger.enabled = false;
             wakingTrigger.enabled = false;
         }
         else if (awake)
         {
-            matChanger.material = sheepMaterials[1];
+            matChanger.materials[2] = sheepMaterials[1];
             awakeSheep.Add(gameObject);
             wakingTrigger.enabled = false;
         }
         else
         {
-            matChanger.material = sheepMaterials[2];
+            matChanger.materials[2] = sheepMaterials[2];
         }
         if (sheepType == SheepType.Slab)
         {
@@ -129,7 +132,7 @@ public class Sheep : MonoBehaviour
     {
         if (active)
         {
-            if (canMove)
+            if (canMove && sheepType != SheepType.Snowball)
             {
                 controller.Move();
             }
@@ -139,18 +142,20 @@ public class Sheep : MonoBehaviour
                 if (isJumping)
                 {
                     jumpTime += Time.deltaTime;
-                    float percentDone = jumpTime / Time.deltaTime * 0.25f;
+                    float percentDone = jumpTime * 50;
                     transform.position = Vector3.Lerp(jumpFrames[jumpIndex], jumpFrames[jumpIndex + 1], percentDone);
                     if (transform.position == jumpFrames[jumpIndex + 1])
                     {
-                        jumpTime = 0;
+                        jumpTime = 0;
+
                         if (jumpIndex < jumpFrames.Length - 2)
                         {
                             jumpIndex++;
                         }
                         else
                         {
-                            isJumping = false;
+                            isJumping = false;
+
                             canMove = true;
 
                             jumpIndex = 0;
@@ -162,19 +167,35 @@ public class Sheep : MonoBehaviour
             {
                 if (canWake)
                 {
-                    closestSheep.GetComponent<Sheep>().awake = true;
-                    closestSheep.transform.GetChild(2).GetComponent<Renderer>().material = sheepMaterials[0];
-                    awakeSheep.Insert(0, closestSheep);
-                    swap = true;
+                    closestSheep.GetComponent<Sheep>().awake = true;
+
+                    closestSheep.transform.GetChild(1).GetComponent<Renderer>().material = sheepMaterials[0];
+                    closestSheep.GetComponent<Sheep>().wakingTrigger.enabled = false;
+                    awakeSheep.Insert(0, closestSheep);
+
+                    swap = true;
+
                 }
                 if (canEat && shepherd.berries[berryIndex].GetComponent<Shrubs>().Eat())
                 {
-                    shepherd.berries[berryIndex].GetComponent<Shrubs>().GrantPowerUp(gameObject);
-                    transform.GetChild(2).GetComponent<MeshFilter>().mesh = meshes[0];
+                    shepherd.berries[berryIndex].GetComponent<Shrubs>().GrantPowerUp(gameObject);
+                    switch (sheepType)
+                    {
+                        case SheepType.Slab:
+                            transform.GetChild(1).GetComponent<SkinnedMeshRenderer>().sharedMesh = meshes[0];
+                            break;
+                        case SheepType.Snowball:
+                            transform.GetChild(1).GetComponent<SkinnedMeshRenderer>().sharedMesh = meshes[2];
+                            break;
+                        default:
+                            break;
+                    }
+
                     poweredUp = false;
                 }
             }
-            // On R press activate the sheep powerup
+            // On R press activate the sheep powerup
+
             if (Input.GetKeyDown(KeyCode.R))
             {
                 poweredUp = !poweredUp;
@@ -193,19 +214,49 @@ public class Sheep : MonoBehaviour
                     case SheepType.Snowball:
                         break;
                     case SheepType.Static:
+                        if (poweredUp)
+                        {
+                            GetComponent<StaticSheep>().ActivatePowerUp(this);
+                        }
+                        else
+                        {
+                            GetComponent<StaticSheep>().DeActivatePowerUp(this);
+                        }
                         break;
                     default:
                         break;
-                }
+                }
+
             }
             // On left shift press, swap to the next active sheep
-            if (Input.GetKeyUp(KeyCode.LeftShift))
+            if (Input.GetKeyUp(KeyCode.LeftShift) && !staticHoldingSheep)
             {
                 if (awakeSheep.Count != 0)
                 {
                     swap = true;
                 }
+
             }
+
+            RaycastHit hit;
+            if (sheepType != SheepType.Sheared && sheepType != SheepType.Snowball && Physics.Raycast(transform.position + transform.up * 0.3f, -transform.up, out hit, 1.0f, 1))
+            {
+                //Debug.Log(hit.transform.name);
+                //Debug.DrawRay(transform.position + transform.up * 0.3f, -transform.up, Color.red, 4);
+                if (hit.transform.tag == "Water")
+                {
+                    
+                    IceLily temp;
+                    if (hit.transform.TryGetComponent<IceLily>(out temp))
+                    {
+                        Debug.Log("WalkedOn = true");
+                        temp.walkedOn = true;
+                    }
+                    
+                }
+            }
+
+
             ///////////////////////////////TEMPORARY CODE ////////////////////
             if (Input.GetKeyDown(KeyCode.T))
             {
@@ -228,17 +279,20 @@ public class Sheep : MonoBehaviour
 
     void LateUpdate()
     {
+
         // Swap to the next sheep
         if (swap)
         {
+            //shepherd.SwapCams();
             if (shepherd.isSheepFocus)
             {
-                transform.GetChild(1).gameObject.SetActive(false);
-                awakeSheep[0].transform.GetChild(1).gameObject.SetActive(true);
+                transform.GetChild(2).GetChild(1).gameObject.SetActive(false);
+                awakeSheep[0].transform.GetChild(2).GetChild(1).gameObject.SetActive(true);
             }
 
+            transform.GetComponent<BoxCollider>().enabled = true;
             shepherd.activeSheep = awakeSheep[0];
-            awakeSheep[0].transform.GetChild(2).GetComponent<Renderer>().material = sheepMaterials[0];
+            awakeSheep[0].transform.GetChild(1).GetComponent<Renderer>().material = sheepMaterials[0];
             awakeSheep[0].GetComponent<Sheep>().active = true;
             awakeSheep.RemoveAt(0);
             awakeSheep.Add(gameObject);
@@ -284,7 +338,7 @@ public class Sheep : MonoBehaviour
             Debug.Log("Geyser triggered");
             other.transform.parent.GetComponent<Geyser>().sheep = this;
         }
-        if (other.gameObject.tag == "Sheep")
+        if (other.gameObject.tag == "Sheep" && !other.GetComponent<Sheep>().awake)
         {
             canWake = true;
 
@@ -300,6 +354,7 @@ public class Sheep : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+
         // Remove jump ability when leaving the trigger
         if (other.gameObject.tag == "Jump")
             canJump = false;
@@ -419,12 +474,14 @@ public class Sheep : MonoBehaviour
     // Masks a vector so only the desired elements are carried on,
     // for example data may be (2.4, 4, 1) and mask may be (0,0,1)
     // the resulting float would be (0, 4, 0)
-    protected Vector3 MaskVector(Vector3 data, Vector3 mask)
+    static public Vector3 MaskVector(Vector3 data, Vector3 mask)
     {
         Vector3 temp;
         temp.x = data.x * mask.x;
         temp.y = data.y * mask.y;
         temp.z = data.z * mask.z;
         return temp;
-    }    
+    }  
+    
+    
 }
