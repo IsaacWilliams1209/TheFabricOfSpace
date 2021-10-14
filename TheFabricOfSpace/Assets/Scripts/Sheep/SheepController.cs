@@ -38,7 +38,7 @@ public class SheepController : MonoBehaviour
     {
         Ray ray = new Ray(transform.TransformPoint(sensorPos), -transform.parent.up);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity) && !hit.collider.isTrigger)
         {
             if (hit.distance < 0.55f  || hit.transform.tag == "Sheep")
                 grounded = true;
@@ -99,7 +99,7 @@ public class SheepController : MonoBehaviour
 
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, 2))
+        if (Physics.Raycast(ray, out hit, 2) && !hit.collider.isTrigger)
         {
             if (hit.distance < 0.4f)
             {
@@ -125,7 +125,7 @@ public class SheepController : MonoBehaviour
         Ray ray = new Ray(l, dir);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, 0.1f))
+        if (Physics.Raycast(ray, out hit, 0.1f) && !hit.collider.isTrigger)
         {
             return hit;
         }

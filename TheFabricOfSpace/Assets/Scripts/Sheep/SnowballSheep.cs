@@ -42,7 +42,7 @@ public class SnowballSheep : MonoBehaviour
         else
         {
             RaycastHit hit;
-            if (Physics.Raycast(transform.position + (transform.up * 0.45f), direction, out hit, 0.5f))
+            if (Physics.Raycast(transform.position + (transform.up * 0.45f), direction, out hit, 0.5f) && !hit.collider.isTrigger)
             {
                 if (hit.transform.tag == "Tree")
                 {
@@ -59,6 +59,7 @@ public class SnowballSheep : MonoBehaviour
                 }
                 if (Physics.Raycast(transform.position + (transform.up * 0.45f), direction - (transform.up * 0.45f), out hit, 1.5f, 1 << 4))
                 {
+                    hit.transform.gameObject.AddComponent<IceLily>();
                     hit.transform.gameObject.layer = 0;
                     hit.transform.GetChild(0).GetComponent<Block>().BlockUpdate();
 
@@ -80,13 +81,10 @@ public class SnowballSheep : MonoBehaviour
                                 Debug.DrawRay(origin, directions[i] * 2, Color.red, 2.0f);
                                 // Update nearby blocks                                
                                 hit.transform.GetComponentInChildren<Block>().BlockUpdate();
+                                Debug.Log(hit.transform.name);
                             }
                         }
                     }
-
-                    
-
-
                 }
                 else
                 {

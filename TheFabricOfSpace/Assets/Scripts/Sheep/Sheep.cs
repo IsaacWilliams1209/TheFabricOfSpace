@@ -140,7 +140,7 @@ public class Sheep : MonoBehaviour
                 if (isJumping)
                 {
                     jumpTime += Time.deltaTime;
-                    float percentDone = jumpTime * 10;
+                    float percentDone = jumpTime * 50;
                     transform.position = Vector3.Lerp(jumpFrames[jumpIndex], jumpFrames[jumpIndex + 1], percentDone);
                     if (transform.position == jumpFrames[jumpIndex + 1])
                     {
@@ -229,7 +229,13 @@ public class Sheep : MonoBehaviour
                 Debug.DrawRay(transform.position + transform.up * 0.3f, -transform.up, Color.red, 4);
                 if (hit.transform.tag == "Water")
                 {
-                    DestroyIceLily(hit.transform);
+                    Debug.Log("WalkedOn = true");
+                    IceLily temp;
+                    if (hit.transform.parent.TryGetComponent<IceLily>(out temp))
+                    {
+                        temp.walkedOn = true;
+                    }
+                    
                 }
             }
 
@@ -456,27 +462,5 @@ public class Sheep : MonoBehaviour
         return temp;
     }  
     
-    void DestroyIceLily(Transform lily)
-    {
-        lily.gameObject.layer = 4;
-        Vector3[] directions = new Vector3[4];
-
-        directions[0] = lily.forward;
-        directions[1] = lily.right;
-        directions[2] = -lily.forward;
-        directions[3] = -lily.right;
-
-        RaycastHit hit;
-
-        for (int i = 0; i < 4; i++)
-        {
-            if (Physics.Raycast(lily.position - lily.up * 0.4f, directions[i], out hit, 1.0f, 1))
-            {
-                if (hit.transform.tag == "Block" || hit.transform.tag == "Sheep" || hit.transform.tag == "Water")
-                {
-                    hit.transform.GetComponentInChildren<Block>().BlockUpdate();
-                }
-            }
-        }
-    }
+    
 }
