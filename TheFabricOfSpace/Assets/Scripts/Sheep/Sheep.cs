@@ -51,7 +51,7 @@ public class Sheep : MonoBehaviour
     // Index of eaten berry in the Shepherd's Berry array, -1 means no berry eaten
     public int berryIndex = -1;
 
-
+    float jumpLength = 0.7857143f + 0.7413793f - 0.25f;
 
     // Refers to the shepherd of this face
     Shepherd shepherd;
@@ -141,9 +141,8 @@ public class Sheep : MonoBehaviour
                 // If the player can't move and is jump cycle through the jumpFrames
                 if (isJumping)
                 {
-                    jumpTime += Time.deltaTime;
-                    float percentDone = jumpTime * 50;
-                    transform.position = Vector3.Lerp(jumpFrames[jumpIndex], jumpFrames[jumpIndex + 1], percentDone);
+                    jumpTime += Time.deltaTime / jumpLength * jumpFrames.Length;
+                    transform.position = Vector3.Lerp(jumpFrames[jumpIndex], jumpFrames[jumpIndex + 1], jumpTime);
                     if (transform.position == jumpFrames[jumpIndex + 1])
                     {
                         jumpTime = 0;
