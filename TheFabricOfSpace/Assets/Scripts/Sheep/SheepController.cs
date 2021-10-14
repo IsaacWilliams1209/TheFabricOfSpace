@@ -23,7 +23,7 @@ public class SheepController : MonoBehaviour
 
     void Start()
     {
-        mesh = transform.GetChild(1);
+        mesh = transform.GetChild(0);
         startRotation = mesh.rotation;
     }
 
@@ -36,9 +36,9 @@ public class SheepController : MonoBehaviour
 
     void Gravity()
     {
-        Ray ray = new Ray(mesh.TransformPoint(sensorPos), -transform.parent.up);
+        Ray ray = new Ray(transform.TransformPoint(sensorPos), -transform.parent.up);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity) && !hit.collider.isTrigger)
         {
             if (hit.distance < 0.55f  || hit.transform.tag == "Sheep")
                 grounded = true;
@@ -66,9 +66,10 @@ public class SheepController : MonoBehaviour
 
         // Move the player left/right
         movement += transform.parent.right * Input.GetAxis("Horizontal") * speed * Time.deltaTime;
+            
         movementVector = CollisionCheck(movement);
-       
-        
+
+
     }
 
     void FinalMovement()
@@ -79,22 +80,26 @@ public class SheepController : MonoBehaviour
         
         if (rotation != Vector3.zero)
         {
-            Quaternion lookRotaion = Quaternion.LookRotation(rotation, transform.parent.up) * startRotation;
-        
+            Quaternion lookRotaion = Quaternion.LookRotation(rotation, transform.parent.up);
+            
             mesh.rotation = Quaternion.RotateTowards(mesh.rotation, lookRotaion, rotationSpeed * Time.deltaTime);
+
+            //Quaternion lookRotaion = Quaternion.LookRotation(rotation, transform.parent.up);
+            //
+            //transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotaion, rotationSpeed * Time.deltaTime);
         }
     }
 
     Vector3 CollisionCheck(Vector3 dir)
     {
         Vector3 d = transform.TransformDirection(dir);
-        Vector3 l = mesh.TransformPoint(sensorPos);
+        Vector3 l = transform.TransformPoint(sensorPos);
 
         Ray ray = new Ray(l, d);
 
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, 2))
+        if (Physics.Raycast(ray, out hit, 2) && !hit.collider.isTrigger)
         {
             if (hit.distance < 0.4f)
             {
@@ -120,7 +125,7 @@ public class SheepController : MonoBehaviour
         Ray ray = new Ray(l, dir);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, 0.1f))
+        if (Physics.Raycast(ray, out hit, 0.1f) && !hit.collider.isTrigger)
         {
             return hit;
         }
@@ -129,6 +134,6 @@ public class SheepController : MonoBehaviour
 
     void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(mesh.TransformPoint(sensorPos), 0.1f);
+        Gizmos.DrawWireCube(transform.TransformPoint(sensorPos), new Vector3(0.1f, 0.1f, 0.1f));
     }
 }

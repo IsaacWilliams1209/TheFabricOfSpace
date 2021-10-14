@@ -17,7 +17,7 @@ public class Sheep : MonoBehaviour
     public SheepType sheepType = SheepType.Sheared;
 
     // List of awake sheep on the face
-    List<GameObject> awakeSheep = new List<GameObject>();
+    public List<GameObject> awakeSheep = new List<GameObject>();
 
     // Array of sheep on the face
     GameObject[] sheep = new GameObject[1];
@@ -29,8 +29,7 @@ public class Sheep : MonoBehaviour
     bool awake = false;
 
     // Is the Sheep active
-    [SerializeField]
-    bool active = false;
+    public bool active = false;
 
     // Will the sheep be swapped this frame
     bool swap = false;
@@ -50,7 +49,7 @@ public class Sheep : MonoBehaviour
     public bool canMove = true;
 
     // Index of eaten berry in the Shepherd's Berry array, -1 means no berry eaten
-    int berryIndex = -1;
+    public int berryIndex = -1;
 
 
 
@@ -88,16 +87,18 @@ public class Sheep : MonoBehaviour
 
     public List<Mesh> meshes = new List<Mesh>();
 
+    public bool staticHoldingSheep = false;
+
     // Start is called before the first frame update
     void Start()
     {
         // Initalising variables
         animator = GetComponent<Animator>();
-        defaultMesh = transform.GetChild(2).GetComponent<SkinnedMeshRenderer>().sharedMesh;
+        defaultMesh = transform.GetChild(1).GetComponent<SkinnedMeshRenderer>().sharedMesh;
         shepherd = transform.parent.GetComponent<Shepherd>();
         sheep = shepherd.sheep;
         awakeSheep = shepherd.awakeSheep;
-        matChanger = transform.GetChild(2).GetComponent<SkinnedMeshRenderer>();
+        matChanger = transform.GetChild(1).GetComponent<SkinnedMeshRenderer>();
         controller = GetComponent<SheepController>();
         mainCollider = GetComponents<BoxCollider>()[0];
         wakingTrigger = GetComponents<BoxCollider>()[1];
@@ -141,18 +142,20 @@ public class Sheep : MonoBehaviour
                 if (isJumping)
                 {
                     jumpTime += Time.deltaTime;
-                    float percentDone = jumpTime * 10;
+                    float percentDone = jumpTime * 50;
                     transform.position = Vector3.Lerp(jumpFrames[jumpIndex], jumpFrames[jumpIndex + 1], percentDone);
                     if (transform.position == jumpFrames[jumpIndex + 1])
                     {
-                        jumpTime = 0;
+                        jumpTime = 0;
+
                         if (jumpIndex < jumpFrames.Length - 2)
                         {
                             jumpIndex++;
                         }
                         else
                         {
-                            isJumping = false;
+                            isJumping = false;
+
                             canMove = true;
 
                             jumpIndex = 0;
@@ -164,28 +167,35 @@ public class Sheep : MonoBehaviour
             {
                 if (canWake)
                 {
-                    closestSheep.GetComponent<Sheep>().awake = true;
-                    closestSheep.transform.GetChild(2).GetComponent<Renderer>().material = sheepMaterials[0];                    closestSheep.GetComponent<Sheep>().wakingTrigger.enabled = false;
-                    awakeSheep.Insert(0, closestSheep);
-                    swap = true;
+                    closestSheep.GetComponent<Sheep>().awake = true;
+
+                    closestSheep.transform.GetChild(1).GetComponent<Renderer>().material = sheepMaterials[0];
+                    closestSheep.GetComponent<Sheep>().wakingTrigger.enabled = false;
+                    awakeSheep.Insert(0, closestSheep);
+
+                    swap = true;
+
                 }
                 if (canEat && shepherd.berries[berryIndex].GetComponent<Shrubs>().Eat())
                 {
-                    shepherd.berries[berryIndex].GetComponent<Shrubs>().GrantPowerUp(gameObject);                    switch (sheepType)
+                    shepherd.berries[berryIndex].GetComponent<Shrubs>().GrantPowerUp(gameObject);
+                    switch (sheepType)
                     {
                         case SheepType.Slab:
-                            transform.GetChild(2).GetComponent<SkinnedMeshRenderer>().sharedMesh = meshes[0];
+                            transform.GetChild(1).GetComponent<SkinnedMeshRenderer>().sharedMesh = meshes[0];
                             break;
                         case SheepType.Snowball:
-                            transform.GetChild(2).GetComponent<SkinnedMeshRenderer>().sharedMesh = meshes[2];
+                            transform.GetChild(1).GetComponent<SkinnedMeshRenderer>().sharedMesh = meshes[2];
                             break;
                         default:
                             break;
-                    }
+                    }
+
                     poweredUp = false;
                 }
             }
-            // On R press activate the sheep powerup
+            // On R press activate the sheep powerup
+
             if (Input.GetKeyDown(KeyCode.R))
             {
                 poweredUp = !poweredUp;
@@ -204,28 +214,45 @@ public class Sheep : MonoBehaviour
                     case SheepType.Snowball:
                         break;
                     case SheepType.Static:
+                        if (poweredUp)
+                        {
+                            GetComponent<StaticSheep>().ActivatePowerUp(this);
+                        }
+                        else
+                        {
+                            GetComponent<StaticSheep>().DeActivatePowerUp(this);
+                        }
                         break;
                     default:
                         break;
-                }
+                }
+
             }
             // On left shift press, swap to the next active sheep
-            if (Input.GetKeyUp(KeyCode.LeftShift))
+            if (Input.GetKeyUp(KeyCode.LeftShift) && !staticHoldingSheep)
             {
                 if (awakeSheep.Count != 0)
                 {
                     swap = true;
                 }
+
             }
 
             RaycastHit hit;
             if (sheepType != SheepType.Sheared && sheepType != SheepType.Snowball && Physics.Raycast(transform.position + transform.up * 0.3f, -transform.up, out hit, 1.0f, 1))
             {
-                Debug.Log(hit.transform.name);
-                Debug.DrawRay(transform.position + transform.up * 0.3f, -transform.up, Color.red, 4);
+                //Debug.Log(hit.transform.name);
+                //Debug.DrawRay(transform.position + transform.up * 0.3f, -transform.up, Color.red, 4);
                 if (hit.transform.tag == "Water")
                 {
-                    DestroyIceLily(hit.transform);
+                    
+                    IceLily temp;
+                    if (hit.transform.TryGetComponent<IceLily>(out temp))
+                    {
+                        Debug.Log("WalkedOn = true");
+                        temp.walkedOn = true;
+                    }
+                    
                 }
             }
 
@@ -252,17 +279,20 @@ public class Sheep : MonoBehaviour
 
     void LateUpdate()
     {
+
         // Swap to the next sheep
         if (swap)
         {
+            //shepherd.SwapCams();
             if (shepherd.isSheepFocus)
             {
-                transform.GetChild(1).gameObject.SetActive(false);
-                awakeSheep[0].transform.GetChild(1).gameObject.SetActive(true);
+                transform.GetChild(2).GetChild(1).gameObject.SetActive(false);
+                awakeSheep[0].transform.GetChild(2).GetChild(1).gameObject.SetActive(true);
             }
 
+            transform.GetComponent<BoxCollider>().enabled = true;
             shepherd.activeSheep = awakeSheep[0];
-            awakeSheep[0].transform.GetChild(2).GetComponent<Renderer>().material = sheepMaterials[0];
+            awakeSheep[0].transform.GetChild(1).GetComponent<Renderer>().material = sheepMaterials[0];
             awakeSheep[0].GetComponent<Sheep>().active = true;
             awakeSheep.RemoveAt(0);
             awakeSheep.Add(gameObject);
@@ -324,6 +354,7 @@ public class Sheep : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+
         // Remove jump ability when leaving the trigger
         if (other.gameObject.tag == "Jump")
             canJump = false;
@@ -452,27 +483,5 @@ public class Sheep : MonoBehaviour
         return temp;
     }  
     
-    void DestroyIceLily(Transform lily)
-    {
-        lily.gameObject.layer = 4;
-        Vector3[] directions = new Vector3[4];
-
-        directions[0] = lily.forward;
-        directions[1] = lily.right;
-        directions[2] = -lily.forward;
-        directions[3] = -lily.right;
-
-        RaycastHit hit;
-
-        for (int i = 0; i < 4; i++)
-        {
-            if (Physics.Raycast(lily.position - lily.up * 0.4f, directions[i], out hit, 1.0f, 1))
-            {
-                if (hit.transform.tag == "Block" || hit.transform.tag == "Sheep" || hit.transform.tag == "Water")
-                {
-                    hit.transform.GetComponentInChildren<Block>().BlockUpdate();
-                }
-            }
-        }
-    }
+    
 }

@@ -10,6 +10,8 @@ public class Transition : MonoBehaviour
     public bool up, left, down, right;
 
     public string nextFace;
+
+    bool isComplete = false;
     
     void Start()
     {
@@ -20,11 +22,16 @@ public class Transition : MonoBehaviour
 
     public void Activate()
     {
-        //cameraRotation.up = up;
-        //cameraRotation.left = left;
-        //cameraRotation.down = down;
-        //cameraRotation.right = right;
-        Player player = GameObject.Find("/GameObject").GetComponent<Player>();
-        player.playerWon = true;
+        if (!isComplete)
+        {
+            cameraRotation.up = up;
+            cameraRotation.left = left;
+            cameraRotation.down = down;
+            cameraRotation.right = right;
+            Player player = GameObject.Find("/GameObject").GetComponent<Player>();
+            player.sidesCompleted++;
+            isComplete = true;
+            
+        }        
     }
 }

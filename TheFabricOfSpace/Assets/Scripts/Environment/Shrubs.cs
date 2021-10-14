@@ -37,22 +37,22 @@ public class Shrubs : MonoBehaviour
     // Activates the shrubs power up
     public void GrantPowerUp(GameObject sheep)
     {
-        switch (shrubType)
-        {
+        switch (shrubType)
+        {
             case SheepType.Slab:
-                transform.parent.GetComponent<Shepherd>().AddPowerToSheep(SheepType.Slab);
-                break;
-            case SheepType.Snowball:
-                transform.parent.GetComponent<Shepherd>().AddPowerToSheep(SheepType.Snowball);
-                break;
-            case SheepType.Static:
-                transform.parent.GetComponent<Shepherd>().AddPowerToSheep(SheepType.Static);
-                break;
-            default:
-                Debug.Log("Something went wrong L47 shrub.cs");
-                break;
-
-
+                transform.parent.GetComponent<Shepherd>().AddPowerToSheep(SheepType.Slab);
+                break;
+            case SheepType.Snowball:
+                transform.parent.GetComponent<Shepherd>().AddPowerToSheep(SheepType.Snowball);
+                break;
+            case SheepType.Static:
+                transform.parent.GetComponent<Shepherd>().AddPowerToSheep(SheepType.Static);
+                break;
+            default:
+                Debug.Log("Something went wrong L47 shrub.cs");
+                break;
+
+
         }
     }
 }

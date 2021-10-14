@@ -66,7 +66,7 @@ public class SlabSheep : MonoBehaviour
 
             // Activate block on slab sheep
 
-            sheep.transform.GetChild(3).GetChild(0).gameObject.SetActive(true);
+            sheep.transform.GetChild(2).GetChild(0).gameObject.SetActive(true);
 
             // Update block for the on the slab sheep
 
@@ -74,7 +74,7 @@ public class SlabSheep : MonoBehaviour
 
             gameObject.layer = 0;
 
-            sheep.transform.GetChild(3).GetChild(0).gameObject.layer = 0;
+            sheep.transform.GetChild(2).GetChild(0).gameObject.layer = 0;
 
             //sheep.transform.GetChild(2).GetComponent<SkinnedMeshRenderer>().sharedMesh = sheep.meshes[1];
 
@@ -84,11 +84,11 @@ public class SlabSheep : MonoBehaviour
 
             gameObject.layer = 2;
 
-            transform.GetChild(3).GetChild(0).gameObject.layer = 2;
+            transform.GetChild(2).GetChild(0).gameObject.layer = 2;
 
             // Set block on slab sheep to inactive                
 
-            transform.GetChild(3).GetChild(0).gameObject.SetActive(false);
+            transform.GetChild(2).GetChild(0).gameObject.SetActive(false);
 
             RaycastHit[] hits = new RaycastHit[4];
 
