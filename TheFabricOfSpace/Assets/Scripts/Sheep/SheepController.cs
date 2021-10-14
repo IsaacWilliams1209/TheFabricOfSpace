@@ -84,9 +84,15 @@ public class SheepController : MonoBehaviour
             
             mesh.rotation = Quaternion.RotateTowards(mesh.rotation, lookRotaion, rotationSpeed * Time.deltaTime);
 
+            GetComponent<Sheep>().animator.SetBool("IsWalking", true);
+
             //Quaternion lookRotaion = Quaternion.LookRotation(rotation, transform.parent.up);
             //
             //transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotaion, rotationSpeed * Time.deltaTime);
+        }
+        else
+        {
+            GetComponent<Sheep>().animator.SetBool("IsWalking", false);
         }
     }
 

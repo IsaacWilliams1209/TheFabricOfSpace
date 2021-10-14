@@ -71,7 +71,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7995402346780267138}
   m_LocalRotation: {x: -0, y: -0, z: 0.21850753, w: 0.97583526}
-  m_LocalPosition: {x: 0.608, y: 0.938, z: -0.10400009}
+  m_LocalPosition: {x: 0.608, y: 0.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6878990372308410839}
@@ -157,14 +157,14 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: b215751a79cb4cd4eb2c777a6c487518, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 4644d781c4ca506479e1693d93f0ade8, type: 2}
+      objectReference: {fileID: 2100000, guid: 2847df4adc8f21a42b88af516ed32b0c, type: 2}
     - target: {fileID: 919132149155446097, guid: b215751a79cb4cd4eb2c777a6c487518, type: 3}
       propertyPath: m_Name
       value: Mechanic_LogFallen003_Model
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b215751a79cb4cd4eb2c777a6c487518, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b215751a79cb4cd4eb2c777a6c487518, type: 3}
