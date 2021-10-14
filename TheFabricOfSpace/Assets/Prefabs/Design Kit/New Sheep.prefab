@@ -723,7 +723,7 @@ Animator:
   m_GameObject: {fileID: 3038127317310476542}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 122789e9ba6e463498fb7aeb2c14b4fa, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cf27e12875cac094fba7771cc9b2e0ae, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -809,6 +809,7 @@ MonoBehaviour:
   index: 0
   poweredUp: 0
   sheepType: 0
+  awakeSheep: []
   awake: 0
   active: 0
   canJump: 0
@@ -823,6 +824,7 @@ MonoBehaviour:
   - {fileID: -2432090755550338912, guid: e2fac84b4e0f61a40a36f6f528d349d8, type: 3}
   - {fileID: -2432090755550338912, guid: 3ee0d52b7710b544b84905e439bfcb0b, type: 3}
   - {fileID: -2432090755550338912, guid: ef9175f505bb2c944a30b4d439c3f623, type: 3}
+  staticHoldingSheep: 0
 --- !u!65 &6916049984022592703
 BoxCollider:
   m_ObjectHideFlags: 0

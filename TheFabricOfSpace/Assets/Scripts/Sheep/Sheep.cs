@@ -179,6 +179,7 @@ public class Sheep : MonoBehaviour
                 if (canEat && shepherd.berries[berryIndex].GetComponent<Shrubs>().Eat())
                 {
                     shepherd.berries[berryIndex].GetComponent<Shrubs>().GrantPowerUp(gameObject);
+                    animator.SetTrigger("IsEating");
                     switch (sheepType)
                     {
                         case SheepType.Slab:
@@ -348,6 +349,7 @@ public class Sheep : MonoBehaviour
         {
             canEat = true;
 
+
             berryIndex = other.GetComponent<Shrubs>().index;
         }
     }
@@ -385,6 +387,9 @@ public class Sheep : MonoBehaviour
     // Calculates the frames the jump
     private void DoDaJump()
     {
+
+        animator.SetTrigger("IsJumping");
+
         // Disable movement and jump ability
 
         canMove = false;
