@@ -60,6 +60,7 @@ public class SnowballSheep : MonoBehaviour
                 if (Physics.Raycast(transform.position + (transform.up * 0.45f), direction - (transform.up * 0.45f), out hit, 1.5f, 1 << 4))
                 {
                     hit.transform.gameObject.AddComponent<IceLily>();
+                    hit.transform.GetChild(3).gameObject.SetActive(true);
                     hit.transform.gameObject.layer = 0;
                     hit.transform.GetChild(0).GetComponent<Block>().BlockUpdate();
 

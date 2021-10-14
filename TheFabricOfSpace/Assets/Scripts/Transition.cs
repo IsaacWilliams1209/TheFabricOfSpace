@@ -29,14 +29,14 @@ public class Transition : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(cameraRotation.gameObject.transform.position, -cameraRotation.gameObject.transform.position, out hit, Mathf.Infinity))
             {
-                
 
-                Shepherd tempShepherd = hit.transform.parent.parent.parent.GetComponentInChildren<Shepherd>();
+                Debug.Log(hit.transform.name);
+                Shepherd tempShepherd = hit.transform.parent.parent.GetComponentInChildren<Shepherd>();
                 tempShepherd.awakeSheep[0].GetComponent<Sheep>().active = true;
-                tempShepherd.awakeSheep[0].GetComponent<Renderer>().material = currentSheep.sheepMaterials[0];
+                //tempShepherd.awakeSheep[0].transform.GetChild(1).GetComponent<SkinnedMeshRenderer>().material = currentSheep.sheepMaterials[0];
                 tempShepherd.activeSheep = tempShepherd.awakeSheep[0];
-                currentSheep.awakeSheep.Insert(0, gameObject);
-                currentSheep.matChanger.material = currentSheep.sheepMaterials[1];
+                currentSheep.awakeSheep.Insert(0, currentSheep.gameObject);
+                //currentSheep.matChanger.material = currentSheep.sheepMaterials[1];
                 currentSheep.active = false;
                 tempShepherd.enabled = true;
                 currentSheep.shepherd.enabled = false;

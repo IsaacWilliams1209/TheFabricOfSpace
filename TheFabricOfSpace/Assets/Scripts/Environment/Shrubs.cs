@@ -10,9 +10,31 @@ public class Shrubs : MonoBehaviour
     [SerializeField]
     SheepType shrubType = SheepType.Slab;
 
+    GameObject berry;
+
     // Holds the berries index in the shepherd
     [HideInInspector]
     public int index;
+
+    void Start()
+    {
+        switch (shrubType)
+        {
+            case SheepType.Slab:
+                berry = transform.GetChild(2).gameObject;
+                break;
+            case SheepType.Snowball:
+                berry = transform.GetChild(0).gameObject;
+                break;
+            case SheepType.Static:
+                berry = transform.GetChild(3).gameObject;
+                break;
+            default:
+                Debug.Log("Something went wrong L40 shrub.cs");
+                break;
+        }
+
+    }
 
     public bool Eat()
     {
@@ -32,6 +54,7 @@ public class Shrubs : MonoBehaviour
     {
         transform.localScale = new Vector3(1,1,1);
         eaten = false;
+        berry.SetActive(true);
     }
 
     // Activates the shrubs power up
@@ -50,9 +73,8 @@ public class Shrubs : MonoBehaviour
                 break;
             default:
                 Debug.Log("Something went wrong L47 shrub.cs");
-                break;
-
-
+                break;
         }
+        berry.SetActive(false);
     }
 }
