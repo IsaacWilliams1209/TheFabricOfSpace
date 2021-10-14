@@ -10,11 +10,13 @@ public class StaticSheep : Sheep
 
     private void Update()
     {
+
         if (grabbedSheep != null)
         {
             if (hasSheep)
             {
                 grabbedSheep.transform.position = transform.position + transform.up;
+                grabbedSheep.transform.GetChild(0).rotation = transform.GetChild(0).rotation;
             }
         }
 
@@ -30,6 +32,7 @@ public class StaticSheep : Sheep
 
         grabbedSheep.transform.position = sheep.transform.position + transform.up;
         hasSheep = true;
+        sheep.staticHoldingSheep = true;
     }
 
 
@@ -37,50 +40,42 @@ public class StaticSheep : Sheep
     {
         RaycastHit hit = new RaycastHit();
 
-        Debug.DrawRay(transform.position + transform.up + transform.GetChild(2).transform.forward * 0.5f,
-            transform.GetChild(2).transform.forward - transform.GetChild(2).transform.up * 1.2f, Color.red, 3.0f);
+        //Debug.DrawRay(transform.position + transform.up + transform.GetChild(0).transform.forward * 0.8f, 
+        //    transform.GetChild(0).transform.forward - transform.up * 20.0f, Color.red, 3.0f);
 
-        if (Physics.Raycast(transform.position + transform.up + transform.GetChild(2).transform.forward * 0.5f,
-            transform.GetChild(2).transform.forward - transform.GetChild(2).transform.up * 1.2f, out hit, 2.0f))
+        if (Physics.Raycast(transform.position + transform.up + transform.GetChild(0).transform.forward * 0.8f, 
+            transform.GetChild(0).transform.forward - transform.up * 30.0f, out hit, 2.0f))
         {
-            Debug.Log(hit.transform.tag);
-            if (hit.transform.tag == "Block")
+            Debug.Log(hit.transform.name);
+
+            if (hit.transform.tag == "Block" || hit.transform.parent.tag == "Block")
             {
-                grabbedSheep.transform.position = transform.position + transform.GetChild(2).transform.forward * 1.0f;
-                hasSheep = false;
-                grabbedSheep = null;
+                if(!Physics.Raycast(hit.point, transform.up))
+                {
+                    grabbedSheep.transform.position = transform.position + transform.GetChild(0).transform.forward * 1.0f;
+                    hasSheep = false;
+                    grabbedSheep = null;
+                    sheep.staticHoldingSheep = false;
+                }
             }
         }
-        else
-        {
-            Debug.Log("Nothing hit");
-
-            //hasSheep = false;
-            //grabbedSheep = null;
-        }
-
     }
 
     private void OnTriggerEnter(Collider other)
     {
+
         if (other.gameObject.tag == "Sheep")
         {
-
             grabbedSheep = other.GetComponent<Sheep>();
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "Sheep")
+        if (other.gameObject.tag == "Sheep" && hasSheep == false)
         {
-            //grabbedSheep = null;
+            grabbedSheep = null;
         }
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireCube(transform.position + transform.GetChild(2).transform.up + transform.GetChild(2).transform.forward * 0.5f, new Vector3(0.1f, 0.1f, 0.1f));
     }
 
 }
