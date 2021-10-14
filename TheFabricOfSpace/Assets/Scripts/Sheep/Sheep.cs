@@ -144,14 +144,16 @@ public class Sheep : MonoBehaviour
                     transform.position = Vector3.Lerp(jumpFrames[jumpIndex], jumpFrames[jumpIndex + 1], percentDone);
                     if (transform.position == jumpFrames[jumpIndex + 1])
                     {
-                        jumpTime = 0;
+                        jumpTime = 0;
+
                         if (jumpIndex < jumpFrames.Length - 2)
                         {
                             jumpIndex++;
                         }
                         else
                         {
-                            isJumping = false;
+                            isJumping = false;
+
                             canMove = true;
 
                             jumpIndex = 0;
@@ -184,7 +186,8 @@ public class Sheep : MonoBehaviour
                     poweredUp = false;
                 }
             }
-            // On R press activate the sheep powerup
+            // On R press activate the sheep powerup
+
             if (Input.GetKeyDown(KeyCode.R))
             {
                 poweredUp = !poweredUp;
@@ -203,10 +206,12 @@ public class Sheep : MonoBehaviour
                     case SheepType.Snowball:
                         break;
                     case SheepType.Static:
+                        GetComponent<StaticSheep>().ActivatePowerUp(this);
                         break;
                     default:
                         break;
-                }
+                }
+
             }
             // On left shift press, swap to the next active sheep
             if (Input.GetKeyUp(KeyCode.LeftShift))
