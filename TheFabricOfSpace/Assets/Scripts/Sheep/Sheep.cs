@@ -245,10 +245,11 @@ public class Sheep : MonoBehaviour
                 //Debug.DrawRay(transform.position + transform.up * 0.3f, -transform.up, Color.red, 4);
                 if (hit.transform.tag == "Water")
                 {
-                    Debug.Log("WalkedOn = true");
+                    
                     IceLily temp;
-                    if (hit.transform.parent.TryGetComponent<IceLily>(out temp))
+                    if (hit.transform.TryGetComponent<IceLily>(out temp))
                     {
+                        Debug.Log("WalkedOn = true");
                         temp.walkedOn = true;
                     }
                     
