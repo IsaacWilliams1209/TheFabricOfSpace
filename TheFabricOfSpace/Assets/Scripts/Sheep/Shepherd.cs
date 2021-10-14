@@ -23,11 +23,11 @@ public class Shepherd : MonoBehaviour
     // Main camera in the scene
     [SerializeField]
     Camera mainCamera;
-    
+
     // Tracks the currently active sheep
     [HideInInspector]
     public GameObject activeSheep;
-    
+
     // Tracks whether the sheep or the planet are currently the focus 
     [HideInInspector]
     public bool isSheepFocus = false;
@@ -54,13 +54,13 @@ public class Shepherd : MonoBehaviour
         if (isSheepFocus)
         {
             mainCamera.gameObject.SetActive(true);
-            activeSheep.transform.GetChild(2).GetChild(0).gameObject.SetActive(false);
+            activeSheep.transform.GetChild(2).GetChild(1).gameObject.SetActive(false);
         }
         else
         {
             mainCamera.gameObject.SetActive(false);
-            activeSheep.transform.GetChild(2).GetChild(0).gameObject.SetActive(true);
-
+            activeSheep.transform.GetChild(2).GetChild(1).gameObject.SetActive(true);
+            //Debug.Log(activeSheep.transform.GetChild(2).GetChild(1).name);
         }
         isSheepFocus = !isSheepFocus;
     }
@@ -80,7 +80,7 @@ public class Shepherd : MonoBehaviour
                 break;
 
             case SheepType.Static:
-                //activeSheep.AddComponent<StaticSheep>();
+                activeSheep.AddComponent<StaticSheep>();
                 activeSheep.GetComponent<Sheep>().sheepType = SheepType.Static;
                 break;
 
