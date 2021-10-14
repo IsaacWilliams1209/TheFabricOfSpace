@@ -683,9 +683,9 @@ GameObject:
   - component: {fileID: 2405564445997910596}
   - component: {fileID: 8611556259813789758}
   - component: {fileID: 8240437766605071123}
+  - component: {fileID: 2014497246605575447}
   - component: {fileID: 8379949031477868290}
   - component: {fileID: 732832399634802373}
-  - component: {fileID: 2014497246605575447}
   - component: {fileID: 3402083336555788401}
   m_Layer: 2
   m_Name: New Sheep
@@ -746,6 +746,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &2014497246605575447
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3038127317310476542}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.5, y: 0.5, z: 1.5}
+  m_Center: {x: 0, y: 0.55, z: 0}
 --- !u!65 &8379949031477868290
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -775,19 +788,6 @@ MonoBehaviour:
   rotationSpeed: 720
   gravity: -0.05
   sensorPos: {x: 0, y: 0.1, z: 0}
---- !u!65 &2014497246605575447
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3038127317310476542}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.5, y: 0.5, z: 1.5}
-  m_Center: {x: 0, y: 0.55, z: 0}
 --- !u!114 &3402083336555788401
 MonoBehaviour:
   m_ObjectHideFlags: 0

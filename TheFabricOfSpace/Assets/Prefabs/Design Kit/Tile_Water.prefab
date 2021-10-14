@@ -246,6 +246,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4554824513077517781}
     m_Modifications:
+    - target: {fileID: 1379403864352892737, guid: 9e75e284be15177418736bf46208bfdf, type: 3}
+      propertyPath: m_Layer
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 2659742004685752208, guid: 9e75e284be15177418736bf46208bfdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -293,6 +297,14 @@ PrefabInstance:
     - target: {fileID: 5338002661681454394, guid: 9e75e284be15177418736bf46208bfdf, type: 3}
       propertyPath: m_Name
       value: Block
+      objectReference: {fileID: 0}
+    - target: {fileID: 5338002661681454394, guid: 9e75e284be15177418736bf46208bfdf, type: 3}
+      propertyPath: m_Layer
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5338002661681454394, guid: 9e75e284be15177418736bf46208bfdf, type: 3}
+      propertyPath: m_TagString
+      value: Water
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e75e284be15177418736bf46208bfdf, type: 3}
