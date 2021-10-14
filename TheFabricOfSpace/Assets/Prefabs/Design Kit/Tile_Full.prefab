@@ -245,6 +245,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: d75521162be358c4192eb3267d71f86e, type: 2}
+    - target: {fileID: -5754084199372789682, guid: 88903066c396ab64981ff3eb802c5464, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -2343627557245114172, guid: f6670cec49f85804ca1c6e02d06c01ae, type: 3}
     - target: {fileID: 919132149155446097, guid: 88903066c396ab64981ff3eb802c5464, type: 3}
       propertyPath: m_Name
       value: Trim_Corner_4
@@ -517,6 +521,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: d75521162be358c4192eb3267d71f86e, type: 2}
+    - target: {fileID: -5754084199372789682, guid: 88903066c396ab64981ff3eb802c5464, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -2343627557245114172, guid: f6670cec49f85804ca1c6e02d06c01ae, type: 3}
     - target: {fileID: 919132149155446097, guid: 88903066c396ab64981ff3eb802c5464, type: 3}
       propertyPath: m_Name
       value: Trim_Corner_3
@@ -649,6 +657,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: d75521162be358c4192eb3267d71f86e, type: 2}
+    - target: {fileID: -5754084199372789682, guid: 88903066c396ab64981ff3eb802c5464, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -2343627557245114172, guid: f6670cec49f85804ca1c6e02d06c01ae, type: 3}
     - target: {fileID: 919132149155446097, guid: 88903066c396ab64981ff3eb802c5464, type: 3}
       propertyPath: m_Name
       value: Trim_Corner_2
@@ -975,6 +987,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: d75521162be358c4192eb3267d71f86e, type: 2}
+    - target: {fileID: -5754084199372789682, guid: 88903066c396ab64981ff3eb802c5464, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -2343627557245114172, guid: f6670cec49f85804ca1c6e02d06c01ae, type: 3}
     - target: {fileID: 919132149155446097, guid: 88903066c396ab64981ff3eb802c5464, type: 3}
       propertyPath: m_Name
       value: Trim_Corner_1
