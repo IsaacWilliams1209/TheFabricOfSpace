@@ -56,6 +56,6 @@ public class Transition : MonoBehaviour
             player.sidesCompleted++;
             isComplete = true;
             currentSheep = sheep;
-        }        
+        }   
     }
 }

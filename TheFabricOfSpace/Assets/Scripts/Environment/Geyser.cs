@@ -46,7 +46,7 @@ public class Geyser : MonoBehaviour
                         blockLow.colliders[i].enabled = true;
                     }
                     // Play animation
-                    GetComponent<BoxCollider>().enabled = false;
+                    transform.GetChild(0).GetComponent<BoxCollider>().enabled = false;
                     to = platform.transform.position + transform.up;
                     from = platform.transform.position;
                 }

@@ -483,9 +483,9 @@ public class Sheep : MonoBehaviour
     static public Vector3 MaskVector(Vector3 data, Vector3 mask)
     {
         Vector3 temp;
-        temp.x = data.x * mask.x;
-        temp.y = data.y * mask.y;
-        temp.z = data.z * mask.z;
+        temp.x = data.x * Mathf.Abs(mask.x);
+        temp.y = data.y * Mathf.Abs(mask.y);
+        temp.z = data.z * Mathf.Abs(mask.z);
         return temp;
     }  
     
