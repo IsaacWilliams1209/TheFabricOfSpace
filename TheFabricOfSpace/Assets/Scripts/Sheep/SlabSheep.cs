@@ -8,17 +8,12 @@ public class SlabSheep : MonoBehaviour
     {
         if (sheep.poweredUp)
         {
-
             // Move to ignore raycast layer
-
             gameObject.layer = 2;
 
             sheep.mainCollider.enabled = true;
 
-
-
             // Prevent movement and lock to tile
-
             sheep.canMove = false;
 
             Vector3 temp = transform.parent.right + transform.parent.forward;
@@ -34,13 +29,9 @@ public class SlabSheep : MonoBehaviour
             RaycastHit[] hits = new RaycastHit[4];
 
             Vector3[] directions = new Vector3[4];
-
             directions[0] = transform.parent.forward;
-
             directions[1] = transform.parent.right;
-
             directions[2] = -transform.parent.forward;
-
             directions[3] = -transform.parent.right;
 
             for (int i = 0; i < hits.Length; i++)
@@ -65,11 +56,9 @@ public class SlabSheep : MonoBehaviour
             }
 
             // Activate block on slab sheep
-
             sheep.transform.GetChild(2).GetChild(0).gameObject.SetActive(true);
 
             // Update block for the on the slab sheep
-
             sheep.transform.GetComponentInChildren<Block>().BlockUpdate();
 
             gameObject.layer = 0;
@@ -93,13 +82,9 @@ public class SlabSheep : MonoBehaviour
             RaycastHit[] hits = new RaycastHit[4];
 
             Vector3[] directions = new Vector3[4];
-
             directions[0] = transform.parent.forward;
-
             directions[1] = transform.parent.right;
-
             directions[2] = -transform.parent.forward;
-
             directions[3] = -transform.parent.right;
 
             for (int i = 0; i < hits.Length; i++)

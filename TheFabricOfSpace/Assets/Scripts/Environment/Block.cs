@@ -96,6 +96,7 @@ public class Block : MonoBehaviour
             int mask = 1;
             if (Physics.Raycast(transform.position, dir, out hit, 2.0f, mask))
             {
+                Debug.Log(hit.transform.name);
                 if (hit.distance > 1.3f)
                 {
                     jumpTriggers[i].enabled = true;
