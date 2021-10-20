@@ -25,7 +25,7 @@ public class Camera_Rotation : MonoBehaviour
     private float rotSpeed = 50.0f;
 
     ///<summary> Tells the update method to rotate/move the camera around the planet on request until interpolation is finished.</summary>
-    private bool isCubeRotating = false;
+    public bool isCubeRotating = false;
 
     ///<summary> Tells the update method to rotate/move the camera around the planet on request until interpolation is finished.</summary>
     private int currFace = 0;

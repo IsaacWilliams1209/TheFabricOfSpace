@@ -51,13 +51,15 @@ public class Sheep : MonoBehaviour
     // Index of eaten berry in the Shepherd's Berry array, -1 means no berry eaten
     public int berryIndex = -1;
 
-
+    float jumpLength = 0.7857143f + 0.7413793f - 0.25f;
 
     // Refers to the shepherd of this face
-    Shepherd shepherd;
+    [HideInInspector]
+    public Shepherd shepherd;
 
     // Used to cahnge materials for the sheep being awake/asleep/active
-    Renderer matChanger;
+    [HideInInspector]
+    public Renderer matChanger;
 
     // Time taken for the sheep to jump
     float jumpTime = 0;
@@ -141,9 +143,8 @@ public class Sheep : MonoBehaviour
                 // If the player can't move and is jump cycle through the jumpFrames
                 if (isJumping)
                 {
-                    jumpTime += Time.deltaTime;
-                    float percentDone = jumpTime * 50;
-                    transform.position = Vector3.Lerp(jumpFrames[jumpIndex], jumpFrames[jumpIndex + 1], percentDone);
+                    jumpTime += Time.deltaTime / jumpLength * jumpFrames.Length;
+                    transform.position = Vector3.Lerp(jumpFrames[jumpIndex], jumpFrames[jumpIndex + 1], jumpTime);
                     if (transform.position == jumpFrames[jumpIndex + 1])
                     {
                         jumpTime = 0;
@@ -179,13 +180,14 @@ public class Sheep : MonoBehaviour
                 if (canEat && shepherd.berries[berryIndex].GetComponent<Shrubs>().Eat())
                 {
                     shepherd.berries[berryIndex].GetComponent<Shrubs>().GrantPowerUp(gameObject);
+                    animator.SetTrigger("IsEating");
                     switch (sheepType)
                     {
                         case SheepType.Slab:
-                            transform.GetChild(1).GetComponent<SkinnedMeshRenderer>().sharedMesh = meshes[0];
+                           // transform.GetChild(1).GetComponent<SkinnedMeshRenderer>().sharedMesh = meshes[0];
                             break;
                         case SheepType.Snowball:
-                            transform.GetChild(1).GetComponent<SkinnedMeshRenderer>().sharedMesh = meshes[2];
+                            // transform.GetChild(1).GetComponent<SkinnedMeshRenderer>().sharedMesh = meshes[2];
                             break;
                         default:
                             break;
@@ -309,7 +311,7 @@ public class Sheep : MonoBehaviour
         {
             Transition transition = other.GetComponent<Transition>();
             //Shepherd tempShepherd = GameObject.Find("Planet Face 6").transform.GetChild(3).GetComponent<Shepherd>();
-            transition.Activate();
+            transition.Activate(this);
             return;
             // you win! activate world rotation
             //tempShepherd.awakeSheep[0].GetComponent<Sheep>().active = true;
@@ -348,6 +350,7 @@ public class Sheep : MonoBehaviour
         {
             canEat = true;
 
+
             berryIndex = other.GetComponent<Shrubs>().index;
         }
     }
@@ -385,6 +388,9 @@ public class Sheep : MonoBehaviour
     // Calculates the frames the jump
     private void DoDaJump()
     {
+
+        animator.SetTrigger("IsJumping");
+
         // Disable movement and jump ability
 
         canMove = false;
@@ -477,9 +483,9 @@ public class Sheep : MonoBehaviour
     static public Vector3 MaskVector(Vector3 data, Vector3 mask)
     {
         Vector3 temp;
-        temp.x = data.x * mask.x;
-        temp.y = data.y * mask.y;
-        temp.z = data.z * mask.z;
+        temp.x = data.x * Mathf.Abs(mask.x);
+        temp.y = data.y * Mathf.Abs(mask.y);
+        temp.z = data.z * Mathf.Abs(mask.z);
         return temp;
     }  
     
