@@ -25,9 +25,9 @@ public class Geyser : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        blockLow = transform.GetChild(0).GetChild(0).GetComponent<Block>();
-        blockHigh = transform.GetChild(0).GetChild(1).GetComponent<Block>();
-        platform = transform.GetChild(0).GetChild(2).gameObject;
+        blockLow = transform.GetChild(0).GetChild(1).GetComponent<Block>();
+        blockHigh = transform.GetChild(0).GetChild(2).GetComponent<Block>();
+        platform = transform.GetChild(0).GetChild(0).gameObject;
     }
 
     // Update is called once per frame
@@ -46,7 +46,7 @@ public class Geyser : MonoBehaviour
                         blockLow.colliders[i].enabled = true;
                     }
                     // Play animation
-                    GetComponent<BoxCollider>().enabled = false;
+                    transform.GetChild(0).GetComponent<BoxCollider>().enabled = false;
                     to = platform.transform.position + transform.up;
                     from = platform.transform.position;
                 }

@@ -4,52 +4,45 @@ using UnityEngine;
 
 public class IceLily : MonoBehaviour
 {
-    Sheep sheep;
+    public bool walkedOn = false;
 
-    bool walkedOn = false;
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        sheep = GetComponent<Sheep>();
+        GetComponents<BoxCollider>()[1].enabled = true;
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnTriggerExit(Collider other)
     {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.up, out hit, 1.5f, 1 << 2))
+        if (walkedOn && !other.isTrigger)
         {
-            
-            if (sheep.sheepType != SheepType.Snowball || sheep.sheepType != SheepType.Sheared)
-            {
-                walkedOn = true;
-                Debug.Log("Sheep found");
-            }
+            DestroyIceLily();
         }
+    }
 
-        if (walkedOn && Physics.Raycast(transform.position, transform.up, out hit, 1.5f, 1 << 2))
+    void DestroyIceLily()
+    {
+        gameObject.layer = 4;
+        GetComponents<BoxCollider>()[1].enabled = false;
+        Vector3[] directions = new Vector3[4];
+
+        directions[0] = transform.forward;
+        directions[1] = transform.right;
+        directions[2] = -transform.forward;
+        directions[3] = -transform.right;
+
+        RaycastHit hit;
+
+        for (int i = 0; i < 4; i++)
         {
-            gameObject.layer = 4;
-            Vector3[] directions = new Vector3[4];
-
-            directions[0] = transform.forward;
-            directions[1] = transform.right;
-            directions[2] = -transform.forward;
-            directions[3] = -transform.right;
-
-            Vector3 origin = hit.transform.position - transform.up * 0.4f;
-
-            for (int i = 0; i < 4; i++)
+            if (Physics.Raycast(transform.position - transform.up * 0.4f, directions[i], out hit, 1.0f, 1))
             {
-                if (Physics.Raycast(origin, directions[i], out hit, 1.0f, 1))
+                if (hit.transform.tag == "Block" || hit.transform.tag == "Sheep" || hit.transform.tag == "Water")
                 {
-                    if (hit.transform.tag == "Block" || hit.transform.tag == "Sheep" || hit.transform.tag == "Water")
-                    {
-                        hit.transform.GetComponentInChildren<Block>().BlockUpdate();
-                    }
+                    hit.transform.GetComponentInChildren<Block>().BlockUpdate();
                 }
             }
-            Destroy(this);
         }
+        transform.GetChild(3).gameObject.SetActive(false);
+        Destroy(this);
     }
 }

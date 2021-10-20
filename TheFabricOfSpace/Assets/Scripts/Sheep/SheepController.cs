@@ -38,7 +38,7 @@ public class SheepController : MonoBehaviour
     {
         Ray ray = new Ray(transform.TransformPoint(sensorPos), -transform.parent.up);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity) && !hit.collider.isTrigger)
         {
             if (hit.distance < 0.55f  || hit.transform.tag == "Sheep")
                 grounded = true;
@@ -66,7 +66,7 @@ public class SheepController : MonoBehaviour
 
         // Move the player left/right
         movement += transform.parent.right * Input.GetAxis("Horizontal") * speed * Time.deltaTime;
-            
+
         movementVector = CollisionCheck(movement);
 
 
@@ -74,7 +74,8 @@ public class SheepController : MonoBehaviour
 
     void FinalMovement()
     {
-        transform.position += transform.TransformDirection(movementVector + currentGravity);
+        //transform.position += transform.parent.TransformDirection(movementVector + currentGravity);
+        transform.position += (movementVector + currentGravity);
 
         Vector3 rotation = Sheep.MaskVector(movementVector, transform.parent.right) + Sheep.MaskVector(movementVector, transform.parent.up) + Sheep.MaskVector(movementVector, transform.parent.forward);
         
@@ -83,27 +84,32 @@ public class SheepController : MonoBehaviour
             Quaternion lookRotaion = Quaternion.LookRotation(rotation, transform.parent.up);
             
             mesh.rotation = Quaternion.RotateTowards(mesh.rotation, lookRotaion, rotationSpeed * Time.deltaTime);
-
+        
+            GetComponent<Sheep>().animator.SetBool("IsWalking", true);
+        
             //Quaternion lookRotaion = Quaternion.LookRotation(rotation, transform.parent.up);
             //
             //transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotaion, rotationSpeed * Time.deltaTime);
+        }
+        else
+        {
+            GetComponent<Sheep>().animator.SetBool("IsWalking", false);
         }
     }
 
     Vector3 CollisionCheck(Vector3 dir)
     {
-        Vector3 d = transform.TransformDirection(dir);
         Vector3 l = transform.TransformPoint(sensorPos);
 
-        Ray ray = new Ray(l, d);
+        Ray ray = new Ray(l, dir);
 
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, 2))
+        if (Physics.Raycast(ray, out hit, 2) && !hit.collider.isTrigger)
         {
             if (hit.distance < 0.4f)
             {
-                Vector3 temp = Vector3.Cross(hit.normal, d);
+                Vector3 temp = Vector3.Cross(hit.normal, dir);
                 Vector3 newDir = Vector3.Cross(temp, hit.normal);
 
                 RaycastHit wallCheck = CheckWall(newDir);
@@ -125,7 +131,7 @@ public class SheepController : MonoBehaviour
         Ray ray = new Ray(l, dir);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, 0.1f))
+        if (Physics.Raycast(ray, out hit, 0.1f) && !hit.collider.isTrigger)
         {
             return hit;
         }
