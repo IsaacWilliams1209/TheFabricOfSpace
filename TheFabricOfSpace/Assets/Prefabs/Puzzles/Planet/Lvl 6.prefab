@@ -333,8 +333,7 @@ MonoBehaviour:
   sheep:
   - {fileID: 585707730035371405}
   - {fileID: 4748189072221112710}
-  awakeSheep:
-  - {fileID: 4748189072221112710}
+  awakeSheep: []
   berries:
   - {fileID: 7538203704006633110}
   - {fileID: 8263205508504381028}

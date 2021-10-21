@@ -378,8 +378,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sheep:
   - {fileID: 8143207246262327358}
-  awakeSheep:
-  - {fileID: 8143207246262327358}
+  awakeSheep: []
   berries:
   - {fileID: 3442970443938717437}
   mainCamera: {fileID: 0}

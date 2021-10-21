@@ -35,11 +35,13 @@ public class Transition : MonoBehaviour
                 tempShepherd.awakeSheep[0].GetComponent<Sheep>().active = true;
                 //tempShepherd.awakeSheep[0].transform.GetChild(1).GetComponent<SkinnedMeshRenderer>().material = currentSheep.sheepMaterials[0];
                 tempShepherd.activeSheep = tempShepherd.awakeSheep[0];
+                tempShepherd.awakeSheep.RemoveAt(0);
                 currentSheep.awakeSheep.Insert(0, currentSheep.gameObject);
                 //currentSheep.matChanger.material = currentSheep.sheepMaterials[1];
                 currentSheep.active = false;
                 tempShepherd.enabled = true;
                 currentSheep.shepherd.enabled = false;
+                isComplete = false;
             }
         }
     }

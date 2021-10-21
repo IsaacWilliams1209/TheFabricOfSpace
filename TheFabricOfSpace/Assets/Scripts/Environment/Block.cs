@@ -96,11 +96,14 @@ public class Block : MonoBehaviour
             int mask = 1;
             if (Physics.Raycast(transform.position, dir, out hit, 2.0f, mask))
             {
-                Debug.Log(hit.transform.name);
                 if (hit.distance > 1.3f)
                 {
                     jumpTriggers[i].enabled = true;
                     jumpLandings[i] = hit.transform.position + transform.up;
+                    if (hit.transform.parent.tag == "Geyser")
+                    {
+                        jumpLandings[i] = hit.transform.position + transform.up * 2.0f;
+                    }
                     traversable[i] = false;
                     colliders[i].enabled = true;
                 }

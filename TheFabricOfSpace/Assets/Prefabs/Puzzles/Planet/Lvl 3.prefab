@@ -423,8 +423,7 @@ MonoBehaviour:
   - {fileID: 8018081503290947797}
   - {fileID: 2563832039955543765}
   - {fileID: 3732115791970243882}
-  awakeSheep:
-  - {fileID: 120573270206172125}
+  awakeSheep: []
   berries:
   - {fileID: 7215717638751467988}
   - {fileID: 6062072740541096493}

@@ -51,7 +51,7 @@ public class SnowballSheep : MonoBehaviour
                     sheep.berryIndex = -1;
                     Destroy(this);
                 }
-                if (hit.transform.tag == "Sheep")
+                if (hit.transform.tag == "Sheep" && !(hit.transform.TryGetComponent<StaticSheep>(out StaticSheep staticSheep)))
                 {
                     sheep.sheepType = SheepType.Sheared;
                     sheep.berryIndex = -1;

@@ -251,8 +251,7 @@ MonoBehaviour:
   - {fileID: 5565064106954076219}
   - {fileID: 3841044441140115325}
   - {fileID: 863824881088379296}
-  awakeSheep:
-  - {fileID: 5565064106954076219}
+  awakeSheep: []
   berries:
   - {fileID: 725389451556106760}
   mainCamera: {fileID: 0}
