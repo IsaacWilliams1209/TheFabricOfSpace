@@ -42,7 +42,9 @@ public class SnowballSheep : MonoBehaviour
         else
         {
             RaycastHit hit;
-            if (Physics.Raycast(transform.position + (transform.up * 0.45f), direction, out hit, 0.5f) && !hit.collider.isTrigger)
+
+            int mask = (1 << 2) | (1 << 0);
+            if (Physics.Raycast(transform.position + (transform.up * 0.45f), direction, out hit, 0.5f, mask) && !hit.collider.isTrigger)
             {
                 if (hit.transform.tag == "Tree")
                 {
