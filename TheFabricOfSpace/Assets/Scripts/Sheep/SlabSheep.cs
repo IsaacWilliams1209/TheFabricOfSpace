@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,11 +19,12 @@ public class SlabSheep : MonoBehaviour
 
             Vector3 temp = transform.parent.right + transform.parent.forward;
 
+            
+
             //Vector3 temp = new Vector3(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y), Mathf.Round(transform.position.z)) + transform.parent.up;
             Vector3 newPos = Sheep.MaskVector(new Vector3(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y), Mathf.Round(transform.position.z)), temp);
-            newPos += Sheep.MaskVector(new Vector3(Mathf.Floor(transform.position.x), Mathf.Floor(transform.position.y), Mathf.Floor(transform.position.z)), transform.parent.up) + transform.parent.up * 0.5f;
 
-
+            newPos += Sheep.MaskVector(new Vector3((int)transform.position.x, (int)transform.position.y, (int)transform.position.z), transform.parent.up) + transform.parent.up * 0.5f;
 
             transform.position = newPos;
 

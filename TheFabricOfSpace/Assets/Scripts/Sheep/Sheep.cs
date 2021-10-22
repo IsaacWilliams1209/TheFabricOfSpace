@@ -341,7 +341,9 @@ public class Sheep : MonoBehaviour
         {
             Debug.Log("Geyser triggered");
             if (other.transform.parent.GetComponent<Geyser>().sheep == null)
+            {
                 other.transform.parent.GetComponent<Geyser>().sheep = this;
+            }
         }
         if (other.gameObject.tag == "Sheep" && !other.GetComponent<Sheep>().awake)
         {
@@ -366,7 +368,8 @@ public class Sheep : MonoBehaviour
             canJump = false;
 
         if (other.gameObject.tag == "Geyser")
-            other.transform.parent.GetComponent<Geyser>().sheep = null;
+            if (other.transform.parent.GetComponent<Geyser>().sheep == this)
+                other.transform.parent.GetComponent<Geyser>().sheep = null;
 
         if (other.gameObject.tag == "Sheep")
         {
@@ -468,7 +471,7 @@ public class Sheep : MonoBehaviour
     // Masks a vector so only the desired elements are carried on,
     // for example data may be (2.4, 4, 1) and mask may be (0,1,0)
     // the resulting float would be 4
-    float MaskVectorAsFloat(Vector3 data, Vector3 mask)
+    static public float MaskVectorAsFloat(Vector3 data, Vector3 mask)
     {
         Vector3 temp;
         temp.x = data.x * (mask.x);

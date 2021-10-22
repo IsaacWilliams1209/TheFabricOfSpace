@@ -27,6 +27,7 @@ public class Transition : MonoBehaviour
         if (isComplete && finishedRotating)
         {
             RaycastHit hit;
+            Debug.DrawRay(cameraRotation.gameObject.transform.position, -cameraRotation.gameObject.transform.position, Color.red, 5.0f);
             if (Physics.Raycast(cameraRotation.gameObject.transform.position, -cameraRotation.gameObject.transform.position, out hit, Mathf.Infinity))
             {
 

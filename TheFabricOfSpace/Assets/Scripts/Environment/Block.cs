@@ -16,6 +16,7 @@ public class Block : MonoBehaviour
     // Colliders that incase each block and prevent passage
     public BoxCollider[] colliders = new BoxCollider[5];
 
+    Vector3[] debugPoints = new Vector3[4];
 
     private void Start()
     {
@@ -96,14 +97,27 @@ public class Block : MonoBehaviour
             int mask = 1;
             if (Physics.Raycast(transform.position, dir, out hit, 2.0f, mask))
             {
+                if (hit.transform.tag == "Sheep")
+                {
+                    if (!hit.transform.TryGetComponent<SlabSheep>(out SlabSheep slab))
+                    {
+                        return;
+                    }
+                }
                 if (hit.distance > 1.3f)
                 {
                     jumpTriggers[i].enabled = true;
                     jumpLandings[i] = hit.transform.position + transform.up;
-                    if (hit.transform.parent.tag == "Geyser")
+                    try {
+                        if (hit.transform.parent.tag == "Geyser")
+                        {
+                            jumpLandings[i] = hit.transform.position + transform.up * 2.0f;
+                        }
+                    } catch
                     {
-                        jumpLandings[i] = hit.transform.position + transform.up * 2.0f;
+
                     }
+                    
                     traversable[i] = false;
                     colliders[i].enabled = true;
                 }
@@ -118,8 +132,81 @@ public class Block : MonoBehaviour
             {
                 traversable[i] = false;
                 colliders[i].enabled = true;
-                jumpTriggers[i].enabled = false;
+                jumpTriggers[i].enabled = false;                
             }
         }
+    }
+
+    public void BlockUpdateDebug()
+    {
+        for (int i = 0; i < traversable.Length; i++)
+        {
+
+            RaycastHit hit;
+            Vector3 dir;
+            dir.x = (transform.localToWorldMatrix * colliders[i].center).x - transform.up.x;
+            dir.y = (transform.localToWorldMatrix * colliders[i].center).y - transform.up.y;
+            dir.z = (transform.localToWorldMatrix * colliders[i].center).z - transform.up.z;
+            //Debug.DrawRay(transform.position, dir, Color.red, 4.0f);
+
+            int mask = 1;
+            if (Physics.Raycast(transform.position, dir, out hit, 2.0f, mask))
+            {
+                if (hit.transform.tag == "Sheep")
+                {
+                    if (!hit.transform.TryGetComponent<SlabSheep>(out SlabSheep slab))
+                    {
+                        return;
+                    }
+                }
+                if (hit.distance > 1.3f)
+                {
+                    jumpTriggers[i].enabled = true;
+                    jumpLandings[i] = hit.transform.position + transform.up;
+                    try
+                    {
+                        if (hit.transform.parent.tag == "Geyser")
+                        {
+                            jumpLandings[i] = hit.transform.position + transform.up * 2.0f;
+                        }
+                    }
+                    catch
+                    {
+
+                    }
+
+                    traversable[i] = false;
+                    colliders[i].enabled = true;
+                }
+                else
+                {
+                    Debug.DrawRay(transform.position, dir, Color.yellow, 10.0f);
+                    Debug.Log("Adjacent: " + hit.transform.name);
+                    traversable[i] = true;
+                    colliders[i].enabled = false;
+                    jumpTriggers[i].enabled = false;
+                }
+            }
+            else
+            {
+                traversable[i] = false;
+                colliders[i].enabled = true;
+                jumpTriggers[i].enabled = false;
+            }
+            //debugPoints[i] = hit.point;
+        }
+    }
+
+    void OnDrawGizmos()
+    {
+        if (debugPoints[0] != null)
+        {
+            Gizmos.color = Color.blue;
+            foreach (Vector3 point in debugPoints)
+            {
+                Gizmos.DrawCube(point, new Vector3(0.1f, 0.1f, 0.1f));
+            }
+        }
+
     }
 }
