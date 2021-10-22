@@ -147,10 +147,10 @@ public class Block : MonoBehaviour
             dir.x = (transform.localToWorldMatrix * colliders[i].center).x - transform.up.x;
             dir.y = (transform.localToWorldMatrix * colliders[i].center).y - transform.up.y;
             dir.z = (transform.localToWorldMatrix * colliders[i].center).z - transform.up.z;
-            //Debug.DrawRay(transform.position, dir, Color.red, 4.0f);
+            Debug.DrawRay(transform.position, dir, Color.red, 4.0f);
 
-            int mask = 1;
-            if (Physics.Raycast(transform.position, dir, out hit, 2.0f, mask))
+            //int mask = (1 << 2);
+            if (Physics.Raycast(transform.position, dir, out hit, 2.0f, 1))
             {
                 if (hit.transform.tag == "Sheep")
                 {
@@ -193,7 +193,7 @@ public class Block : MonoBehaviour
                 colliders[i].enabled = true;
                 jumpTriggers[i].enabled = false;
             }
-            //debugPoints[i] = hit.point;
+            debugPoints[i] = hit.point;
         }
     }
 
