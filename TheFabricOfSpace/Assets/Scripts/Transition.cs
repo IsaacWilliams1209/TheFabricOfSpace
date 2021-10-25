@@ -32,7 +32,7 @@ public class Transition : MonoBehaviour
             {
 
                 Debug.Log(hit.transform.name);
-                Shepherd tempShepherd = hit.transform.parent.parent.GetComponentInChildren<Shepherd>();
+                Shepherd tempShepherd = hit.transform.GetComponentInChildren<Shepherd>();
                 tempShepherd.awakeSheep[0].GetComponent<Sheep>().active = true;
                 //tempShepherd.awakeSheep[0].transform.GetChild(1).GetComponent<SkinnedMeshRenderer>().material = currentSheep.sheepMaterials[0];
                 tempShepherd.activeSheep = tempShepherd.awakeSheep[0];
