@@ -7,32 +7,43 @@ public class StaticSheep : Sheep
 
     Sheep grabbedSheep;
     bool hasSheep = false;
-    
+    Vector3 front , right, back, left;
+    Vector3 displacementToSheep;
+    float frontSide , rightSide, backSide, leftSide;
+   
 
-    private void RadialLocationCheck(Vector3 sheepRotation)
+    private void AttachSheep()
     {
-        Debug.Log(sheepRotation.y);
-        //Grabbed sheep is connected infront of the sheep
-        if(sheepRotation.y >= 316.0f && sheepRotation.y <= 45)
+        front = transform.GetChild(0).forward;
+        right = transform.GetChild(0).right;
+        back  = -transform.GetChild(0).forward;
+        left  = -transform.GetChild(0).right;
+
+        displacementToSheep = grabbedSheep.transform.position - transform.position;
+
+        frontSide = Vector3.Dot(transform.GetChild(0).forward, transform.position);
+        backSide =  Vector3.Dot(-transform.GetChild(0).forward, transform.position);
+        rightSide = Vector3.Dot(transform.GetChild(0).forward, transform.position);
+        leftSide =  Vector3.Dot(-transform.GetChild(0).right, transform.position);
+
+        Vector3[] testing = new Vector3[5];
+        testing[0] = front;
+        testing[1] = right;
+        testing[2] = back;
+        testing[3] = left;
+        testing[4] = displacementToSheep;
+
+        float[] debugging = new float[4];
+        debugging[0] = frontSide;
+        debugging[1] = backSide;
+        debugging[2] = rightSide;
+        debugging[3] = leftSide;
+
+        for (int i = 0; i < 5; i++)
         {
-            Debug.Log("Attach to front side of the sheep");
+            Debug.DrawRay(transform.position, testing[i], Color.white, 5.0f);
         }
-        //Grabbed sheep is connected to right side of sheep
-        if (sheepRotation.y >= 46.0f && sheepRotation.y <= 135)
-        {
-            Debug.Log("Attach to the right side of the sheep");
-        }
-        //Grabbed sheep is connected behind the sheep
-        if (sheepRotation.y >= 136.0f && sheepRotation.y <= 225.0f)
-        {
-            Debug.Log("Attach to the backside the sheep");
-        }
-        //Grabbed sheep is connected to left side of sheep
-        if (sheepRotation.y >= 226.0f && sheepRotation.y <= 315.0f)
-        {
-            Debug.Log("Attach to the left side of the sheep");
-        }
-        //return sheepRotation;
+
     }
 
     private void Update()
@@ -58,8 +69,7 @@ public class StaticSheep : Sheep
             return;
         }
 
-        Vector3 temp = transform.GetChild(0).rotation.eulerAngles;
-        RadialLocationCheck(temp);
+        AttachSheep();
 
         //RaycastHit[] hits = new RaycastHit[4];
 
@@ -94,7 +104,7 @@ public class StaticSheep : Sheep
 
     public void DeActivatePowerUp(Sheep sheep)
     {
-        if(sheep.staticHoldingSheep == false)
+        if (sheep.staticHoldingSheep == false)
         {
             return;
         }
