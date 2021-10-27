@@ -7,6 +7,8 @@ public class SnowballSheep : MonoBehaviour
     bool currentlyMoving;
     Vector3 direction;
 
+    Vector3[] debugPoints = new Vector3[4];
+
     Sheep sheep;
 
     void Start()
@@ -39,11 +41,15 @@ public class SnowballSheep : MonoBehaviour
                 currentlyMoving = true;
             }
         }
-        else
+        else if (currentlyMoving)
         {
             RaycastHit hit;
-            if (Physics.Raycast(transform.position + (transform.up * 0.45f), direction, out hit, 0.5f) && !hit.collider.isTrigger)
+
+            int mask = (1 << 2) | (1 << 0);
+            Debug.DrawRay(transform.position + (transform.up * 0.45f), direction, Color.blue, 5.0f);
+            if (Physics.Raycast(transform.position + (transform.up * 0.45f), direction, out hit, 0.5f, mask) && !hit.collider.isTrigger)
             {
+                debugPoints[0] = hit.point;
                 if (hit.transform.tag == "Tree")
                 {
                     hit.transform.parent.GetComponent<OldTree>().Fall(direction);
@@ -53,14 +59,24 @@ public class SnowballSheep : MonoBehaviour
                 }
                 if (hit.transform.tag == "Sheep")
                 {
-                    sheep.sheepType = SheepType.Sheared;
-                    sheep.berryIndex = -1;
-                    Destroy(this);
+                    if (hit.transform.TryGetComponent<StaticSheep>(out StaticSheep staticSheep))
+                    {
+                        currentlyMoving = false;
+                    }
+                    else
+                    {
+                        sheep.sheepType = SheepType.Sheared;
+                        sheep.berryIndex = -1;
+                        Destroy(this);
+                    }
+                    
                 }
                 if (Physics.Raycast(transform.position + (transform.up * 0.45f), direction - (transform.up * 0.45f), out hit, 1.5f, 1 << 4))
                 {
                     hit.transform.gameObject.AddComponent<IceLily>();
-                    hit.transform.GetChild(3).gameObject.SetActive(true);
+                    try { hit.transform.GetChild(3).gameObject.SetActive(true); }
+                    catch { Debug.Log(hit.transform.name); }
+                    
                     hit.transform.gameObject.layer = 0;
                     hit.transform.GetChild(0).GetComponent<Block>().BlockUpdate();
 
@@ -74,14 +90,21 @@ public class SnowballSheep : MonoBehaviour
                     Vector3 origin = hit.transform.position - transform.up * 0.4f;
 
                     for (int i = 0; i < 4; i++)
-                    {                        
+                    {
                         if (Physics.Raycast(origin, directions[i], out hit, 1.0f, 1))
                         {
-                            if (hit.transform.tag == "Block" || hit.transform.tag == "Sheep" || hit.transform.tag == "Water")
+                            if (hit.transform.tag == "Sheep" || hit.transform.tag == "Water")
                             {
                                 Debug.DrawRay(origin, directions[i] * 2, Color.red, 2.0f);
                                 // Update nearby blocks                                
                                 hit.transform.GetComponentInChildren<Block>().BlockUpdate();
+                                Debug.Log(hit.transform.name);
+                            }
+                            if (hit.transform.tag == "Block" && hit.transform.GetChild(hit.transform.childCount - 1).TryGetComponent<Block>(out Block block))
+                            {
+                                Debug.DrawRay(origin, directions[i] * 2, Color.red, 2.0f);
+                                // Update nearby blocks                                
+                                hit.transform.GetComponentInChildren<Block>().BlockUpdateDebug();
                                 Debug.Log(hit.transform.name);
                             }
                         }
@@ -95,5 +118,18 @@ public class SnowballSheep : MonoBehaviour
             else
                 transform.position += GetComponent<SheepController>().speed * direction * Time.deltaTime;
         }
+    }
+
+    void OnDrawGizmos()
+    {
+        if (debugPoints[0] != null)
+        {
+            Gizmos.color = Color.blue;
+            foreach (Vector3 point in debugPoints)
+            {
+                Gizmos.DrawCube(point, new Vector3(0.1f, 0.1f, 0.1f));
+            }
+        }
+
     }
 }

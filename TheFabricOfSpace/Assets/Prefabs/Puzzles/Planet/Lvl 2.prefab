@@ -143,10 +143,10 @@ BoxCollider:
   m_GameObject: {fileID: 3203389806501290974}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 9, y: 0.1, z: 9}
-  m_Center: {x: 0, y: 0.5, z: 0}
+  m_Center: {x: 0, y: 3.5, z: 0}
 --- !u!1 &6446391412476844835
 GameObject:
   m_ObjectHideFlags: 0
@@ -251,8 +251,7 @@ MonoBehaviour:
   - {fileID: 5565064106954076219}
   - {fileID: 3841044441140115325}
   - {fileID: 863824881088379296}
-  awakeSheep:
-  - {fileID: 5565064106954076219}
+  awakeSheep: []
   berries:
   - {fileID: 725389451556106760}
   mainCamera: {fileID: 0}
@@ -4377,11 +4376,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8073788453270386363, guid: 951ad91662fdc24429a995b7f2ba7186, type: 3}
       propertyPath: down
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8073788453270386363, guid: 951ad91662fdc24429a995b7f2ba7186, type: 3}
       propertyPath: up
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 951ad91662fdc24429a995b7f2ba7186, type: 3}
@@ -8497,6 +8496,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2287221688518232690, guid: 9632e1ad908970745ad4165edd12712f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2582600294652559283, guid: 9632e1ad908970745ad4165edd12712f, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4652049606421392669, guid: 9632e1ad908970745ad4165edd12712f, type: 3}

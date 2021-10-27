@@ -688,7 +688,6 @@ GameObject:
   - component: {fileID: 732832399634802373}
   - component: {fileID: 3402083336555788401}
   - component: {fileID: 6916049984022592703}
-  - component: {fileID: 1081320812524914758}
   m_Layer: 2
   m_Name: New Sheep
   m_TagString: Sheep
@@ -817,6 +816,8 @@ MonoBehaviour:
   canWake: 0
   canMove: 1
   berryIndex: -1
+  shepherd: {fileID: 0}
+  matChanger: {fileID: 0}
   mainCollider: {fileID: 0}
   wakingTrigger: {fileID: 0}
   animator: {fileID: 0}
@@ -838,19 +839,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.5, y: 0.3, z: 1.5}
   m_Center: {x: 0, y: 0.3, z: 0}
---- !u!65 &1081320812524914758
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3038127317310476542}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.3, y: 0.3, z: 0.3}
-  m_Center: {x: -0.03, y: 0.36, z: -0.24}
 --- !u!1 &3271013300231221056
 GameObject:
   m_ObjectHideFlags: 0

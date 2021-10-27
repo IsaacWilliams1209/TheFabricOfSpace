@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,39 +9,31 @@ public class SlabSheep : MonoBehaviour
     {
         if (sheep.poweredUp)
         {
-
             // Move to ignore raycast layer
-
             gameObject.layer = 2;
 
             sheep.mainCollider.enabled = true;
 
-
-
             // Prevent movement and lock to tile
-
             sheep.canMove = false;
 
             Vector3 temp = transform.parent.right + transform.parent.forward;
 
+            
+
             //Vector3 temp = new Vector3(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y), Mathf.Round(transform.position.z)) + transform.parent.up;
             Vector3 newPos = Sheep.MaskVector(new Vector3(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y), Mathf.Round(transform.position.z)), temp);
-            newPos += Sheep.MaskVector(new Vector3(Mathf.Floor(transform.position.x), Mathf.Floor(transform.position.y), Mathf.Floor(transform.position.z)), transform.parent.up) + transform.parent.up * 0.5f;
 
-
+            newPos += Sheep.MaskVector(new Vector3((int)transform.position.x, (int)transform.position.y, (int)transform.position.z), transform.parent.up) + transform.parent.up * 0.5f;
 
             transform.position = newPos;
 
             RaycastHit[] hits = new RaycastHit[4];
 
             Vector3[] directions = new Vector3[4];
-
             directions[0] = transform.parent.forward;
-
             directions[1] = transform.parent.right;
-
             directions[2] = -transform.parent.forward;
-
             directions[3] = -transform.parent.right;
 
             for (int i = 0; i < hits.Length; i++)
@@ -65,11 +58,9 @@ public class SlabSheep : MonoBehaviour
             }
 
             // Activate block on slab sheep
-
             sheep.transform.GetChild(2).GetChild(0).gameObject.SetActive(true);
 
             // Update block for the on the slab sheep
-
             sheep.transform.GetComponentInChildren<Block>().BlockUpdate();
 
             gameObject.layer = 0;
@@ -93,13 +84,9 @@ public class SlabSheep : MonoBehaviour
             RaycastHit[] hits = new RaycastHit[4];
 
             Vector3[] directions = new Vector3[4];
-
             directions[0] = transform.parent.forward;
-
             directions[1] = transform.parent.right;
-
             directions[2] = -transform.parent.forward;
-
             directions[3] = -transform.parent.right;
 
             for (int i = 0; i < hits.Length; i++)
