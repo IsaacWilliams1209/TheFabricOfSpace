@@ -19,7 +19,7 @@ public class SheepController : MonoBehaviour
     Vector3 currentGravity;
 
     bool grounded;
-    Vector3 movementVector;
+    public Vector3 movementVector;
 
     void Start()
     {

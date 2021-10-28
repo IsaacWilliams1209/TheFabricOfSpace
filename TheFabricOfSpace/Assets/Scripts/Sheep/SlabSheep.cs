@@ -67,7 +67,7 @@ public class SlabSheep : MonoBehaviour
 
             sheep.transform.GetChild(2).GetChild(0).gameObject.layer = 0;
 
-            //sheep.transform.GetChild(2).GetComponent<SkinnedMeshRenderer>().sharedMesh = sheep.meshes[1];
+            sheep.transform.GetChild(1).GetComponent<SkinnedMeshRenderer>().sharedMesh = sheep.meshes[1];
 
         }
         else
@@ -111,7 +111,7 @@ public class SlabSheep : MonoBehaviour
 
             sheep.canMove = true;
 
-            //transform.GetChild(2).GetComponent<SkinnedMeshRenderer>().sharedMesh = sheep.meshes[0];
+            transform.GetChild(1).GetComponent<SkinnedMeshRenderer>().sharedMesh = sheep.meshes[0];
 
             sheep.mainCollider.enabled = false;
         }

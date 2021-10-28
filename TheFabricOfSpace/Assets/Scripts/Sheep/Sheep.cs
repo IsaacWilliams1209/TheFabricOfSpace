@@ -25,8 +25,7 @@ public class Sheep : MonoBehaviour
     GameObject closestSheep;
 
     // Is the sheep awake
-    [SerializeField]
-    bool awake = false;
+    public bool awake = false;
 
     // Is the Sheep active
     public bool active = false;
@@ -186,10 +185,10 @@ public class Sheep : MonoBehaviour
                     switch (sheepType)
                     {
                         case SheepType.Slab:
-                           // transform.GetChild(1).GetComponent<SkinnedMeshRenderer>().sharedMesh = meshes[0];
+                            transform.GetChild(1).GetComponent<SkinnedMeshRenderer>().sharedMesh = meshes[0];
                             break;
                         case SheepType.Snowball:
-                            // transform.GetChild(1).GetComponent<SkinnedMeshRenderer>().sharedMesh = meshes[2];
+                             transform.GetChild(1).GetComponent<SkinnedMeshRenderer>().sharedMesh = meshes[2];
                             break;
                         default:
                             break;
@@ -287,6 +286,7 @@ public class Sheep : MonoBehaviour
         // Swap to the next sheep
         if (swap)
         {
+            animator.SetBool("IsWalking", false);
             //shepherd.SwapCams();
             if (shepherd.isSheepFocus)
             {
