@@ -11,9 +11,10 @@ public class SnowballSheep : MonoBehaviour
 
     Sheep sheep;
 
-    void Start()
+    void Awake()
     {
         sheep = GetComponent<Sheep>();
+        gameObject.layer = 2;
     }
 
     private void Update()
@@ -45,16 +46,20 @@ public class SnowballSheep : MonoBehaviour
         {
             RaycastHit hit;
 
-            int mask = (1 << 2) | (1 << 0);
+            int mask = (1 << 8) | (1 << 0);
             Debug.DrawRay(transform.position + (transform.up * 0.45f), direction, Color.blue, 5.0f);
             if (Physics.Raycast(transform.position + (transform.up * 0.45f), direction, out hit, 0.5f, mask) && !hit.collider.isTrigger)
             {
+                Debug.Log(hit.transform.name);
                 debugPoints[0] = hit.point;
                 if (hit.transform.tag == "Tree")
                 {
                     hit.transform.parent.GetComponent<OldTree>().Fall(direction);
                     sheep.sheepType = SheepType.Sheared;
+                    if (!(sheep.berryIndex < 0))
+                        sheep.shepherd.berries[sheep.berryIndex].GetComponent<Shrubs>().Restore();
                     sheep.berryIndex = -1;
+                    gameObject.layer = 8;
                     Destroy(this);
                 }
                 if (hit.transform.tag == "Sheep")
@@ -66,7 +71,10 @@ public class SnowballSheep : MonoBehaviour
                     else
                     {
                         sheep.sheepType = SheepType.Sheared;
+                        if (!(sheep.berryIndex < 0))
+                            sheep.shepherd.berries[sheep.berryIndex].GetComponent<Shrubs>().Restore();
                         sheep.berryIndex = -1;
+                        gameObject.layer = 8;
                         Destroy(this);
                     }
                     
@@ -112,7 +120,7 @@ public class SnowballSheep : MonoBehaviour
                 }
                 else
                 {
-                    currentlyMoving = false;
+                    currentlyMoving = false;                    
                 }                
             }
             else

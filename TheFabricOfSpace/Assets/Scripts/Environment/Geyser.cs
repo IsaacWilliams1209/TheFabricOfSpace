@@ -59,6 +59,7 @@ public class Geyser : MonoBehaviour
             }
             else if (active && !isMoving)
             {
+                transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
                 isMoving = true;
                 transform.GetChild(0).GetComponent<BoxCollider>().enabled = false;
                 blockHigh.gameObject.SetActive(false);
@@ -70,6 +71,7 @@ public class Geyser : MonoBehaviour
         else if (active && !isMoving)
         {
             Debug.Log("Sheep is null");
+            transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
             testBool = true;
             isMoving = true;
             blockHigh.gameObject.SetActive(false);
@@ -93,13 +95,18 @@ public class Geyser : MonoBehaviour
             directions[1] = platform.transform.right;
             directions[2] = -platform.transform.forward;
             directions[3] = -platform.transform.right;
+            
             transform.GetChild(0).GetComponent<BoxCollider>().enabled = true;
+            transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
+            
             for (int i = 0; i < 4; i++)
             {
                 transform.GetChild(0).GetChild(0).gameObject.layer = 2;
                 Debug.DrawRay(transform.GetChild(0).position + transform.up, directions[i], Color.blue, 6.0f);
+                transform.GetChild(0).gameObject.layer = 2;
                 if (Physics.Raycast(transform.GetChild(0).position + transform.up, directions[i], out hits[i], 2.0f))
                 {
+                    transform.GetChild(0).gameObject.layer = 0;
                     Debug.Log(hits[i].transform.name);
                     if (hits[i].transform.tag == "Block")
                     {
@@ -108,7 +115,7 @@ public class Geyser : MonoBehaviour
                         hits[i].transform.GetComponentInChildren<Block>().BlockUpdateDebug();
                         debugPoints[i] = hits[i].point;
                     }
-                    if (hits[i].transform.tag == "Geyser")
+                    else if (hits[i].transform.tag == "Geyser")
                     {
                         transform.GetChild(0).GetChild(0).gameObject.layer = 0;
                         // Update nearby blocks
@@ -117,9 +124,16 @@ public class Geyser : MonoBehaviour
                         {
                             block.BlockUpdateDebug();
                         }
-                        debugPoints[i] = hits[i].point;
+                        
                     }
-
+                    else
+                    {
+                        //try
+                        //{
+                        //
+                        //}
+                    }
+                    debugPoints[i] = hits[i].point;
                 }
             }
             

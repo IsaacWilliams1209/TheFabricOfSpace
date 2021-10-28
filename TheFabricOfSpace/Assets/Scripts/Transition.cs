@@ -21,7 +21,7 @@ public class Transition : MonoBehaviour
         cameraRotation = GameObject.Find("Main Camera").GetComponent<Camera_Rotation>();
     }
 
-    void Update()
+    void LateUpdate()
     {
         finishedRotating = !cameraRotation.isCubeRotating;
         if (isComplete && finishedRotating)
