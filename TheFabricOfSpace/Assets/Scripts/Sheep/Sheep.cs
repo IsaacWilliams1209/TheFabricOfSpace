@@ -25,8 +25,7 @@ public class Sheep : MonoBehaviour
     GameObject closestSheep;
 
     // Is the sheep awake
-    [SerializeField]
-    bool awake = false;
+    public bool awake = false;
 
     // Is the Sheep active
     public bool active = false;
@@ -287,6 +286,7 @@ public class Sheep : MonoBehaviour
         // Swap to the next sheep
         if (swap)
         {
+            animator.SetBool("IsWalking", false);
             //shepherd.SwapCams();
             if (shepherd.isSheepFocus)
             {
