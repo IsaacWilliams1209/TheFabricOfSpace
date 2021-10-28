@@ -186,10 +186,10 @@ public class Sheep : MonoBehaviour
                     switch (sheepType)
                     {
                         case SheepType.Slab:
-                           // transform.GetChild(1).GetComponent<SkinnedMeshRenderer>().sharedMesh = meshes[0];
+                            transform.GetChild(1).GetComponent<SkinnedMeshRenderer>().sharedMesh = meshes[0];
                             break;
                         case SheepType.Snowball:
-                            // transform.GetChild(1).GetComponent<SkinnedMeshRenderer>().sharedMesh = meshes[2];
+                             transform.GetChild(1).GetComponent<SkinnedMeshRenderer>().sharedMesh = meshes[2];
                             break;
                         default:
                             break;
