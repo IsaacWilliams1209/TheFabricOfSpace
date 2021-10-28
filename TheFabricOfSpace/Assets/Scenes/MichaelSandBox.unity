@@ -498,7 +498,12 @@ PrefabInstance:
       propertyPath: sheepType
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 6916049984022592703, guid: ec31c2b230fbe4148b310b10985c5445, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 6916049984022592703, guid: ec31c2b230fbe4148b310b10985c5445, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ec31c2b230fbe4148b310b10985c5445, type: 3}
 --- !u!1 &413052734 stripped
 GameObject:
@@ -1239,11 +1244,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec31c2b230fbe4148b310b10985c5445, type: 3}
---- !u!1 &946611145 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 927041852777109850, guid: 09eb91779d826ef4586f758eeb6c950b, type: 3}
-  m_PrefabInstance: {fileID: 1353243735}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &997272991 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5538832918377876119, guid: 09eb91779d826ef4586f758eeb6c950b, type: 3}
@@ -1395,6 +1395,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8e7c31fddd62664fbfe1b7b69103212, type: 3}
+--- !u!1 &1036656103 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6835288035031798569, guid: 09eb91779d826ef4586f758eeb6c950b, type: 3}
+  m_PrefabInstance: {fileID: 1353243735}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1068357469 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3038127317310476542, guid: ec31c2b230fbe4148b310b10985c5445, type: 3}
@@ -1764,6 +1769,10 @@ PrefabInstance:
       propertyPath: active
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 927041852777109850, guid: 09eb91779d826ef4586f758eeb6c950b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5051429047245249908, guid: 09eb91779d826ef4586f758eeb6c950b, type: 3}
       propertyPath: m_Name
       value: TestGrounds
@@ -1828,6 +1837,18 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6165431104036407699, guid: 09eb91779d826ef4586f758eeb6c950b, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6165431104036407699, guid: 09eb91779d826ef4586f758eeb6c950b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.61
+      objectReference: {fileID: 0}
+    - target: {fileID: 6612667674974567334, guid: 09eb91779d826ef4586f758eeb6c950b, type: 3}
+      propertyPath: active
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8432941073587764068, guid: 09eb91779d826ef4586f758eeb6c950b, type: 3}
       propertyPath: berries.Array.size
       value: 2
@@ -1843,7 +1864,7 @@ PrefabInstance:
     - target: {fileID: 8432941073587764068, guid: 09eb91779d826ef4586f758eeb6c950b, type: 3}
       propertyPath: sheep.Array.data[0]
       value: 
-      objectReference: {fileID: 946611145}
+      objectReference: {fileID: 1036656103}
     - target: {fileID: 8432941073587764068, guid: 09eb91779d826ef4586f758eeb6c950b, type: 3}
       propertyPath: sheep.Array.data[1]
       value: 

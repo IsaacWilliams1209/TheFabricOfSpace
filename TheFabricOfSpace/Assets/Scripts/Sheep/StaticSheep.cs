@@ -1,63 +1,74 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class StaticSheep : Sheep
 {
 
     Sheep grabbedSheep;
+    Sheep additonalSheep;
     bool hasSheep = false;
-    Vector3 front , right, back, left;
-    Vector3 displacementToSheep;
-    float frontSide , rightSide, backSide, leftSide;
-   
+    Vector3 attachedSide;
+    Vector3 frontSide, rightSide, backSide, leftSide;
+    bool updateFrontSide, updateRightSide, updateBackSide, updateLeftSide;
 
-    private void AttachSheep()
+    private void SideUpdate()
     {
-        front = transform.GetChild(0).forward;
-        right = transform.GetChild(0).right;
-        back  = -transform.GetChild(0).forward;
-        left  = -transform.GetChild(0).right;
+        frontSide = transform.GetChild(0).forward;
+        rightSide = transform.GetChild(0).right;
+        backSide  = -transform.GetChild(0).forward;
+        leftSide  = -transform.GetChild(0).right;
 
-        displacementToSheep = grabbedSheep.transform.position - transform.position;
+        if (updateFrontSide) { attachedSide = frontSide; }
+        else if (updateRightSide) { attachedSide = rightSide * 0.5f; }
+        else if (updateBackSide) { attachedSide = backSide; }
+        else if (updateLeftSide) { attachedSide = leftSide * 0.5f; }
+    }
 
-        frontSide = Vector3.Dot(transform.GetChild(0).forward, transform.position);
-        backSide =  Vector3.Dot(-transform.GetChild(0).forward, transform.position);
-        rightSide = Vector3.Dot(transform.GetChild(0).forward, transform.position);
-        leftSide =  Vector3.Dot(-transform.GetChild(0).right, transform.position);
+    private Vector3 AttachSheep()
+    {
 
-        Vector3[] testing = new Vector3[5];
-        testing[0] = front;
-        testing[1] = right;
-        testing[2] = back;
-        testing[3] = left;
-        testing[4] = displacementToSheep;
+        SideUpdate();
 
-        float[] debugging = new float[4];
-        debugging[0] = frontSide;
-        debugging[1] = backSide;
-        debugging[2] = rightSide;
-        debugging[3] = leftSide;
+        Vector3 displacementToSheep = grabbedSheep.transform.position - transform.position;
+        displacementToSheep = Vector3.Normalize(displacementToSheep);
 
-        for (int i = 0; i < 5; i++)
-        {
-            Debug.DrawRay(transform.position, testing[i], Color.white, 5.0f);
-        }
+        float frontValue, rightValue, backValue, leftValue;
+
+        frontValue = Vector3.Dot(frontSide, displacementToSheep);
+        rightValue = Vector3.Dot(rightSide, displacementToSheep);
+        backValue = Vector3.Dot(backSide, displacementToSheep);
+        leftValue = Vector3.Dot(leftSide, displacementToSheep);
+
+        updateFrontSide = false;
+        updateRightSide = false;
+        updateBackSide = false;
+        updateLeftSide = false;
+
+        if (frontValue > rightValue && frontValue > backValue && frontValue > leftValue)      { updateFrontSide = true;  return frontSide;  }
+        else if (rightValue > frontValue && rightValue > backValue && rightValue > leftValue) { updateLeftSide  = true;  return rightSide;  }
+        else if (backValue > frontValue && backValue > rightValue && backValue > leftValue)   { updateBackSide  = true;  return backSide;   }
+        else if (leftValue > frontValue && leftValue > rightValue && leftValue > backValue)   { updateLeftSide  = true;  return leftSide;   }
+
+        return frontSide;
 
     }
 
     private void Update()
     {
-
         if (grabbedSheep != null)
         {
             if (hasSheep)
             {
-                grabbedSheep.transform.position = transform.position + transform.up;
+                grabbedSheep.transform.position += GetComponent<SheepController>().movementVector;
                 grabbedSheep.transform.GetChild(0).rotation = transform.GetChild(0).rotation;
+                SideUpdate();
+                grabbedSheep.transform.position = transform.position + attachedSide;
+                if(additonalSheep != null)
+                {
+                    additonalSheep.transform.position = grabbedSheep.transform.position + grabbedSheep.transform.up;
+                    additonalSheep.transform.GetChild(0).rotation = grabbedSheep.transform.GetChild(0).rotation;
+                }
             }
         }
-
     }
 
     public void ActivatePowerUp(Sheep sheep)
@@ -66,39 +77,33 @@ public class StaticSheep : Sheep
         if (grabbedSheep == null)
         {
             sheep.poweredUp = false;
+            sheep.staticHoldingSheep = false;
             return;
         }
 
-        AttachSheep();
+        else if (grabbedSheep.awake == false)
+        {
+            sheep.poweredUp = false;
+            sheep.staticHoldingSheep = false;
+            return;
+        }
 
-        //RaycastHit[] hits = new RaycastHit[4];
+        attachedSide = AttachSheep();
+        grabbedSheep.transform.position = sheep.transform.position + attachedSide;
+        hasSheep = true;
+        sheep.staticHoldingSheep = true;
 
-        //Vector3[] directions = new Vector3[4];
+        if (grabbedSheep.sheepType == SheepType.Slab)
+        {
+            RaycastHit hit = new RaycastHit();
+            if (Physics.Raycast(grabbedSheep.transform.position, grabbedSheep.transform.up, out hit, 3.0f, 1 << 2))
+            {
+                additonalSheep = hit.transform.GetComponent<Sheep>();
+            }
+        }
 
-        //directions[0] = transform.GetChild(0).forward;
-        //directions[1] = transform.GetChild(0).right;
-        //directions[2] = -transform.GetChild(0).forward;
-        //directions[3] = -transform.GetChild(0).right;
+        grabbedSheep.gameObject.layer = 2;
 
-        //for (int i = 0; i < hits.Length; i++)
-        //{
-
-        //    Debug.DrawRay(transform.position, directions[i], Color.white, 3.0f);
-        //    grabbedSheep.transform.position = sheep.transform.position + transform.up;
-        //    hasSheep = true;
-        //    sheep.staticHoldingSheep = true;
-
-        //}
-
-        //if(grabbedSheep.sheepType == SheepType.Slab)
-        //{
-        //    Debug.Log("This is a static sheep");
-        //}
-        //else
-        //{
-
-
-        //}
     }
 
 
@@ -111,25 +116,22 @@ public class StaticSheep : Sheep
 
         RaycastHit hit = new RaycastHit();
 
-        //Debug.DrawRay(transform.position + transform.up + transform.GetChild(0).transform.forward * 0.8f, 
-        //    transform.GetChild(0).transform.forward - transform.up * 20.0f, Color.red, 3.0f);
-
-        if (Physics.Raycast(transform.position + transform.up + transform.GetChild(0).transform.forward * 0.8f, 
-            transform.GetChild(0).transform.forward - transform.up * 30.0f, out hit, 2.0f))
+        Debug.DrawRay(grabbedSheep.transform.position, -grabbedSheep.transform.up, Color.white, 3.0f);
+        if(Physics.Raycast(grabbedSheep.transform.position, -grabbedSheep.transform.up, out hit, 2.0f))
         {
-            Debug.Log(hit.transform.name);
-
-            if (hit.transform.tag == "Block" || hit.transform.parent.tag == "Block")
+            if(hit.transform.tag == "Water")
             {
-                if(!Physics.Raycast(hit.point, transform.up))
-                {
-                    grabbedSheep.transform.position = transform.position + transform.GetChild(0).transform.forward * 1.0f;
-                    hasSheep = false;
-                    grabbedSheep = null;
-                    sheep.staticHoldingSheep = false;
-                }
+                Debug.Log("not safe to place sheep");
+            }
+            else
+            {
+                hasSheep = false;
+                grabbedSheep.gameObject.layer = 0;
+                grabbedSheep = null;
+                sheep.staticHoldingSheep = false;
             }
         }
+
     }
 
     private void OnTriggerEnter(Collider other)
