@@ -110,7 +110,8 @@ public class Sheep : MonoBehaviour
             matChanger.materials[2] = sheepMaterials[0];
             shepherd.activeSheep = gameObject;
             wakingTrigger.enabled = false;
-            wakingTrigger.enabled = false;
+            shepherd.SwapCams();
+            Debug.Log("CamsSwapped");
         }
         else if (awake)
         {
@@ -248,22 +249,15 @@ public class Sheep : MonoBehaviour
                 //Debug.DrawRay(transform.position + transform.up * 0.3f, -transform.up, Color.red, 4);
                 if (hit.transform.tag == "Water")
                 {
-                    
+
                     IceLily temp;
                     if (hit.transform.TryGetComponent<IceLily>(out temp))
                     {
                         Debug.Log("WalkedOn = true");
                         temp.walkedOn = true;
                     }
-                    
+
                 }
-            }
-
-
-            ///////////////////////////////TEMPORARY CODE ////////////////////
-            if (Input.GetKeyDown(KeyCode.T))
-            {
-                shepherd.SwapCams();
             }
         }
         else if (awake)

@@ -18,7 +18,8 @@ public class Transition : MonoBehaviour
     void Start()
     {
         //cameraRotation = transform.parent.parent.GetChild(0).GetChild(0).GetComponent<Camera_Rotation>();
-        cameraRotation = GameObject.Find("Main Camera").GetComponent<Camera_Rotation>();
+        cameraRotation = GameObject.Find("/LavishPlanet/Planet_Rotation/Main Camera").GetComponent<Camera_Rotation>();
+        Debug.Log("BerrySet");
     }
 
     void LateUpdate()
@@ -43,6 +44,7 @@ public class Transition : MonoBehaviour
                 tempShepherd.enabled = true;
                 currentSheep.shepherd.enabled = false;
                 isComplete = false;
+                tempShepherd.SwapCams();
             }
         }
     }
@@ -51,6 +53,7 @@ public class Transition : MonoBehaviour
     {
         if (!isComplete)
         {
+            sheep.shepherd.SwapCams();
             cameraRotation.up = up;
             cameraRotation.left = left;
             cameraRotation.down = down;
