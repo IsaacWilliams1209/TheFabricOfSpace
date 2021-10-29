@@ -10,9 +10,35 @@ public class Shrubs : MonoBehaviour
     [SerializeField]
     SheepType shrubType = SheepType.Slab;
 
+    GameObject berry;
+
     // Holds the berries index in the shepherd
-    [HideInInspector]
+    //[HideInInspector]
     public int index;
+
+    void Start()
+    {
+        switch (shrubType)
+        {
+            case SheepType.Slab:
+                berry = transform.GetChild(2).gameObject;
+                break;
+            case SheepType.Snowball:
+                berry = transform.GetChild(0).gameObject;
+                break;
+            case SheepType.Static:
+                berry = transform.GetChild(3).gameObject;
+                break;
+
+            default:
+
+                Debug.Log("Something went wrong L40 shrub.cs");
+
+                break;
+        }
+        berry.SetActive(true);
+
+    }
 
     public bool Eat()
     {
@@ -20,7 +46,7 @@ public class Shrubs : MonoBehaviour
         if (!eaten)
         {
             transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
-            
+            berry.SetActive(false);
             eaten = true;
             return true;
         }
@@ -32,27 +58,39 @@ public class Shrubs : MonoBehaviour
     {
         transform.localScale = new Vector3(1,1,1);
         eaten = false;
+        berry.SetActive(true);
     }
 
     // Activates the shrubs power up
     public void GrantPowerUp(GameObject sheep)
     {
-        switch (shrubType)
-        {
+        switch (shrubType)
+
+        {
+
             case SheepType.Slab:
-                transform.parent.GetComponent<Shepherd>().AddPowerToSheep(SheepType.Slab);
-                break;
-            case SheepType.Snowball:
-                transform.parent.GetComponent<Shepherd>().AddPowerToSheep(SheepType.Snowball);
-                break;
-            case SheepType.Static:
-                transform.parent.GetComponent<Shepherd>().AddPowerToSheep(SheepType.Static);
-                break;
-            default:
-                Debug.Log("Something went wrong L47 shrub.cs");
-                break;
-
-
+                transform.parent.GetComponent<Shepherd>().AddPowerToSheep(SheepType.Slab);
+
+                break;
+
+            case SheepType.Snowball:
+
+                transform.parent.GetComponent<Shepherd>().AddPowerToSheep(SheepType.Snowball);
+
+                break;
+
+            case SheepType.Static:
+
+                transform.parent.GetComponent<Shepherd>().AddPowerToSheep(SheepType.Static);
+
+                break;
+
+            default:
+
+                Debug.Log("Something went wrong L47 shrub.cs");
+
+                break;
         }
+        berry.SetActive(false);
     }
 }

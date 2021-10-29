@@ -42,6 +42,7 @@ public class IceLily : MonoBehaviour
                 }
             }
         }
+        transform.GetChild(3).gameObject.SetActive(false);
         Destroy(this);
     }
 }

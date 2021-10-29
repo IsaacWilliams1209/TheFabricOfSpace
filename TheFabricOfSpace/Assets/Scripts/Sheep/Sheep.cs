@@ -25,8 +25,7 @@ public class Sheep : MonoBehaviour
     GameObject closestSheep;
 
     // Is the sheep awake
-    [SerializeField]
-    bool awake = false;
+    public bool awake = false;
 
     // Is the Sheep active
     public bool active = false;
@@ -54,10 +53,12 @@ public class Sheep : MonoBehaviour
     float jumpLength = 0.7857143f + 0.7413793f - 0.25f;
 
     // Refers to the shepherd of this face
-    Shepherd shepherd;
+    [HideInInspector]
+    public Shepherd shepherd;
 
     // Used to cahnge materials for the sheep being awake/asleep/active
-    Renderer matChanger;
+    [HideInInspector]
+    public Renderer matChanger;
 
     // Time taken for the sheep to jump
     float jumpTime = 0;
@@ -109,7 +110,8 @@ public class Sheep : MonoBehaviour
             matChanger.materials[2] = sheepMaterials[0];
             shepherd.activeSheep = gameObject;
             wakingTrigger.enabled = false;
-            wakingTrigger.enabled = false;
+            shepherd.SwapCams();
+            Debug.Log("CamsSwapped");
         }
         else if (awake)
         {
@@ -158,6 +160,8 @@ public class Sheep : MonoBehaviour
                             canMove = true;
 
                             jumpIndex = 0;
+
+                            transform.position = transform.position + transform.forward * 0.1f;
                         }
                     }
                 }
@@ -168,7 +172,7 @@ public class Sheep : MonoBehaviour
                 {
                     closestSheep.GetComponent<Sheep>().awake = true;
 
-                    closestSheep.transform.GetChild(1).GetComponent<Renderer>().material = sheepMaterials[0];
+                    //closestSheep.transform.GetChild(1).GetComponent<Renderer>().material = sheepMaterials[0];
                     closestSheep.GetComponent<Sheep>().wakingTrigger.enabled = false;
                     awakeSheep.Insert(0, closestSheep);
 
@@ -182,10 +186,10 @@ public class Sheep : MonoBehaviour
                     switch (sheepType)
                     {
                         case SheepType.Slab:
-                           // transform.GetChild(1).GetComponent<SkinnedMeshRenderer>().sharedMesh = meshes[0];
+                            transform.GetChild(1).GetComponent<SkinnedMeshRenderer>().sharedMesh = meshes[0];
                             break;
                         case SheepType.Snowball:
-                            // transform.GetChild(1).GetComponent<SkinnedMeshRenderer>().sharedMesh = meshes[2];
+                             transform.GetChild(1).GetComponent<SkinnedMeshRenderer>().sharedMesh = meshes[2];
                             break;
                         default:
                             break;
@@ -245,22 +249,15 @@ public class Sheep : MonoBehaviour
                 //Debug.DrawRay(transform.position + transform.up * 0.3f, -transform.up, Color.red, 4);
                 if (hit.transform.tag == "Water")
                 {
-                    
+
                     IceLily temp;
                     if (hit.transform.TryGetComponent<IceLily>(out temp))
                     {
                         Debug.Log("WalkedOn = true");
                         temp.walkedOn = true;
                     }
-                    
+
                 }
-            }
-
-
-            ///////////////////////////////TEMPORARY CODE ////////////////////
-            if (Input.GetKeyDown(KeyCode.T))
-            {
-                shepherd.SwapCams();
             }
         }
         else if (awake)
@@ -283,6 +280,7 @@ public class Sheep : MonoBehaviour
         // Swap to the next sheep
         if (swap)
         {
+            animator.SetBool("IsWalking", false);
             //shepherd.SwapCams();
             if (shepherd.isSheepFocus)
             {
@@ -292,11 +290,11 @@ public class Sheep : MonoBehaviour
 
             transform.GetComponent<BoxCollider>().enabled = true;
             shepherd.activeSheep = awakeSheep[0];
-            awakeSheep[0].transform.GetChild(1).GetComponent<Renderer>().material = sheepMaterials[0];
+            //awakeSheep[0].transform.GetChild(1).GetComponent<Renderer>().material = sheepMaterials[0];
             awakeSheep[0].GetComponent<Sheep>().active = true;
             awakeSheep.RemoveAt(0);
             awakeSheep.Add(gameObject);
-            matChanger.material = sheepMaterials[1];
+            //matChanger.material = sheepMaterials[1];
             active = false;
             swap = false;
         }
@@ -309,7 +307,7 @@ public class Sheep : MonoBehaviour
         {
             Transition transition = other.GetComponent<Transition>();
             //Shepherd tempShepherd = GameObject.Find("Planet Face 6").transform.GetChild(3).GetComponent<Shepherd>();
-            transition.Activate();
+            transition.Activate(this);
             return;
             // you win! activate world rotation
             //tempShepherd.awakeSheep[0].GetComponent<Sheep>().active = true;
@@ -336,7 +334,10 @@ public class Sheep : MonoBehaviour
         if (other.gameObject.tag == "Geyser")
         {
             Debug.Log("Geyser triggered");
-            other.transform.parent.GetComponent<Geyser>().sheep = this;
+            if (other.transform.parent.GetComponent<Geyser>().sheep == null)
+            {
+                other.transform.parent.GetComponent<Geyser>().sheep = this;
+            }
         }
         if (other.gameObject.tag == "Sheep" && !other.GetComponent<Sheep>().awake)
         {
@@ -361,7 +362,8 @@ public class Sheep : MonoBehaviour
             canJump = false;
 
         if (other.gameObject.tag == "Geyser")
-            other.transform.parent.GetComponent<Geyser>().sheep = null;
+            if (other.transform.parent.GetComponent<Geyser>().sheep == this)
+                other.transform.parent.GetComponent<Geyser>().sheep = null;
 
         if (other.gameObject.tag == "Sheep")
         {
@@ -397,8 +399,6 @@ public class Sheep : MonoBehaviour
 
         // Activate jumping bool
         isJumping = true;
-
-        /////////////////////////////////   REPLACE WITH ACTUAL FRAME COUNT ///////////////////////////
 
         int numFrames = 30;
 
@@ -440,11 +440,11 @@ public class Sheep : MonoBehaviour
 
         float denom = (x1 - x2) * (x1 - x3) * (x2 - x3);
 
-        var z_dist = (arrivingPos.z - startingPos.z) / numFrames;
-        var x_dist = (arrivingPos.x - startingPos.x) / numFrames;
+        float z_dist = (arrivingPos.z - startingPos.z) / numFrames;
+        float x_dist = (arrivingPos.x - startingPos.x) / numFrames;
 
         float A = (x3 * (y2 - y1) + x2 * (y1 - y3) + x1 * (y3 - y2)) / denom;
-        float B = (float)(System.Math.Pow(x3, 2) * (y1 - y2) + System.Math.Pow(x2, 2) * (y3 - y1) + System.Math.Pow(x1, 2) * (y2 - y3)) / denom;
+        float B = ((x3 * x3) * (y1 - y2) + (x2 *x2) * (y3 - y1) + (x1* x1) * (y2 - y3)) / denom;
         float C = (x2 * x3 * (x2 - x3) * y1 + x3 * x1 * (x3 - x1) * y2 + x1 * x2 * (x1 - x2) * y3) / denom;
 
         float newX = startingPos.z;
@@ -465,27 +465,37 @@ public class Sheep : MonoBehaviour
     // Masks a vector so only the desired elements are carried on,
     // for example data may be (2.4, 4, 1) and mask may be (0,1,0)
     // the resulting float would be 4
-    float MaskVectorAsFloat(Vector3 data, Vector3 mask)
+    static public float MaskVectorAsFloat(Vector3 data, Vector3 mask)
     {
         Vector3 temp;
-
-        temp.x = data.x * mask.x;
-        temp.y = data.y * mask.y;
-        temp.z = data.z * mask.z;
+        temp.x = data.x * (mask.x);
+        temp.y = data.y * (mask.y);
+        temp.z = data.z * (mask.z);
         return temp.x + temp.y + temp.z;
     }
 
     // Masks a vector so only the desired elements are carried on,
     // for example data may be (2.4, 4, 1) and mask may be (0,0,1)
-    // the resulting float would be (0, 4, 0)
+    // the resulting Vector3 would be (0, 0, 1)
     static public Vector3 MaskVector(Vector3 data, Vector3 mask)
     {
         Vector3 temp;
-        temp.x = data.x * mask.x;
-        temp.y = data.y * mask.y;
-        temp.z = data.z * mask.z;
+        temp.x = data.x * Mathf.Abs(mask.x);
+        temp.y = data.y * Mathf.Abs(mask.y);
+        temp.z = data.z * Mathf.Abs(mask.z);
         return temp;
-    }  
-    
-    
+    }
+
+    void OnDrawGizmos()
+    {
+        if (jumpFrames[0] != null)
+        {
+            Gizmos.color = Color.yellow;
+            foreach (Vector3 point in jumpFrames)
+            {
+                Gizmos.DrawSphere(point, .1f);
+            }
+        }
+    }
+
 }
