@@ -789,6 +789,7 @@ MonoBehaviour:
   rotationSpeed: 720
   gravity: -0.05
   sensorPos: {x: 0, y: 0.2, z: 0}
+  movementVector: {x: 0, y: 0, z: 0}
 --- !u!114 &3402083336555788401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -822,8 +823,8 @@ MonoBehaviour:
   wakingTrigger: {fileID: 0}
   animator: {fileID: 0}
   meshes:
-  - {fileID: -9041869914260873611, guid: 09829cea18af7e647a0ec159670f46e4, type: 3}
-  - {fileID: -4364763809839442312, guid: 5492013278077da48ad9bbb350a0e920, type: 3}
+  - {fileID: 7120451651249902827, guid: 0d3bba08f3fabd541860dd5790e516a9, type: 3}
+  - {fileID: -2167570075894139802, guid: 8b099c13b75158d4f8a7f37d92525e33, type: 3}
   - {fileID: -2930794645719161189, guid: e1864c696aed91a40adc871266ddbe92, type: 3}
   staticHoldingSheep: 0
 --- !u!65 &5058815981710956296
