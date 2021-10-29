@@ -40,7 +40,9 @@ public class SlabSheep : MonoBehaviour
             {
                 Debug.DrawRay(transform.position + transform.up * 0.1f, directions[i], Color.blue, 6.0f);
 
-                if (Physics.Raycast(transform.position + transform.up * 0.1f, directions[i], out hits[i], 2.0f))
+                int mask = ~((1 << 8) | (1 << 2));
+
+                if (Physics.Raycast(transform.position + transform.up * 0.1f, directions[i], out hits[i], 2.0f, mask))
                 {
 
                     if (hits[i].transform.tag == "Block" || hits[i].transform.tag == "Sheep")

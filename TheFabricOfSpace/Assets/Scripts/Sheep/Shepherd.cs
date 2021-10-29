@@ -44,7 +44,11 @@ public class Shepherd : MonoBehaviour
         {
             berries[i].GetComponent<Shrubs>().index = i;
         }
-        //mainCamera = transform.parent.parent.GetChild(0).GetChild(0).GetComponent<Camera>();
+        //mainCamera = transform.parent.parent.GetChild(0).GetChild(0).GetComponent<Camera>();        
+    }
+
+    private void Awake()
+    {
         mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
     }
 
