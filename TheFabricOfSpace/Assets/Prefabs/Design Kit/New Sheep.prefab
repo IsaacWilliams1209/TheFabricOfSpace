@@ -824,7 +824,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   meshes:
   - {fileID: 7120451651249902827, guid: 0d3bba08f3fabd541860dd5790e516a9, type: 3}
-  - {fileID: -2167570075894139802, guid: 8b099c13b75158d4f8a7f37d92525e33, type: 3}
+  - {fileID: -2167570075894139802, guid: c9f92f50dc58f7446b2bcbd0bef36351, type: 3}
   - {fileID: -2930794645719161189, guid: e1864c696aed91a40adc871266ddbe92, type: 3}
   staticHoldingSheep: 0
 --- !u!65 &5058815981710956296
