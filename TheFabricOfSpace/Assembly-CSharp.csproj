@@ -8,8 +8,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <ProjectGuid>{8C86636C-7665-829C-94F4-8888E3592D02}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -57,11 +56,13 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Sheep\SheepController.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\LogoCinematic.cs" />
+    <Compile Include="Assets\Scripts\Audio\AudioManager.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\GeneralBasics2d.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\TestingUnitTests.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\PathBezier2d.cs" />
+    <Compile Include="Assets\Scripts\Sheep\SnowballSheep.cs" />
+    <Compile Include="Assets\Scripts\Singleton.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\PathSpline2d.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\GeneralCameraShake.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
+    <Compile Include="Assets\Scripts\Sheep\SheepController.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Framework\LeanSmooth.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\PathSplinePerformance.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Framework\LeanTest.cs" />
@@ -89,10 +91,13 @@
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Archived\TestingPunch.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Framework\LeanAudio.cs" />
+    <Compile Include="Assets\Scripts\Environment\IceLily.cs" />
     <Compile Include="Assets\Scripts\Environment\Geyser.cs" />
     <Compile Include="Assets\Scripts\PointerData.cs" />
+    <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\PathSplineTrack.cs" />
+    <Compile Include="Assets\Scripts\Transition.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
     <Compile Include="Assets\Scripts\GUI\PopUpController.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\TestingZLegacy.cs" />
@@ -114,6 +119,7 @@
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark04.cs" />
+    <Compile Include="Assets\Scripts\GUI_Manager.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
     <Compile Include="Assets\Scripts\UI_Manager.cs" />
@@ -125,6 +131,7 @@
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
     <Compile Include="Assets\Scripts\Planet_Generation.cs" />
     <Compile Include="Assets\Scripts\Camera_Rotation.cs" />
+    <Compile Include="Assets\Scripts\UI\MenuController.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Framework\LeanTweenExt.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Framework\LTDescrOptional.cs" />
@@ -134,49 +141,43 @@
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
     <Compile Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\PathSplines.cs" />
+    <Compile Include="Assets\Scripts\Environment\OldTree.cs" />
+    <Compile Include="Assets\Scripts\ButtonContoller.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\GeneralUISpace.cs" />
     <Compile Include="Assets\Scripts\GUI\PopUp_Manager.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\GeneralEventsListeners.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Framework\LTDescr.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Archived\OldGUIExamplesCS.cs" />
-    <Compile Include="Assets\Scripts\Singleton.cs" />
-    <Compile Include="Assets\Scripts\SheepController.cs" />
-    <Compile Include="Assets\Scripts\Player.cs" />
-    <Compile Include="Assets\Scripts\Transition.cs" />
-    <Compile Include="Assets\Scripts\GUI\PopUpController.cs" />
-    <Compile Include="Assets\Scripts\GUI_Manager.cs" />
-    <Compile Include="Assets\Scripts\UI\MenuController.cs" />
-    <Compile Include="Assets\Scripts\ButtonContoller.cs" />
-    <Compile Include="Assets\Scripts\GUI\PopUp_Manager.cs" />
+    <Compile Include="Assets\Scripts\Audio\AudioController.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\UnityPackages\TextMesh Pro\Shaders\TMPro.cginc" />
-    <None Include="Assets\UnityPackages\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
-    <None Include="Assets\UnityPackages\LeanTween\ReadMe.txt" />
-    <None Include="Assets\UnityPackages\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
-    <None Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Fonts\Oswald-Bold - OFL.txt" />
-    <None Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Fonts\Anton OFL.txt" />
-    <None Include="Assets\UnityPackages\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
-    <None Include="Assets\UnityPackages\LeanTween\License.txt" />
-    <None Include="Assets\UnityPackages\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
-    <None Include="Assets\UnityPackages\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
-    <None Include="Assets\UnityPackages\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
-    <None Include="Assets\UnityPackages\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
-    <None Include="Assets\UnityPackages\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
-    <None Include="Assets\UnityPackages\TextMesh Pro\Shaders\TMP_SDF.shader" />
-    <None Include="Assets\UnityPackages\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
-    <None Include="Assets\UnityPackages\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
-    <None Include="Assets\UnityPackages\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
-    <None Include="Assets\UnityPackages\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
-    <None Include="Assets\UnityPackages\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
-    <None Include="Assets\UnityPackages\LeanTween\Examples\Archived\2dUnlitWithFade.shader" />
-    <None Include="Assets\UnityPackages\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
-    <None Include="Assets\UnityPackages\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
-    <None Include="Assets\UnityPackages\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
-    <None Include="Assets\UnityPackages\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
-    <None Include="Assets\UnityPackages\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
-    <None Include="Assets\UnityPackages\TextMesh Pro\Shaders\TMP_Sprite.shader" />
-    <None Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Fonts\Bangers - OFL.txt" />
+     <None Include="Assets\UnityPackages\TextMesh Pro\Shaders\TMPro.cginc" />
+     <None Include="Assets\UnityPackages\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
+     <None Include="Assets\UnityPackages\LeanTween\ReadMe.txt" />
+     <None Include="Assets\UnityPackages\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
+     <None Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Fonts\Oswald-Bold - OFL.txt" />
+     <None Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Fonts\Anton OFL.txt" />
+     <None Include="Assets\UnityPackages\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
+     <None Include="Assets\UnityPackages\LeanTween\License.txt" />
+     <None Include="Assets\UnityPackages\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
+     <None Include="Assets\UnityPackages\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
+     <None Include="Assets\UnityPackages\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
+     <None Include="Assets\UnityPackages\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
+     <None Include="Assets\UnityPackages\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
+     <None Include="Assets\UnityPackages\TextMesh Pro\Shaders\TMP_SDF.shader" />
+     <None Include="Assets\UnityPackages\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
+     <None Include="Assets\UnityPackages\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
+     <None Include="Assets\UnityPackages\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
+     <None Include="Assets\UnityPackages\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
+     <None Include="Assets\UnityPackages\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
+     <None Include="Assets\UnityPackages\LeanTween\Examples\Archived\2dUnlitWithFade.shader" />
+     <None Include="Assets\UnityPackages\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
+     <None Include="Assets\UnityPackages\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
+     <None Include="Assets\UnityPackages\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
+     <None Include="Assets\UnityPackages\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
+     <None Include="Assets\UnityPackages\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
+     <None Include="Assets\UnityPackages\TextMesh Pro\Shaders\TMP_Sprite.shader" />
+     <None Include="Assets\UnityPackages\TextMesh Pro\Examples &amp; Extras\Fonts\Bangers - OFL.txt" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.1.10f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
