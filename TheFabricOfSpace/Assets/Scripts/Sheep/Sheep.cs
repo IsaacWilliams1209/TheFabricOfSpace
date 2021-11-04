@@ -122,24 +122,26 @@ public class Sheep : MonoBehaviour
             awakeSheep.Add(gameObject);
             wakingTrigger.enabled = false;
         }
-        else
+        if(sheepType != SheepType.Sheared)
         {
-
-        }
-        if (sheepType == SheepType.Slab)
-        {
-            materialHolder = matChanger.materials;
-            materialHolder[1] = sheepMaterials[0];
-            materialHolder[2] = sheepMaterials[0];
-            materialHolder[0] = sheepMaterials[0];
-            matChanger.materials = materialHolder;
-            matChanger.sharedMesh = meshes[0];
             berryIndex = -2;
-            if (poweredUp)
+            if (sheepType == SheepType.Slab)
             {
-                GetComponent<SlabSheep>().ActivatePowerUp(this);
+                materialHolder = matChanger.materials;
+                materialHolder[1] = sheepMaterials[0];
+                materialHolder[2] = sheepMaterials[0];
+                materialHolder[0] = sheepMaterials[0];
+                matChanger.materials = materialHolder;
+                matChanger.sharedMesh = meshes[0];
+
+                if (poweredUp)
+                {
+                    GetComponent<SlabSheep>().ActivatePowerUp(this);
+                }
             }
         }
+
+        
     }
 
     // Update is called once per frame
@@ -362,10 +364,9 @@ public class Sheep : MonoBehaviour
 
             closestSheep = other.gameObject;
         }
-        if (other.gameObject.tag == "Reg")
+        if (other.gameObject.tag == "Reg" && berryIndex == -1)
         {
             canEat = true;
-
 
             berryIndex = other.GetComponent<Shrubs>().index;
         }

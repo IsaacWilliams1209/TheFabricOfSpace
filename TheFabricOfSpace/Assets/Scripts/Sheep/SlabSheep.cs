@@ -77,7 +77,7 @@ public class SlabSheep : MonoBehaviour
 
             sheep.transform.GetChild(1).GetComponent<SkinnedMeshRenderer>().sharedMesh = sheep.meshes[1];
             transform.GetChild(0).rotation = Quaternion.Euler(0, 0, 90);
-            transform.GetChild(0).position += Sheep.MaskVector(new Vector3(0, 0.5f, 0.2f), transform.up + transform.forward);
+            transform.GetChild(0).position += transform.up * 0.5f + transform.forward * 0.2f;
 
         }
         else
@@ -104,7 +104,7 @@ public class SlabSheep : MonoBehaviour
 
                 Debug.DrawRay(transform.position + transform.up * 0.1f, directions[i], Color.blue, 6.0f);
 
-                if (Physics.Raycast(transform.position + transform.up * 0.1f, directions[i], out hits[i], 2.0f))
+                if (Physics.Raycast(transform.position + transform.up * 0.1f, directions[i], out hits[i], 2.0f, 1))
                 {
 
                     if (hits[i].transform.tag == "Block" || hits[i].transform.tag == "Sheep")
@@ -130,7 +130,7 @@ public class SlabSheep : MonoBehaviour
             transform.GetChild(1).GetComponent<SkinnedMeshRenderer>().sharedMesh = sheep.meshes[0];
 
             transform.GetChild(0).rotation = Quaternion.Euler(0, 180, 0);
-            transform.GetChild(0).position -= Sheep.MaskVector(new Vector3(0, 0.5f, 0.2f), transform.up + transform.forward);
+            transform.GetChild(0).position -= transform.up * 0.5f + transform.forward * 0.2f;
 
     sheep.mainCollider.enabled = false;
         }
