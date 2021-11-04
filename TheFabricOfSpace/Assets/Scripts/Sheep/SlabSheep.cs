@@ -69,7 +69,15 @@ public class SlabSheep : MonoBehaviour
 
             sheep.transform.GetChild(2).GetChild(0).gameObject.layer = 0;
 
+            sheep.materialHolder = sheep.matChanger.materials;
+            sheep.materialHolder[1] = sheep.sheepMaterials[1];
+            sheep.materialHolder[2] = sheep.sheepMaterials[1];
+            sheep.materialHolder[0] = sheep.sheepMaterials[1];
+            sheep.matChanger.materials = sheep.materialHolder;
+
             sheep.transform.GetChild(1).GetComponent<SkinnedMeshRenderer>().sharedMesh = sheep.meshes[1];
+            transform.GetChild(0).rotation = Quaternion.Euler(0, 0, 90);
+            transform.GetChild(0).position += Sheep.MaskVector(new Vector3(0, 0.5f, 0.2f), transform.up + transform.forward);
 
         }
         else
@@ -113,9 +121,18 @@ public class SlabSheep : MonoBehaviour
 
             sheep.canMove = true;
 
+            sheep.materialHolder = sheep.matChanger.materials;
+            sheep.materialHolder[1] = sheep.sheepMaterials[0];
+            sheep.materialHolder[2] = sheep.sheepMaterials[0];
+            sheep.materialHolder[0] = sheep.sheepMaterials[0];
+            sheep.matChanger.materials = sheep.materialHolder;
+
             transform.GetChild(1).GetComponent<SkinnedMeshRenderer>().sharedMesh = sheep.meshes[0];
 
-            sheep.mainCollider.enabled = false;
+            transform.GetChild(0).rotation = Quaternion.Euler(0, 180, 0);
+            transform.GetChild(0).position -= Sheep.MaskVector(new Vector3(0, 0.5f, 0.2f), transform.up + transform.forward);
+
+    sheep.mainCollider.enabled = false;
         }
     }
 }

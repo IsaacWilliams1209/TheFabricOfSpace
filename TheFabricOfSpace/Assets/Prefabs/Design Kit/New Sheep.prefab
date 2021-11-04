@@ -803,9 +803,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sheepMaterials:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 2100000, guid: e184fc1cbac070d4887e42aaba709f2b, type: 2}
+  - {fileID: 2100000, guid: 55c3ec5679a95c2428eadebd83c43a40, type: 2}
+  - {fileID: 2100000, guid: 555cfc54fa8552848b2402de936e5424, type: 2}
   index: 0
   poweredUp: 0
   sheepType: 0
@@ -827,6 +827,7 @@ MonoBehaviour:
   - {fileID: -2167570075894139802, guid: c9f92f50dc58f7446b2bcbd0bef36351, type: 3}
   - {fileID: -2930794645719161189, guid: e1864c696aed91a40adc871266ddbe92, type: 3}
   staticHoldingSheep: 0
+  materialHolder: []
 --- !u!65 &5058815981710956296
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1986,13 +1987,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7509632539055662400}
-  m_LocalRotation: {x: 0.38268343, y: -0, z: -0, w: 0.92387956}
-  m_LocalPosition: {x: 0, y: 4, z: -4}
+  m_LocalRotation: {x: 0.44509947, y: -0, z: -0, w: 0.8954811}
+  m_LocalPosition: {x: 0, y: 6.01, z: -5.22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5382326588536651409}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 52.859, y: 0, z: 0}
 --- !u!20 &8583880216559202450
 Camera:
   m_ObjectHideFlags: 0
