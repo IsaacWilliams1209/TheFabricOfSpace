@@ -51,7 +51,7 @@ public class Block : MonoBehaviour
                 {
                     // Hit distance is greater than 1 so the player can jump
                     jumpTriggers[i].enabled = true;
-                    jumpLandings[i] = hit.transform.position + transform.up;
+                    jumpLandings[i] = hit.transform.position + transform.up * 0.6f;
                     traversable[i] = false;
                     colliders[i].enabled = true;
                 }
