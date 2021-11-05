@@ -19,6 +19,7 @@ public class ButtonContoller : MonoBehaviour
 {
     public ButtonType buttonType;
 
+    AudioManager audioManager;
     MenuManager menuManager;
     Button currButton;
 
@@ -27,6 +28,7 @@ public class ButtonContoller : MonoBehaviour
         currButton = GetComponent<Button>();
         currButton.onClick.AddListener(OnButtonClicked);
         menuManager = MenuManager.GetInstance();
+        audioManager = AudioManager.GetInstance();
     }
 
     public void OnButtonClicked()
@@ -36,6 +38,8 @@ public class ButtonContoller : MonoBehaviour
             case ButtonType.StartLevel:
                 Time.timeScale = 1.0f;
                 menuManager.SwitchMenu(MenuType.GUI);
+                audioManager.PlayAudio(AudioType.SpaceAmbience);
+                audioManager.PlayAudio(AudioType.WaterAmbience);
                 break;
             case ButtonType.GoToMainMenu:
                 menuManager.SwitchMenu(MenuType.MainMenu);
