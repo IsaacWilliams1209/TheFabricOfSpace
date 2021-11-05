@@ -125,23 +125,33 @@ public class Sheep : MonoBehaviour
         if(sheepType != SheepType.Sheared)
         {
             berryIndex = -2;
-            if (sheepType == SheepType.Slab)
+            switch (sheepType)
             {
-                materialHolder = matChanger.materials;
-                materialHolder[1] = sheepMaterials[0];
-                materialHolder[2] = sheepMaterials[0];
-                materialHolder[0] = sheepMaterials[0];
-                matChanger.materials = materialHolder;
-                matChanger.sharedMesh = meshes[0];
+                case SheepType.Slab:
+                    materialHolder = matChanger.materials;
+                    materialHolder[1] = sheepMaterials[0];
+                    materialHolder[2] = sheepMaterials[0];
+                    materialHolder[0] = sheepMaterials[0];
+                    matChanger.materials = materialHolder;
+                    matChanger.sharedMesh = meshes[0];
 
-                if (poweredUp)
-                {
-                    GetComponent<SlabSheep>().ActivatePowerUp(this);
-                }
+                    if (poweredUp)
+                    {
+                        GetComponent<SlabSheep>().ActivatePowerUp(this);
+                    }
+                    break;
+                case SheepType.Snowball:
+                    //animator.SetBool("IsSnowball", true);
+                    break;
+                case SheepType.Static:
+                    matChanger.sharedMesh = meshes[3];
+                    break;
+                default:
+                    break;
+
+
             }
-        }
-
-        
+        }        
     }
 
     // Update is called once per frame

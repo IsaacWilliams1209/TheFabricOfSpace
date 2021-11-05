@@ -44,6 +44,7 @@ public class SnowballSheep : MonoBehaviour
         }
         else if (currentlyMoving)
         {
+            GetComponent<Animator>().SetBool("IsRolling", true);
             RaycastHit hit;
 
             int mask = (1 << 8) | (1 << 0);
@@ -67,6 +68,7 @@ public class SnowballSheep : MonoBehaviour
                     if (hit.transform.TryGetComponent<StaticSheep>(out StaticSheep staticSheep))
                     {
                         currentlyMoving = false;
+                        GetComponent<Animator>().SetBool("IsRolling", false);
                     }
                     else
                     {
@@ -75,6 +77,8 @@ public class SnowballSheep : MonoBehaviour
                             sheep.shepherd.berries[sheep.berryIndex].GetComponent<Shrubs>().Restore();
                         sheep.berryIndex = -1;
                         gameObject.layer = 8;
+                        GetComponent<Animator>().SetBool("IsRolling", false);
+                        GetComponent<Animator>().SetBool("IsSnowball", false);
                         Destroy(this);
                     }
                     
@@ -120,7 +124,8 @@ public class SnowballSheep : MonoBehaviour
                 }
                 else
                 {
-                    currentlyMoving = false;                    
+                    currentlyMoving = false;
+                    GetComponent<Animator>().SetBool("IsRolling", false);
                 }                
             }
             else
