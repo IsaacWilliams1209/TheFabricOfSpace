@@ -7,7 +7,8 @@ public class Planet_Generation : MonoBehaviour
 {
     /// <summary> Array that will hold 6 prefabs created by the designers and than will spawn a planet by iterating through each prefab spawing it into the scene
     /// </summary>
-    private GameObject[] planetFaces;
+    [HideInInspector]
+    public GameObject[] planetFaces;
 
     /// <summary> These faces are the game prefabs that the designers feed there levels into and the code uses them to create a new planet. 
     ///</summary>
@@ -40,7 +41,7 @@ public class Planet_Generation : MonoBehaviour
         PlanetSpawn();
     }
 
-    private void PlanetSpawn()
+    public void PlanetSpawn()
     {
         for (currFace = 0; currFace < maxFaceAmount; currFace++)
         {
