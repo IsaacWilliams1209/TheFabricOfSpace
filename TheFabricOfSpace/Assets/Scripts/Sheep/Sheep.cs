@@ -113,6 +113,7 @@ public class Sheep : MonoBehaviour
         // Set apropriate materials for the sheep
         if (active)
         {
+            animator.SetBool("IsAwake", true);
             shepherd.activeSheep = gameObject;
             wakingTrigger.enabled = false;
             shepherd.SwapCams();
@@ -120,6 +121,7 @@ public class Sheep : MonoBehaviour
         }
         else if (awake)
         {
+            animator.SetBool("IsAwake", true);
             awakeSheep.Add(gameObject);
             wakingTrigger.enabled = false;
         }
@@ -135,7 +137,11 @@ public class Sheep : MonoBehaviour
             materialHolder[0] = sheepMaterials[0];
             matChanger.materials = materialHolder;
             matChanger.sharedMesh = meshes[0];
-           berryIndex = -2;
+            berryIndex = -2;
+            if (poweredUp)
+            {
+                GetComponent<SlabSheep>().ActivatePowerUp(this);
+            }
         }
     }
 
@@ -215,7 +221,7 @@ public class Sheep : MonoBehaviour
             }
             // On R press activate the sheep powerup
 
-            if (Input.GetKeyDown(KeyCode.R))
+            if (Input.GetKeyDown(KeyCode.E))
             {
                 poweredUp = !poweredUp;
 
@@ -254,7 +260,6 @@ public class Sheep : MonoBehaviour
                 {
                     swap = true;
                 }
-
             }
 
             RaycastHit hit;
@@ -264,7 +269,6 @@ public class Sheep : MonoBehaviour
                 //Debug.DrawRay(transform.position + transform.up * 0.3f, -transform.up, Color.red, 4);
                 if (hit.transform.tag == "Water")
                 {
-
                     IceLily temp;
                     if (hit.transform.TryGetComponent<IceLily>(out temp))
                     {
@@ -306,6 +310,7 @@ public class Sheep : MonoBehaviour
 
             transform.GetComponent<BoxCollider>().enabled = true;
             shepherd.activeSheep = awakeSheep[0];
+            awakeSheep[0].GetComponent<Sheep>().animator.SetBool("IsAwake", true);
             //awakeSheep[0].transform.GetChild(1).GetComponent<Renderer>().material = sheepMaterials[0];
             awakeSheep[0].GetComponent<Sheep>().active = true;
             awakeSheep.RemoveAt(0);
