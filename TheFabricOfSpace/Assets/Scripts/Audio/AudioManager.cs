@@ -7,37 +7,53 @@ public enum AudioType
 {
     MainAudio,
     WaterAmbience,
-    SpaceAmbience
+    SpaceAmbience,
+    ButtonSelect,
+    ButtonHover,
+    SheepWalking
 }
 
 public class AudioManager : Singleton<AudioManager>
 {
 
-    List<AudioController> audioSelection;
-    AudioController desiredAudio;
+    List<AudioController> audioList;
+    AudioController desiredAudio = null;
+    public AudioController lastActiveAudio = null;
+    public bool stopAudio = false;
 
     protected override void Awake()
     {
         base.Awake();
-        audioSelection = GetComponentsInChildren<AudioController>().ToList();
-        audioSelection.ForEach(x => x.gameObject.SetActive(false));
+        audioList = GetComponentsInChildren<AudioController>().ToList();
+        audioList.ForEach(x => x.gameObject.SetActive(false));
         PlayAudio(AudioType.MainAudio);
-    }
-
-    private void Start()
-    {
-
     }
 
     public void PlayAudio(AudioType audioToPlay)
     {
-        desiredAudio = audioSelection.Find(x => x.audioType == audioToPlay);
+        desiredAudio = audioList.Find(x => x.audioType == audioToPlay);
 
         if (desiredAudio != null)
         {
             desiredAudio.gameObject.SetActive(true);
             desiredAudio.gameObject.GetComponent<AudioSource>().Play();
+            lastActiveAudio = desiredAudio;
+            desiredAudio = null;
         }
         else { Debug.LogWarning("Could not find the desired audio"); }
     }
+
+
+    public void StopDesiredAudio(AudioType audioToStop)
+    {
+        lastActiveAudio = audioList.Find(x => x.audioType == audioToStop);
+
+        if (lastActiveAudio != null) {
+            lastActiveAudio.gameObject.GetComponent<AudioSource>().Stop();
+            lastActiveAudio = null;
+        }
+
+    }
+
+
 }

@@ -93,6 +93,8 @@ public class Sheep : MonoBehaviour
     [HideInInspector]
     public Material[] materialHolder;
 
+    AudioManager audioManager;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -106,6 +108,7 @@ public class Sheep : MonoBehaviour
         controller = GetComponent<SheepController>();
         mainCollider = GetComponents<BoxCollider>()[0];
         wakingTrigger = GetComponents<BoxCollider>()[1];
+        audioManager = AudioManager.GetInstance();
 
         // Set apropriate materials for the sheep
         if (active)
@@ -293,6 +296,7 @@ public class Sheep : MonoBehaviour
         if (swap)
         {
             animator.SetBool("IsWalking", false);
+            //audioManager.StopDesiredAudio(AudioType.SheepWalking);
             //shepherd.SwapCams();
             if (shepherd.isSheepFocus)
             {

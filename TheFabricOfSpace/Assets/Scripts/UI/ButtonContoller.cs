@@ -42,15 +42,19 @@ public class ButtonContoller : MonoBehaviour
                 audioManager.PlayAudio(AudioType.WaterAmbience);
                 break;
             case ButtonType.GoToMainMenu:
+                audioManager.PlayAudio(AudioType.ButtonSelect);
                 menuManager.SwitchMenu(MenuType.MainMenu);
                 break;
             case ButtonType.GoToSettings:
+                audioManager.PlayAudio(AudioType.ButtonSelect);
                 menuManager.SwitchMenu(MenuType.SettingsMenu);
                 break;
             case ButtonType.GoToCredits:
+                audioManager.PlayAudio(AudioType.ButtonSelect);
                 menuManager.SwitchMenu(MenuType.Credits);
                 break;
             case ButtonType.ExitGame:
+                audioManager.PlayAudio(AudioType.ButtonSelect);
                 Application.Quit();
                 break;
             default:

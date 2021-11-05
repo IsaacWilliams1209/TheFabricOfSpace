@@ -21,10 +21,13 @@ public class SheepController : MonoBehaviour
     bool grounded;
     public Vector3 movementVector;
 
+    AudioManager audioManager;
+
     void Start()
     {
         mesh = transform.GetChild(0);
         startRotation = mesh.rotation;
+        audioManager = AudioManager.GetInstance();
     }
 
     public void Move()
@@ -86,6 +89,8 @@ public class SheepController : MonoBehaviour
             mesh.rotation = Quaternion.RotateTowards(mesh.rotation, lookRotaion, rotationSpeed * Time.deltaTime);
         
             GetComponent<Sheep>().animator.SetBool("IsWalking", true);
+
+            audioManager.PlayAudio(AudioType.SheepWalking);
         
             //Quaternion lookRotaion = Quaternion.LookRotation(rotation, transform.parent.up);
             //
@@ -94,6 +99,7 @@ public class SheepController : MonoBehaviour
         else
         {
             GetComponent<Sheep>().animator.SetBool("IsWalking", false);
+            audioManager.StopDesiredAudio(AudioType.SheepWalking);
         }
     }
 
