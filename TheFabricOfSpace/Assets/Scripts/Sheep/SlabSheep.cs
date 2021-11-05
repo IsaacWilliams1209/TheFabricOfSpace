@@ -76,8 +76,8 @@ public class SlabSheep : MonoBehaviour
             sheep.matChanger.materials = sheep.materialHolder;
 
             sheep.transform.GetChild(1).GetComponent<SkinnedMeshRenderer>().sharedMesh = sheep.meshes[1];
-            transform.GetChild(0).rotation = Quaternion.Euler(0, 0, 90);
-            transform.GetChild(0).position += transform.up * 0.5f + transform.forward * 0.2f;
+            transform.GetChild(0).rotation = GetComponent<SheepController>().startRotation;
+            transform.GetChild(0).position += transform.up * 0.5f + transform.forward * -0.2f;
 
         }
         else
@@ -129,8 +129,8 @@ public class SlabSheep : MonoBehaviour
 
             transform.GetChild(1).GetComponent<SkinnedMeshRenderer>().sharedMesh = sheep.meshes[0];
 
-            transform.GetChild(0).rotation = Quaternion.Euler(0, 180, 0);
-            transform.GetChild(0).position -= transform.up * 0.5f + transform.forward * 0.2f;
+            transform.GetChild(0).rotation = transform.parent.rotation;
+            transform.GetChild(0).position -= transform.up * 0.5f + transform.forward * -0.2f;
 
     sheep.mainCollider.enabled = false;
         }

@@ -12,7 +12,8 @@ public class SheepController : MonoBehaviour
 
     public Vector3 sensorPos;
 
-    Quaternion startRotation;
+    [HideInInspector]
+    public Quaternion startRotation;
 
     Transform mesh;
 
@@ -24,7 +25,7 @@ public class SheepController : MonoBehaviour
     void Start()
     {
         mesh = transform.GetChild(0);
-        startRotation = mesh.rotation;
+        startRotation = mesh.GetChild(1).rotation;
     }
 
     public void Move()
