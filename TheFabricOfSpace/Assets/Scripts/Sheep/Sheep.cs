@@ -93,6 +93,9 @@ public class Sheep : MonoBehaviour
     [HideInInspector]
     public Material[] materialHolder;
 
+    [HideInInspector]
+    public TutorialPromt promtChanger;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -106,6 +109,7 @@ public class Sheep : MonoBehaviour
         controller = GetComponent<SheepController>();
         mainCollider = GetComponents<BoxCollider>()[0];
         wakingTrigger = GetComponents<BoxCollider>()[1];
+        promtChanger = GameObject.Find("/GameObject").GetComponent<TutorialPromt>();
 
         // Set apropriate materials for the sheep
         if (active)
@@ -115,6 +119,7 @@ public class Sheep : MonoBehaviour
             wakingTrigger.enabled = false;
             shepherd.SwapCams();
             Debug.Log("CamsSwapped");
+            promtChanger.UpdateText(this);
         }
         else if (awake)
         {
@@ -315,7 +320,7 @@ public class Sheep : MonoBehaviour
                 transform.GetChild(2).GetChild(1).gameObject.SetActive(false);
                 awakeSheep[0].transform.GetChild(2).GetChild(1).gameObject.SetActive(true);
             }
-
+            promtChanger.UpdateText(awakeSheep[0].GetComponent<Sheep>());
             transform.GetComponent<BoxCollider>().enabled = true;
             shepherd.activeSheep = awakeSheep[0];
             awakeSheep[0].GetComponent<Sheep>().animator.SetBool("IsAwake", true);
@@ -323,7 +328,7 @@ public class Sheep : MonoBehaviour
             awakeSheep[0].GetComponent<Sheep>().active = true;
             awakeSheep.RemoveAt(0);
             awakeSheep.Add(gameObject);
-            //matChanger.material = sheepMaterials[1];
+            //matChanger.material = sheepMaterials[1];            
             active = false;
             swap = false;
         }
