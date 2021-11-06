@@ -807,6 +807,8 @@ MonoBehaviour:
   - {fileID: 2100000, guid: e184fc1cbac070d4887e42aaba709f2b, type: 2}
   - {fileID: 2100000, guid: 55c3ec5679a95c2428eadebd83c43a40, type: 2}
   - {fileID: 2100000, guid: 555cfc54fa8552848b2402de936e5424, type: 2}
+  - {fileID: 6482697493424803068, guid: 6372d10be0236f7418ae94403d60e118, type: 3}
+  - {fileID: 2100000, guid: 555cfc54fa8552848b2402de936e5424, type: 2}
   index: 0
   poweredUp: 0
   sheepType: 0
@@ -830,6 +832,7 @@ MonoBehaviour:
   - {fileID: 6159415530302770013, guid: e79c17fcd2ed96c488179c9eca747d67, type: 3}
   staticHoldingSheep: 0
   materialHolder: []
+  promtChanger: {fileID: 0}
 --- !u!65 &5058815981710956296
 BoxCollider:
   m_ObjectHideFlags: 0

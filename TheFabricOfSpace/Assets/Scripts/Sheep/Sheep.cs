@@ -146,7 +146,8 @@ public class Sheep : MonoBehaviour
                     }
                     break;
                 case SheepType.Snowball:
-                    //animator.SetBool("IsSnowball", true);
+                    animator.SetBool("IsSnowball", true);
+                    matChanger.sharedMesh = meshes[2];
                     break;
                 case SheepType.Static:
                     matChanger.sharedMesh = meshes[3];
@@ -225,6 +226,9 @@ public class Sheep : MonoBehaviour
                             break;
                         case SheepType.Snowball:
                              matChanger.sharedMesh = meshes[2];
+                            break;
+                        case SheepType.Static:
+                            matChanger.sharedMesh = meshes[3];
                             break;
                         default:
                             break;
