@@ -19,9 +19,15 @@ public class Player : MonoBehaviour
 
         if (playerWon) {
             playerWon = false;
+            sidesCompleted = 0;
             Time.timeScale = 0.0f;
             menuManager.SwitchMenu(MenuType.WinScreen);
+            GameObject worldReset = GameObject.Find("/LavishPlanet");
+            for (int i = 0; i < 6; i++)
+            {
+                Destroy(worldReset.transform.GetChild(i+1).gameObject);
+            }
+            worldReset.GetComponent<Planet_Generation>().PlanetSpawn();
         }
     }
-
 }
