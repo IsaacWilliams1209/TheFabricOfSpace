@@ -13,10 +13,10 @@ public class TutorialPromt : MonoBehaviour
         switch (sheep.sheepType)
         {
             case SheepType.Sheared:
-                tutePrompt.text = "Wool Style: Sheared Sheep\nPress E when near a 1 block gap to jump across\n\nCan jump across water also";
+                tutePrompt.text = "Wool Style: Sheared Sheep\nPress E when near a 1 block gap to jump across\n\nCan also jump across water ";
                 break;
             case SheepType.Slab:
-                tutePrompt.text = "Wool Style: Slab Sheep\nPress E to Puff making the sheep become a block that can be walked on by other sheep\n\nPress E once Puff to Unpuff, allowing this sheep to move around freely";
+                tutePrompt.text = "Wool Style: Slab Sheep\nPress E to Puff making the sheep become a block that can be walked on by other sheep but restricts movement";
                 break;
             case SheepType.Snowball:
                 tutePrompt.text = "Wool Style: Snowball Sheep\nMoving in any direction makes this sheep roll until reaching an edge or colliding with an object\n\nRolling over water makes traversable Ice Lilies";
