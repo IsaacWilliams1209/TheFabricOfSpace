@@ -305,7 +305,7 @@ public class Sheep : MonoBehaviour
             {
                 if (hit.transform.tag == "Sheep" && hit.transform.GetComponent<Sheep>().sheepType == SheepType.Slab)
                 {
-                    hit.transform.GetComponent<Sheep>().poweredUp = false;
+                    //hit.transform.GetComponent<SlabSheep>().steppedOn = true;
                 }
             }
         }
