@@ -207,7 +207,7 @@ public class Sheep : MonoBehaviour
                 if (canWake)
                 {
                     closestSheep.GetComponent<Sheep>().awake = true;
-
+                    sheepIcons.guiNeedsUpdate = true;
                     //closestSheep.transform.GetChild(1).GetComponent<Renderer>().material = sheepMaterials[0];
                     closestSheep.GetComponent<Sheep>().wakingTrigger.enabled = false;
                     awakeSheep.Insert(0, closestSheep);
@@ -321,7 +321,7 @@ public class Sheep : MonoBehaviour
         // Swap to the next sheep
         if (swap)
         {
-            sheepIcons.iconNeedsUpdate = true;
+            sheepIcons.guiNeedsUpdate = true;
             animator.SetBool("IsWalking", false);
             //shepherd.SwapCams();
             if (shepherd.isSheepFocus)

@@ -14,6 +14,8 @@ public class Transition : MonoBehaviour
     bool finishedRotating = false;
 
     Sheep currentSheep;
+
+    GUI_Manager sheepIcons;
     
     void Start()
     {
@@ -46,6 +48,7 @@ public class Transition : MonoBehaviour
                 isComplete = false;
                 tempShepherd.SwapCams();
                 tempShepherd.activeSheep.GetComponent<Sheep>().promtChanger.UpdateText(tempShepherd.activeSheep.GetComponent<Sheep>());
+                sheepIcons.currSheep = tempShepherd;
             }
         }
     }
