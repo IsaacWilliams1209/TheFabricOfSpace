@@ -364,7 +364,7 @@ public class Sheep : MonoBehaviour
         if (other.gameObject.tag == "Geyser")
         {
             Debug.Log("Geyser triggered");
-            if (other.transform.parent.GetComponent<Geyser>().sheep == null)
+            if (sheepType == SheepType.Slab && other.transform.parent.GetComponent<Geyser>().sheep == null)
             {
                 other.transform.parent.GetComponent<Geyser>().sheep = this;
             }
