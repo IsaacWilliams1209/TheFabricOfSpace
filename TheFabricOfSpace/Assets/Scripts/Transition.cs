@@ -45,6 +45,7 @@ public class Transition : MonoBehaviour
                 currentSheep.shepherd.enabled = false;
                 isComplete = false;
                 tempShepherd.SwapCams();
+                tempShepherd.activeSheep.GetComponent<Sheep>().promtChanger.UpdateText(tempShepherd.activeSheep.GetComponent<Sheep>());
             }
         }
     }

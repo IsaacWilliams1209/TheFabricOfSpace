@@ -789,6 +789,7 @@ MonoBehaviour:
   rotationSpeed: 720
   gravity: -0.05
   sensorPos: {x: 0, y: 0.2, z: 0}
+  startRotation: {x: 0, y: 0, z: 0, w: 0}
   movementVector: {x: 0, y: 0, z: 0}
 --- !u!114 &3402083336555788401
 MonoBehaviour:
@@ -805,6 +806,8 @@ MonoBehaviour:
   sheepMaterials:
   - {fileID: 2100000, guid: e184fc1cbac070d4887e42aaba709f2b, type: 2}
   - {fileID: 2100000, guid: 55c3ec5679a95c2428eadebd83c43a40, type: 2}
+  - {fileID: 2100000, guid: 555cfc54fa8552848b2402de936e5424, type: 2}
+  - {fileID: 6482697493424803068, guid: 6372d10be0236f7418ae94403d60e118, type: 3}
   - {fileID: 2100000, guid: 555cfc54fa8552848b2402de936e5424, type: 2}
   index: 0
   poweredUp: 0
@@ -825,10 +828,11 @@ MonoBehaviour:
   meshes:
   - {fileID: 7120451651249902827, guid: 0d3bba08f3fabd541860dd5790e516a9, type: 3}
   - {fileID: -2167570075894139802, guid: c9f92f50dc58f7446b2bcbd0bef36351, type: 3}
-  - {fileID: -2930794645719161189, guid: e1864c696aed91a40adc871266ddbe92, type: 3}
+  - {fileID: -5415402816329098856, guid: 6372d10be0236f7418ae94403d60e118, type: 3}
   - {fileID: 6159415530302770013, guid: e79c17fcd2ed96c488179c9eca747d67, type: 3}
   staticHoldingSheep: 0
   materialHolder: []
+  promtChanger: {fileID: 0}
 --- !u!65 &5058815981710956296
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1988,13 +1992,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7509632539055662400}
-  m_LocalRotation: {x: 0.44509947, y: -0, z: -0, w: 0.8954811}
-  m_LocalPosition: {x: 0, y: 6.01, z: -5.22}
+  m_LocalRotation: {x: 0.47564173, y: -0, z: -0, w: 0.8796391}
+  m_LocalPosition: {x: 0, y: 6.73, z: -6.16}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5382326588536651409}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 52.859, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 56.802, y: 0, z: 0}
 --- !u!20 &8583880216559202450
 Camera:
   m_ObjectHideFlags: 0

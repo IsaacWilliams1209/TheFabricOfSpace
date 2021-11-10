@@ -93,6 +93,9 @@ public class Sheep : MonoBehaviour
     [HideInInspector]
     public Material[] materialHolder;
 
+    [HideInInspector]
+    public TutorialPromt promtChanger;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -106,6 +109,7 @@ public class Sheep : MonoBehaviour
         controller = GetComponent<SheepController>();
         mainCollider = GetComponents<BoxCollider>()[0];
         wakingTrigger = GetComponents<BoxCollider>()[1];
+        promtChanger = GameObject.Find("/GameObject").GetComponent<TutorialPromt>();
 
         // Set apropriate materials for the sheep
         if (active)
@@ -115,6 +119,7 @@ public class Sheep : MonoBehaviour
             wakingTrigger.enabled = false;
             shepherd.SwapCams();
             Debug.Log("CamsSwapped");
+            promtChanger.UpdateText(this);
         }
         else if (awake)
         {
@@ -122,24 +127,37 @@ public class Sheep : MonoBehaviour
             awakeSheep.Add(gameObject);
             wakingTrigger.enabled = false;
         }
-        else
+        if(sheepType != SheepType.Sheared)
         {
-
-        }
-        if (sheepType == SheepType.Slab)
-        {
-            materialHolder = matChanger.materials;
-            materialHolder[1] = sheepMaterials[0];
-            materialHolder[2] = sheepMaterials[0];
-            materialHolder[0] = sheepMaterials[0];
-            matChanger.materials = materialHolder;
-            matChanger.sharedMesh = meshes[0];
             berryIndex = -2;
-            if (poweredUp)
+            switch (sheepType)
             {
-                GetComponent<SlabSheep>().ActivatePowerUp(this);
+                case SheepType.Slab:
+                    materialHolder = matChanger.materials;
+                    materialHolder[1] = sheepMaterials[0];
+                    materialHolder[2] = sheepMaterials[0];
+                    materialHolder[0] = sheepMaterials[0];
+                    matChanger.materials = materialHolder;
+                    matChanger.sharedMesh = meshes[0];
+
+                    if (poweredUp)
+                    {
+                        GetComponent<SlabSheep>().ActivatePowerUp(this);
+                    }
+                    break;
+                case SheepType.Snowball:
+                    animator.SetBool("IsSnowball", true);
+                    matChanger.sharedMesh = meshes[2];
+                    break;
+                case SheepType.Static:
+                    matChanger.sharedMesh = meshes[3];
+                    break;
+                default:
+                    break;
+
+
             }
-        }
+        }        
     }
 
     // Update is called once per frame
@@ -208,6 +226,9 @@ public class Sheep : MonoBehaviour
                             break;
                         case SheepType.Snowball:
                              matChanger.sharedMesh = meshes[2];
+                            break;
+                        case SheepType.Static:
+                            matChanger.sharedMesh = meshes[3];
                             break;
                         default:
                             break;
@@ -303,7 +324,7 @@ public class Sheep : MonoBehaviour
                 transform.GetChild(2).GetChild(1).gameObject.SetActive(false);
                 awakeSheep[0].transform.GetChild(2).GetChild(1).gameObject.SetActive(true);
             }
-
+            promtChanger.UpdateText(awakeSheep[0].GetComponent<Sheep>());
             transform.GetComponent<BoxCollider>().enabled = true;
             shepherd.activeSheep = awakeSheep[0];
             awakeSheep[0].GetComponent<Sheep>().animator.SetBool("IsAwake", true);
@@ -311,7 +332,7 @@ public class Sheep : MonoBehaviour
             awakeSheep[0].GetComponent<Sheep>().active = true;
             awakeSheep.RemoveAt(0);
             awakeSheep.Add(gameObject);
-            //matChanger.material = sheepMaterials[1];
+            //matChanger.material = sheepMaterials[1];            
             active = false;
             swap = false;
         }
@@ -362,10 +383,9 @@ public class Sheep : MonoBehaviour
 
             closestSheep = other.gameObject;
         }
-        if (other.gameObject.tag == "Reg")
+        if (other.gameObject.tag == "Reg" && berryIndex == -1)
         {
             canEat = true;
-
 
             berryIndex = other.GetComponent<Shrubs>().index;
         }

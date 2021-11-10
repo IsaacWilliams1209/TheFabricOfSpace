@@ -14,6 +14,8 @@ public class Geyser : MonoBehaviour
 
     GameObject platform;
 
+    GameObject inputSpout;
+
     Vector3 to;
 
     Vector3 from;
@@ -26,13 +28,15 @@ public class Geyser : MonoBehaviour
 
     bool testBool = true;
 
+    bool down = false;
+
     // Start is called before the first frame update
     void Start()
     {
         blockLow = transform.GetChild(0).GetChild(1).GetComponent<Block>();
         blockHigh = transform.GetChild(0).GetChild(2).GetComponent<Block>();
         platform = transform.GetChild(0).GetChild(0).gameObject;
-
+        inputSpout = transform.GetChild(1).GetChild(1).gameObject;
         blockHigh.gameObject.SetActive(false);
     }
 
@@ -55,6 +59,7 @@ public class Geyser : MonoBehaviour
                     transform.GetChild(0).GetComponent<BoxCollider>().enabled = true;
                     to = platform.transform.position + transform.up;
                     from = platform.transform.position;
+                    down = true;
                 }
             }
             else if (active && !isMoving)
@@ -65,6 +70,7 @@ public class Geyser : MonoBehaviour
                 blockHigh.gameObject.SetActive(false);
                 to = platform.transform.position - transform.up;
                 from = platform.transform.position;
+                down = false;
                 blockLow.BlockUpdate();
             }
         }
@@ -78,6 +84,7 @@ public class Geyser : MonoBehaviour
             transform.GetChild(0).GetComponent<BoxCollider>().enabled = false;
             to = platform.transform.position - transform.up;
             from = platform.transform.position;
+            down = false;
             blockLow.BlockUpdate();
         }
         if (active  && testBool/* and animation is complete*/)
@@ -142,7 +149,14 @@ public class Geyser : MonoBehaviour
         {
             // timer = animationTime/ (animationTime - Time.deltaTime);
             timer += Time.deltaTime;
-
+            if (down)
+            {
+                inputSpout.transform.position = Vector3.Lerp(inputSpout.transform.parent.position, inputSpout.transform.parent.position - transform.up, timer);
+            }                
+            else
+            {
+                inputSpout.transform.position = Vector3.Lerp(inputSpout.transform.parent.position - transform.up, inputSpout.transform.parent.position, timer);
+            }                
             platform.transform.position = Vector3.Lerp(from, to, timer);
             if (platform.transform.position == to)
             {

@@ -54,6 +54,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\LogoCinematic.cs" />
+    <Compile Include="Assets\Scripts\Audio\AudioManager.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\GeneralBasics2d.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\TestingUnitTests.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\PathBezier2d.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\PathSpline.cs" />
     <Compile Include="Assets\Scripts\UI\MenuManager.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\GeneralEasingTypes.cs" />
+    <Compile Include="Assets\Scripts\Audio\AudioController.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\Following.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\PathSplineEndless.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\GeneralBasic.cs" />
@@ -144,6 +146,7 @@
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Scripts\GeneralEventsListeners.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Framework\LTDescr.cs" />
     <Compile Include="Assets\UnityPackages\LeanTween\Examples\Archived\OldGUIExamplesCS.cs" />
+    <Compile Include="Assets\Scripts\UI\TutorialPromt.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\UnityPackages\TextMesh Pro\Shaders\TMPro.cginc" />
