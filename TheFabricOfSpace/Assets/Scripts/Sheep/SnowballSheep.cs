@@ -58,7 +58,7 @@ public class SnowballSheep : MonoBehaviour
                     hit.transform.parent.GetComponent<OldTree>().Fall(direction);
                     sheep.sheepType = SheepType.Sheared;
                     if (!(sheep.berryIndex < 0))
-                        sheep.shepherd.berries[sheep.berryIndex].GetComponent<Shrubs>().Restore();
+                        sheep.shepherd.berries[sheep.berryIndex].GetComponent<Shrubs>().Restore(sheep);
                     sheep.berryIndex = -1;
                     gameObject.layer = 8;
                     Destroy(this);
@@ -74,7 +74,7 @@ public class SnowballSheep : MonoBehaviour
                     {
                         sheep.sheepType = SheepType.Sheared;
                         if (!(sheep.berryIndex < 0))
-                            sheep.shepherd.berries[sheep.berryIndex].GetComponent<Shrubs>().Restore();
+                            sheep.shepherd.berries[sheep.berryIndex].GetComponent<Shrubs>().Restore(sheep);
                         sheep.berryIndex = -1;
                         gameObject.layer = 8;
                         GetComponent<Animator>().SetBool("IsRolling", false);
