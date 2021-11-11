@@ -841,7 +841,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb65f9ce3339d37409623d0c912387a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonType: 0
+  buttonType: 5
 --- !u!114 &321252727
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2985,6 +2985,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sidesCompleted: 0
   playerWon: 0
+  inMainMenu: 1
 --- !u!4 &1000685468
 Transform:
   m_ObjectHideFlags: 0
@@ -4394,7 +4395,10 @@ MonoBehaviour:
   shockSheepIcon: {fileID: 0}
   sheepAsleepIcon: {fileID: 0}
   newIconScale: {x: 0.8, y: 0.8, z: 0.8}
+  allSheepOnLevel: []
+  screenIcons: []
   isSheepSwapping: 0
+  switchGUI: 0
 --- !u!1001 &1544740532
 PrefabInstance:
   m_ObjectHideFlags: 0

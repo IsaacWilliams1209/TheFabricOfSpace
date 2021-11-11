@@ -56,7 +56,6 @@ public class Transition : MonoBehaviour
                 cameraRotation.right = right;
                 currentSheep.shepherd.SwapCams();
             }
-            
         }
         if (finishedRotating && timer > transitionTimer && !RENAMELATER)
         {
@@ -80,8 +79,9 @@ public class Transition : MonoBehaviour
                 isComplete = false;
                 tempShepherd.SwapCams();
                 tempShepherd.activeSheep.GetComponent<Sheep>().promtChanger.UpdateText(tempShepherd.activeSheep.GetComponent<Sheep>());
+                sheepIcons.switchGUI = true;
                 sheepIcons.currSheep = tempShepherd;
-                sheepIcons.SwitchGUILayout();
+                //sheepIcons.SwitchGUILayout();
                 currentSheep = tempShepherd.activeSheep.GetComponent<Sheep>();
                 cameraStartingRotation = currentSheep.transform.GetChild(2).GetChild(1).rotation;
                 cameraStartingPosition = currentSheep.transform.GetChild(2).GetChild(1).position;

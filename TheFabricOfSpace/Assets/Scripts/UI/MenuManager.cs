@@ -28,6 +28,11 @@ public class MenuManager : Singleton<MenuManager>
         SwitchMenu(MenuType.MainMenu);
     }
 
+    private void ResumeGame()
+    {
+
+    }
+
     public void SwitchMenu(MenuType type)
     {
         if (lastActiveMenu != null)
@@ -48,6 +53,16 @@ public class MenuManager : Singleton<MenuManager>
     public void TurnMenusOff()
     {
         menus.ForEach(x => x.gameObject.SetActive(false));
+    }
+
+    public void TurnMenuOff(MenuType type)
+    {
+        MenuController desiredMenu = menus.Find(x => x.menuType == type);
+        if (desiredMenu != null)
+        {
+            desiredMenu.gameObject.SetActive(false);
+        }
+        else { Debug.LogWarning("The desired canvas was not found!"); }
     }
 
 }

@@ -11,6 +11,7 @@ public enum ButtonType
     GoToControlsMenu,
     GoToCredits,
     GoToMainMenu,
+    ResumeGame,
     ExitGame
 }
 
@@ -23,12 +24,15 @@ public class ButtonContoller : MonoBehaviour
     MenuManager menuManager;
     Button currButton;
 
+    Player player;
+
     private void Start()
     {
         currButton = GetComponent<Button>();
         currButton.onClick.AddListener(OnButtonClicked);
         menuManager = MenuManager.GetInstance();
         audioManager = AudioManager.GetInstance();
+        player = GameObject.Find("/GameObject").GetComponent<Player>();
     }
 
     public void OnButtonClicked()
@@ -40,18 +44,25 @@ public class ButtonContoller : MonoBehaviour
                 menuManager.SwitchMenu(MenuType.GUI);
                 audioManager.PlayAudio(AudioType.SpaceAmbience);
                 audioManager.PlayAudio(AudioType.WaterAmbience);
+                player.inMainMenu = false;
                 break;
             case ButtonType.GoToMainMenu:
                 menuManager.SwitchMenu(MenuType.MainMenu);
+                player.inMainMenu = true;
                 break;
             case ButtonType.GoToControlsMenu:
                 menuManager.SwitchMenu(MenuType.ControlsMenu);
+
                 break;
             case ButtonType.GoToCredits:
                 menuManager.SwitchMenu(MenuType.Credits);
                 break;
             case ButtonType.ExitGame:
                 Application.Quit();
+                break;
+            case ButtonType.ResumeGame:
+                Time.timeScale = 1.0f;
+                menuManager.TurnMenuOff(MenuType.PauseMenu);
                 break;
             default:
                 break;

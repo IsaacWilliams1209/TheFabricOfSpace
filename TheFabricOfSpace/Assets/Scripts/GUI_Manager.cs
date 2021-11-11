@@ -17,12 +17,13 @@ public class GUI_Manager : MonoBehaviour
     Player currPlanetFace;
     [SerializeField] Vector3 newIconScale;
     Vector3 iconOffset = new Vector3(0,100,0);
-    List<GameObject> allSheepOnLevel = new List<GameObject>(); //[0] component will always be the icon of the active sheep and shouldn't be touched.
-    List<GameObject> screenIcons = new List<GameObject>(); //tracks what sheep icons are currently inactive.
+    [SerializeField]List<GameObject> allSheepOnLevel = new List<GameObject>(); //[0] component will always be the icon of the active sheep and shouldn't be touched.
+    [SerializeField] List<GameObject> screenIcons = new List<GameObject>(); //tracks what sheep icons are currently inactive.
     Sprite currPowerIcon;
     public bool isSheepSwapping;
     int amountOfGoldBerries = 0;
     TextMeshProUGUI berryCount;
+    public bool switchGUI = false;
 
     private void Start()
     {
@@ -42,7 +43,7 @@ public class GUI_Manager : MonoBehaviour
 
     void Update()
     {
-
+        if (switchGUI) { SwitchGUILayout(); }
         if (guiNeedsUpdate)
         {
             currSheep.activeSheep.GetComponent<Sheep>().sheepIcons = this;
@@ -75,10 +76,14 @@ public class GUI_Manager : MonoBehaviour
 
     public void SwitchGUILayout()
     {
-        ResetList();
-        if (currPlanetFace.sidesCompleted == 1) { amountOfGoldBerries = currPlanetFace.sidesCompleted; }
-        if (currPlanetFace.sidesCompleted == 2)
+        switchGUI = false;
+        Debug.Log("Changing Faces");
+        if (currPlanetFace.sidesCompleted == 1)
         {
+            Debug.Log("Planet Face 02");
+            allSheepOnLevel.Clear();
+            screenIcons.Clear();
+
             //List that will track each individual sheep on the face. Will use its index to update the icons.
             allSheepOnLevel.Add(currSheep.gameObject.transform.GetChild(0).gameObject);
             allSheepOnLevel.Add(currSheep.gameObject.transform.GetChild(1).gameObject);
@@ -93,9 +98,8 @@ public class GUI_Manager : MonoBehaviour
             screenIcons.Add(CreateSheepIcon(iconOffset, "Non Active Sheep ", 3));
 
             amountOfGoldBerries = currPlanetFace.sidesCompleted;
-            guiNeedsUpdate = true;
         }
-        if(currPlanetFace.sidesCompleted == 3)
+        if(currPlanetFace.sidesCompleted == 2)
         {
             //List that will track each individual sheep on the face. Will use its index to update the icons.
             allSheepOnLevel.Add(currSheep.gameObject.transform.GetChild(0).gameObject);
@@ -116,7 +120,7 @@ public class GUI_Manager : MonoBehaviour
             amountOfGoldBerries = currPlanetFace.sidesCompleted;
             guiNeedsUpdate = true;
         }
-        if (currPlanetFace.sidesCompleted == 4)
+        if (currPlanetFace.sidesCompleted == 3)
         {
             //List that will track each individual sheep on the face. Will use its index to update the icons.
             allSheepOnLevel.Add(currSheep.gameObject.transform.GetChild(0).gameObject);
@@ -124,6 +128,21 @@ public class GUI_Manager : MonoBehaviour
             //The GUI icons that are on the screen for the player to see.
             iconOffset = UpdateVector(iconOffset, new Vector3(0, iconOffset.y, iconOffset.z));
             screenIcons.Add(CreateSheepIcon(iconOffset, "Non Active Sheep ", 1));
+
+            amountOfGoldBerries = currPlanetFace.sidesCompleted;
+            guiNeedsUpdate = true;
+        }
+        if (currPlanetFace.sidesCompleted == 4)
+        {
+            //List that will track each individual sheep on the face. Will use its index to update the icons.
+            allSheepOnLevel.Add(currSheep.gameObject.transform.GetChild(0).gameObject);
+            allSheepOnLevel.Add(currSheep.gameObject.transform.GetChild(1).gameObject);
+
+            //The GUI icons that are on the screen for the player to see.
+            iconOffset = UpdateVector(iconOffset, new Vector3(50, iconOffset.y, iconOffset.z));
+            screenIcons.Add(CreateSheepIcon(iconOffset, "Non Active Sheep", 1));
+            iconOffset = UpdateVector(iconOffset, new Vector3(-50, iconOffset.y, iconOffset.z));
+            screenIcons.Add(CreateSheepIcon(iconOffset, "Non Active Sheep ", 2));
 
             amountOfGoldBerries = currPlanetFace.sidesCompleted;
             guiNeedsUpdate = true;
@@ -143,21 +162,7 @@ public class GUI_Manager : MonoBehaviour
             amountOfGoldBerries = currPlanetFace.sidesCompleted;
             guiNeedsUpdate = true;
         }
-        if (currPlanetFace.sidesCompleted == 6)
-        {
-            //List that will track each individual sheep on the face. Will use its index to update the icons.
-            allSheepOnLevel.Add(currSheep.gameObject.transform.GetChild(0).gameObject);
-            allSheepOnLevel.Add(currSheep.gameObject.transform.GetChild(1).gameObject);
-
-            //The GUI icons that are on the screen for the player to see.
-            iconOffset = UpdateVector(iconOffset, new Vector3(50, iconOffset.y, iconOffset.z));
-            screenIcons.Add(CreateSheepIcon(iconOffset, "Non Active Sheep", 1));
-            iconOffset = UpdateVector(iconOffset, new Vector3(-50, iconOffset.y, iconOffset.z));
-            screenIcons.Add(CreateSheepIcon(iconOffset, "Non Active Sheep ", 2));
-
-            amountOfGoldBerries = currPlanetFace.sidesCompleted;
-            guiNeedsUpdate = true;
-        }
+        guiNeedsUpdate = true;
     }
 
     private void InitialGUILayOut()
@@ -266,15 +271,17 @@ public class GUI_Manager : MonoBehaviour
         LeanTween.cancel(lastIcon);
     }
 
-    private void ResetList()
-    {
-        //int listLength = allSheepOnLevel.Count -1;
-        //Debug.Log(listLength);
-        for (int i = 0; i < allSheepOnLevel.Count - 1; i++)
-        {
-            allSheepOnLevel.Remove(allSheepOnLevel[i]);
-            screenIcons.Remove(allSheepOnLevel[i]);
-        }
-    }
+    //private void ResetList()
+    //{
+    //    Debug.Log("The GUI is getting reset");
+    //    int index = allSheepOnLevel.Count - 1;
+    //    Debug.Log(index);
+    //    for (int i = index; i < allSheepOnLevel.Count - 1; i--)
+    //    {
+    //        Debug.Log("Removing");
+    //        allSheepOnLevel.RemoveAt(i);
+    //        screenIcons.RemoveAt(i);
+    //    }
+    //}
 
 }
