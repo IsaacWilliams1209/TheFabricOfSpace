@@ -9,26 +9,58 @@ public class Transition : MonoBehaviour
 
     public bool up, left, down, right;
 
+    public float transitionTimer;
+
     bool isComplete = false;
 
     bool finishedRotating = false;
+
+    bool RENAMELATER;
+
+    float timer;
 
     Sheep currentSheep;
 
     GUI_Manager sheepIcons;
     
+    Quaternion cameraStartingRotation;
+
+    Vector3 cameraStartingPosition;
+
     void Start()
     {
-        //cameraRotation = transform.parent.parent.GetChild(0).GetChild(0).GetComponent<Camera_Rotation>();
         cameraRotation = GameObject.Find("/LavishPlanet/Planet_Rotation/Main Camera").GetComponent<Camera_Rotation>();
         Debug.Log("BerrySet");
+        //sheepIcons = Resources.FindObjectsOfTypeAll("GUI").GetComponent<GUI_Manager>();
+        sheepIcons = Resources.FindObjectsOfTypeAll<GUI_Manager>()[0];
     }
 
     void LateUpdate()
     {
-        finishedRotating = !cameraRotation.isCubeRotating;
-        if (isComplete && finishedRotating)
+        if (timer > transitionTimer && !RENAMELATER)
         {
+            finishedRotating = !cameraRotation.isCubeRotating;
+            isComplete = false;
+        }
+
+        if (isComplete)
+        {
+            //move camera on sheep towards the main camera
+            CameraPan(cameraStartingPosition, cameraRotation.transform.position, cameraStartingRotation, cameraRotation.transform.rotation);
+
+            if (timer > transitionTimer)
+            {
+                cameraRotation.up = up;
+                cameraRotation.left = left;
+                cameraRotation.down = down;
+                cameraRotation.right = right;
+                currentSheep.shepherd.SwapCams();
+            }
+            
+        }
+        if (finishedRotating && timer > transitionTimer && !RENAMELATER)
+        {
+            
             RaycastHit hit;
             Debug.DrawRay(cameraRotation.gameObject.transform.position, -cameraRotation.gameObject.transform.position, Color.red, 5.0f);
             if (Physics.Raycast(cameraRotation.gameObject.transform.position, -cameraRotation.gameObject.transform.position, out hit, Mathf.Infinity))
@@ -49,7 +81,18 @@ public class Transition : MonoBehaviour
                 tempShepherd.SwapCams();
                 tempShepherd.activeSheep.GetComponent<Sheep>().promtChanger.UpdateText(tempShepherd.activeSheep.GetComponent<Sheep>());
                 sheepIcons.currSheep = tempShepherd;
+                sheepIcons.SwitchGUILayout();
+                currentSheep = tempShepherd.activeSheep.GetComponent<Sheep>();
+                cameraStartingRotation = currentSheep.transform.GetChild(2).GetChild(1).rotation;
+                cameraStartingPosition = currentSheep.transform.GetChild(2).GetChild(1).position;
+                timer = 0;
+                RENAMELATER = true;
+                finishedRotating = false;
             }
+        }
+        if (RENAMELATER && timer < transitionTimer)
+        {
+            CameraPan(cameraRotation.transform.position, cameraStartingPosition, cameraRotation.transform.rotation, cameraStartingRotation);
         }
     }
 
@@ -57,15 +100,21 @@ public class Transition : MonoBehaviour
     {
         if (!isComplete)
         {
-            sheep.shepherd.SwapCams();
-            cameraRotation.up = up;
-            cameraRotation.left = left;
-            cameraRotation.down = down;
-            cameraRotation.right = right;
+            
+            
             Player player = GameObject.Find("/GameObject").GetComponent<Player>();
             player.sidesCompleted++;
             isComplete = true;
             currentSheep = sheep;
+            cameraStartingRotation = currentSheep.transform.GetChild(2).GetChild(1).rotation;
+            cameraStartingPosition = currentSheep.transform.GetChild(2).GetChild(1).position;
         }   
+    }
+
+    void CameraPan(Vector3 posFrom, Vector3 posTo, Quaternion rotFrom, Quaternion rotTo)
+    {
+        timer += Time.deltaTime;
+        currentSheep.transform.GetChild(2).GetChild(1).position = Vector3.Lerp(posFrom, posTo, timer / transitionTimer);
+        currentSheep.transform.GetChild(2).GetChild(1).rotation = Quaternion.Slerp(rotFrom, rotTo, timer / transitionTimer);
     }
 }

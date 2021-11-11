@@ -36,6 +36,7 @@ public class GUI_Manager : MonoBehaviour
         popUpManager = PopUp_Manager.GetInstance();
         currSheep.activeSheep.GetComponent<Sheep>().sheepIcons = this;
         berryCount = transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+        currPlanetFace = GameObject.Find("/GameObject").GetComponent<Player>();
         InitialGUILayOut();
     }
 
@@ -72,7 +73,7 @@ public class GUI_Manager : MonoBehaviour
 
     }
 
-    private void SwitchGUILayout()
+    public void SwitchGUILayout()
     {
         ResetList();
         if (currPlanetFace.sidesCompleted == 1) { amountOfGoldBerries = currPlanetFace.sidesCompleted; }
@@ -267,10 +268,12 @@ public class GUI_Manager : MonoBehaviour
 
     private void ResetList()
     {
-        int listLength = allSheepOnLevel.Count;
-        for (int i = 0; i < listLength; i++)
+        //int listLength = allSheepOnLevel.Count -1;
+        //Debug.Log(listLength);
+        for (int i = 0; i < allSheepOnLevel.Count - 1; i++)
         {
             allSheepOnLevel.Remove(allSheepOnLevel[i]);
+            screenIcons.Remove(allSheepOnLevel[i]);
         }
     }
 

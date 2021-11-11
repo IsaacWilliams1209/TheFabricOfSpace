@@ -5,8 +5,18 @@ using UnityEngine;
 
 public class SlabSheep : MonoBehaviour
 {
+    [HideInInspector]
+    public bool steppedOn = false;
+
     public void ActivatePowerUp(Sheep sheep)
     {
+        RaycastHit hit;
+        if (!sheep.poweredUp && Physics.BoxCast(transform.position + transform.up, new Vector3(0.15f, 0.1f, 0.15f), transform.up, out hit, transform.rotation, 1.0f, 1<<8))
+        {
+            sheep.poweredUp = true;
+            return;
+        }
+
         if (sheep.poweredUp)
         {
             // Move to ignore raycast layer

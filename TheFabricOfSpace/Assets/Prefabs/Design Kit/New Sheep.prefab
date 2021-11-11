@@ -756,7 +756,7 @@ BoxCollider:
   m_GameObject: {fileID: 3038127317310476542}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1.5, y: 0.5, z: 1.5}
   m_Center: {x: 0, y: 0.55, z: 0}
@@ -808,7 +808,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 55c3ec5679a95c2428eadebd83c43a40, type: 2}
   - {fileID: 2100000, guid: 555cfc54fa8552848b2402de936e5424, type: 2}
   - {fileID: 6482697493424803068, guid: 6372d10be0236f7418ae94403d60e118, type: 3}
-  - {fileID: 2100000, guid: 555cfc54fa8552848b2402de936e5424, type: 2}
+  - {fileID: 2100000, guid: ef735307293485f42bc3dd8427cdfa8f, type: 2}
   index: 0
   poweredUp: 0
   sheepType: 0
@@ -824,6 +824,7 @@ MonoBehaviour:
   matChanger: {fileID: 0}
   mainCollider: {fileID: 0}
   wakingTrigger: {fileID: 0}
+  defaultMesh: {fileID: 0}
   animator: {fileID: 0}
   meshes:
   - {fileID: 7120451651249902827, guid: 0d3bba08f3fabd541860dd5790e516a9, type: 3}
