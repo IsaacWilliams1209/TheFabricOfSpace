@@ -54,11 +54,18 @@ public class Shrubs : MonoBehaviour
     }
 
     // Restores the bush to it's un eaten state
-    public void Restore()
+    public void Restore(Sheep sheep)
     {
         transform.localScale = new Vector3(1,1,1);
         eaten = false;
         berry.SetActive(true);
+        sheep.matChanger.sharedMesh = sheep.defaultMesh;
+        sheep.materialHolder = sheep.matChanger.materials;
+        sheep.materialHolder[1] = sheep.sheepMaterials[2];
+        sheep.materialHolder[2] = sheep.sheepMaterials[2];
+        sheep.materialHolder[0] = sheep.sheepMaterials[2];
+        sheep.matChanger.materials = sheep.materialHolder;
+
     }
 
     // Activates the shrubs power up

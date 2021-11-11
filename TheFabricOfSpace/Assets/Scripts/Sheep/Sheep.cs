@@ -81,7 +81,8 @@ public class Sheep : MonoBehaviour
     [HideInInspector]
     public BoxCollider wakingTrigger;
 
-    Mesh defaultMesh;
+    [HideInInspector]
+    public Mesh defaultMesh;
 
     [HideInInspector]
     public Animator animator;
@@ -239,7 +240,7 @@ public class Sheep : MonoBehaviour
             }
             // On R press activate the sheep powerup
 
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.E) && !isJumping)
             {
                 poweredUp = !poweredUp;
 
@@ -305,7 +306,7 @@ public class Sheep : MonoBehaviour
             {
                 if (hit.transform.tag == "Sheep" && hit.transform.GetComponent<Sheep>().sheepType == SheepType.Slab)
                 {
-                    hit.transform.GetComponent<Sheep>().poweredUp = false;
+                    //hit.transform.GetComponent<SlabSheep>().steppedOn = true;
                 }
             }
         }
@@ -347,15 +348,6 @@ public class Sheep : MonoBehaviour
             //Shepherd tempShepherd = GameObject.Find("Planet Face 6").transform.GetChild(3).GetComponent<Shepherd>();
             transition.Activate(this);
             return;
-            // you win! activate world rotation
-            //tempShepherd.awakeSheep[0].GetComponent<Sheep>().active = true;
-            //tempShepherd.awakeSheep[0].GetComponent<Renderer>().material = sheepMaterials[0];
-            //tempShepherd.activeSheep = tempShepherd.awakeSheep[0];
-            //awakeSheep.Insert(0, gameObject);
-            //matChanger.material = sheepMaterials[1];
-            //active = false;
-            //tempShepherd.enabled = true;
-            //shepherd.enabled = false;
         }
         if (other.gameObject.tag == "Jump")
         {
@@ -372,7 +364,7 @@ public class Sheep : MonoBehaviour
         if (other.gameObject.tag == "Geyser")
         {
             Debug.Log("Geyser triggered");
-            if (other.transform.parent.GetComponent<Geyser>().sheep == null)
+            if (sheepType == SheepType.Slab && other.transform.parent.GetComponent<Geyser>().sheep == null)
             {
                 other.transform.parent.GetComponent<Geyser>().sheep = this;
             }
@@ -413,7 +405,7 @@ public class Sheep : MonoBehaviour
         {
             canEat = false;
 
-            if (sheepType != SheepType.Slab)
+            if (sheepType == SheepType.Sheared)
             {
 
                 berryIndex = -1;
@@ -459,6 +451,12 @@ public class Sheep : MonoBehaviour
         arrivingPos.y = MaskVectorAsFloat(jumpLanding, transform.parent.up);
         arrivingPos.z = MaskVectorAsFloat(jumpLanding, transform.parent.forward);
 
+        if (arrivingPos.z == startingPos.z)
+        {
+            startingPos.z += 0.1f;
+            stP.z += 0.1f;
+        }
+
         // Lock to z-axis
         Vector3 arP = new Vector3(0, arrivingPos.y, arrivingPos.z);
 
@@ -467,6 +465,8 @@ public class Sheep : MonoBehaviour
         Vector3 diff = ((arP - stP) / 2) + new Vector3(0, 1, 0);
 
         Vector3 vertex = stP + diff;
+
+        
 
         float x1 = startingPos.z;
         float y1 = startingPos.y;
