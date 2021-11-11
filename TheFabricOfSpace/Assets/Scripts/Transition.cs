@@ -15,6 +15,8 @@ public class Transition : MonoBehaviour
 
     bool finishedRotating = false;
 
+    bool RENAMELATER;
+
     float timer;
 
     Sheep currentSheep;
@@ -31,7 +33,7 @@ public class Transition : MonoBehaviour
 
     void LateUpdate()
     {
-        if (timer > transitionTimer)
+        if (timer > transitionTimer && !RENAMELATER)
         {
             finishedRotating = !cameraRotation.isCubeRotating;
             isComplete = false;
@@ -40,9 +42,8 @@ public class Transition : MonoBehaviour
         if (isComplete)
         {
             //move camera on sheep towards the main camera
-            timer += Time.deltaTime;
-            currentSheep.transform.GetChild(2).GetChild(1).position = Vector3.Lerp(cameraStartingPosition, cameraRotation.transform.position, timer/transitionTimer);
-            currentSheep.transform.GetChild(2).GetChild(1).rotation = Quaternion.Slerp(cameraStartingRotation, cameraRotation.transform.rotation, timer / transitionTimer);
+            CameraPan(cameraStartingPosition, cameraRotation.transform.position, cameraStartingRotation, cameraRotation.transform.rotation);
+
             if (timer > transitionTimer)
             {
                 cameraRotation.up = up;
@@ -53,7 +54,7 @@ public class Transition : MonoBehaviour
             }
             
         }
-        if (finishedRotating)
+        if (finishedRotating && timer > transitionTimer && !RENAMELATER)
         {
             
             RaycastHit hit;
@@ -75,9 +76,16 @@ public class Transition : MonoBehaviour
                 isComplete = false;
                 tempShepherd.SwapCams();
                 tempShepherd.activeSheep.GetComponent<Sheep>().promtChanger.UpdateText(tempShepherd.activeSheep.GetComponent<Sheep>());
-                finishedRotating = false;
+                currentSheep = tempShepherd.activeSheep.GetComponent<Sheep>();
+                cameraStartingRotation = currentSheep.transform.GetChild(2).GetChild(1).rotation;
+                cameraStartingPosition = currentSheep.transform.GetChild(2).GetChild(1).position;
                 timer = 0;
+                RENAMELATER = true;
             }
+        }
+        if (RENAMELATER && timer < transitionTimer)
+        {
+            CameraPan(cameraRotation.transform.position, cameraStartingPosition, cameraRotation.transform.rotation, cameraStartingRotation);
         }
     }
 
@@ -96,5 +104,10 @@ public class Transition : MonoBehaviour
         }   
     }
 
-    //void CameraPan(Vector3 from, Vector3 to)
+    void CameraPan(Vector3 posFrom, Vector3 posTo, Quaternion rotFrom, Quaternion rotTo)
+    {
+        timer += Time.deltaTime;
+        currentSheep.transform.GetChild(2).GetChild(1).position = Vector3.Lerp(posFrom, posTo, timer / transitionTimer);
+        currentSheep.transform.GetChild(2).GetChild(1).rotation = Quaternion.Slerp(rotFrom, rotTo, timer / transitionTimer);
+    }
 }
