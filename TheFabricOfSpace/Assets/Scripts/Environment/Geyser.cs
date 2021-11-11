@@ -117,6 +117,7 @@ public class Geyser : MonoBehaviour
                     Debug.Log(hits[i].transform.name);
                     if (hits[i].transform.tag == "Block")
                     {
+                        Debug.Log(hits[i].transform.parent.name);
                         transform.GetChild(0).GetChild(0).gameObject.layer = 0;
                         // Update nearby blocks
                         hits[i].transform.GetComponentInChildren<Block>().BlockUpdateDebug();

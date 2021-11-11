@@ -77,6 +77,7 @@ public class Transition : MonoBehaviour
                 tempShepherd.SwapCams();
                 tempShepherd.activeSheep.GetComponent<Sheep>().promtChanger.UpdateText(tempShepherd.activeSheep.GetComponent<Sheep>());
                 currentSheep = tempShepherd.activeSheep.GetComponent<Sheep>();
+                currentSheep.canMove = false;
                 cameraStartingRotation = currentSheep.transform.GetChild(2).GetChild(1).rotation;
                 cameraStartingPosition = currentSheep.transform.GetChild(2).GetChild(1).position;
                 timer = 0;
@@ -86,6 +87,10 @@ public class Transition : MonoBehaviour
         if (RENAMELATER && timer < transitionTimer)
         {
             CameraPan(cameraRotation.transform.position, cameraStartingPosition, cameraRotation.transform.rotation, cameraStartingRotation);
+            if (timer > transitionTimer)
+            {
+                currentSheep.canMove = true;
+            }
         }
     }
 
@@ -93,8 +98,7 @@ public class Transition : MonoBehaviour
     {
         if (!isComplete)
         {
-            
-            
+            sheep.canMove = false;   
             Player player = GameObject.Find("/GameObject").GetComponent<Player>();
             player.sidesCompleted++;
             isComplete = true;
