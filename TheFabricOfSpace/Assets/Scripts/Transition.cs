@@ -19,6 +19,10 @@ public class Transition : MonoBehaviour
 
     Sheep currentSheep;
     
+    Quaternion cameraStartingRotation;
+
+    Vector3 cameraStartingPosition;
+
     void Start()
     {
         cameraRotation = GameObject.Find("/LavishPlanet/Planet_Rotation/Main Camera").GetComponent<Camera_Rotation>();
@@ -27,17 +31,31 @@ public class Transition : MonoBehaviour
 
     void LateUpdate()
     {
-        finishedRotating = !cameraRotation.isCubeRotating;
+        if (timer > transitionTimer)
+        {
+            finishedRotating = !cameraRotation.isCubeRotating;
+            isComplete = false;
+        }
+
         if (isComplete)
         {
             //move camera on sheep towards the main camera
             timer += Time.deltaTime;
-            currentSheep.transform.GetChild(2).GetChild(1).position = Vector3.Lerp(currentSheep.transform.position, cameraRotation.transform.position, timer/transitionTimer);
+            currentSheep.transform.GetChild(2).GetChild(1).position = Vector3.Lerp(cameraStartingPosition, cameraRotation.transform.position, timer/transitionTimer);
+            currentSheep.transform.GetChild(2).GetChild(1).rotation = Quaternion.Slerp(cameraStartingRotation, cameraRotation.transform.rotation, timer / transitionTimer);
+            if (timer > transitionTimer)
+            {
+                cameraRotation.up = up;
+                cameraRotation.left = left;
+                cameraRotation.down = down;
+                cameraRotation.right = right;
+                currentSheep.shepherd.SwapCams();
+            }
             
         }
-        if (isComplete && finishedRotating)
+        if (finishedRotating)
         {
-            currentSheep.shepherd.SwapCams();
+            
             RaycastHit hit;
             Debug.DrawRay(cameraRotation.gameObject.transform.position, -cameraRotation.gameObject.transform.position, Color.red, 5.0f);
             if (Physics.Raycast(cameraRotation.gameObject.transform.position, -cameraRotation.gameObject.transform.position, out hit, Mathf.Infinity))
@@ -57,6 +75,8 @@ public class Transition : MonoBehaviour
                 isComplete = false;
                 tempShepherd.SwapCams();
                 tempShepherd.activeSheep.GetComponent<Sheep>().promtChanger.UpdateText(tempShepherd.activeSheep.GetComponent<Sheep>());
+                finishedRotating = false;
+                timer = 0;
             }
         }
     }
@@ -66,14 +86,15 @@ public class Transition : MonoBehaviour
         if (!isComplete)
         {
             
-            cameraRotation.up = up;
-            cameraRotation.left = left;
-            cameraRotation.down = down;
-            cameraRotation.right = right;
+            
             Player player = GameObject.Find("/GameObject").GetComponent<Player>();
             player.sidesCompleted++;
             isComplete = true;
             currentSheep = sheep;
+            cameraStartingRotation = currentSheep.transform.GetChild(2).GetChild(1).rotation;
+            cameraStartingPosition = currentSheep.transform.GetChild(2).GetChild(1).position;
         }   
     }
+
+    //void CameraPan(Vector3 from, Vector3 to)
 }
