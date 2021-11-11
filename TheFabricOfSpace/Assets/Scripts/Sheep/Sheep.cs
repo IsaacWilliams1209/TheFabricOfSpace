@@ -151,6 +151,11 @@ public class Sheep : MonoBehaviour
                     matChanger.sharedMesh = meshes[2];
                     break;
                 case SheepType.Static:
+                    materialHolder = matChanger.materials;
+                    materialHolder[1] = sheepMaterials[4];
+                    materialHolder[2] = sheepMaterials[4];
+                    materialHolder[0] = sheepMaterials[4];
+                    matChanger.materials = materialHolder;
                     matChanger.sharedMesh = meshes[3];
                     break;
                 default:
@@ -229,6 +234,11 @@ public class Sheep : MonoBehaviour
                              matChanger.sharedMesh = meshes[2];
                             break;
                         case SheepType.Static:
+                            materialHolder = matChanger.materials;
+                            materialHolder[1] = sheepMaterials[4];
+                            materialHolder[2] = sheepMaterials[4];
+                            materialHolder[0] = sheepMaterials[4];
+                            matChanger.materials = materialHolder;
                             matChanger.sharedMesh = meshes[3];
                             break;
                         default:
