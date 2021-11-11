@@ -70,7 +70,6 @@ public class Block : MonoBehaviour
                     colliders[i].enabled = true;
                     jumpTriggers[i].enabled = false;
                 }
-                debugPoints[i] = hit.point;
             }
             else
             {
@@ -108,8 +107,11 @@ public class Block : MonoBehaviour
                 }
                 if (hit.distance > 1.3f)
                 {
-                    jumpTriggers[i].enabled = true;
-                    jumpLandings[i] = hit.transform.position + transform.up;
+                    if (hit.transform.tag != "Water")
+                    {
+                        jumpTriggers[i].enabled = true;
+                        jumpLandings[i] = hit.transform.position + transform.up;
+                    }
                     try {
                         if (hit.transform.parent.tag == "Geyser")
                         {
@@ -164,8 +166,11 @@ public class Block : MonoBehaviour
                 }
                 if (hit.distance > 1.3f)
                 {
-                    jumpTriggers[i].enabled = true;
-                    jumpLandings[i] = hit.transform.position + transform.up;
+                    if (hit.transform.tag != "Water")
+                    {
+                        jumpTriggers[i].enabled = true;
+                        jumpLandings[i] = hit.transform.position + transform.up;
+                    }
                     try
                     {
                         if (hit.transform.parent.tag == "Geyser")
