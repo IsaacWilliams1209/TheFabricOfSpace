@@ -70,6 +70,7 @@ public class Block : MonoBehaviour
                     colliders[i].enabled = true;
                     jumpTriggers[i].enabled = false;
                 }
+                debugPoints[i] = hit.point;
             }
             else
             {
@@ -135,6 +136,7 @@ public class Block : MonoBehaviour
                 colliders[i].enabled = true;
                 jumpTriggers[i].enabled = false;                
             }
+            debugPoints[i] = hit.point;
         }
     }
 
