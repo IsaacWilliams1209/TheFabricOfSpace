@@ -7,7 +7,7 @@ public enum MenuType
 {
     MainMenu,
     LevelSelection,
-    SettingsMenu,
+    ControlsMenu,
     Credits,
     PauseMenu,
     WinScreen,

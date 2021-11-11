@@ -8,7 +8,7 @@ public enum ButtonType
 {
     SelectLevel,
     StartLevel,
-    GoToSettings,
+    GoToControlsMenu,
     GoToCredits,
     GoToMainMenu,
     ExitGame
@@ -44,8 +44,8 @@ public class ButtonContoller : MonoBehaviour
             case ButtonType.GoToMainMenu:
                 menuManager.SwitchMenu(MenuType.MainMenu);
                 break;
-            case ButtonType.GoToSettings:
-                menuManager.SwitchMenu(MenuType.SettingsMenu);
+            case ButtonType.GoToControlsMenu:
+                menuManager.SwitchMenu(MenuType.ControlsMenu);
                 break;
             case ButtonType.GoToCredits:
                 menuManager.SwitchMenu(MenuType.Credits);
