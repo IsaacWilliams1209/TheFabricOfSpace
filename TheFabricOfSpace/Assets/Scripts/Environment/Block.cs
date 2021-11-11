@@ -55,7 +55,7 @@ public class Block : MonoBehaviour
                     traversable[i] = false;
                     colliders[i].enabled = true;
                 }
-                else if (hit.transform.gameObject.tag == "Block" || hit.transform.gameObject.tag == "Slope Upper" || hit.transform.gameObject.tag == "Geyser")
+                else if (hit.transform.gameObject.tag == "Block" || (hit.transform.gameObject.tag == "Slope Upper" && hit.distance < 0.6f) || hit.transform.gameObject.tag == "Geyser" )
                 {
                     // Hit a block adjacent to current block so disable colliders
                     Debug.DrawRay(transform.position, dir * 2, Color.red, 2.0f);
@@ -96,7 +96,7 @@ public class Block : MonoBehaviour
             //Debug.DrawRay(transform.position, dir, Color.red, 4.0f);
 
             int mask = 1;
-            if (Physics.Raycast(transform.position, dir, out hit, 2.0f, mask))
+            if (Physics.Raycast(transform.position, dir, out hit, 1.6f, mask))
             {
                 if (hit.transform.tag == "Sheep")
                 {
@@ -105,7 +105,7 @@ public class Block : MonoBehaviour
                         return;
                     }
                 }
-                if (hit.distance > 1.3f)
+                if (hit.distance > 1.1f)
                 {
                     if (hit.transform.tag != "Water")
                     {
@@ -117,7 +117,8 @@ public class Block : MonoBehaviour
                         {
                             jumpLandings[i] = hit.transform.position + transform.up * 2.0f;
                         }
-                    } catch
+                    } 
+                    catch
                     {
 
                     }
@@ -138,7 +139,6 @@ public class Block : MonoBehaviour
                 colliders[i].enabled = true;
                 jumpTriggers[i].enabled = false;                
             }
-            debugPoints[i] = hit.point;
         }
     }
 
@@ -155,7 +155,7 @@ public class Block : MonoBehaviour
             Debug.DrawRay(transform.position, dir, Color.red, 4.0f);
 
             //int mask = (1 << 2);
-            if (Physics.Raycast(transform.position, dir, out hit, 2.0f, 1))
+            if (Physics.Raycast(transform.position, dir, out hit, 1.6f, 1))
             {
                 if (hit.transform.tag == "Sheep")
                 {
@@ -164,7 +164,7 @@ public class Block : MonoBehaviour
                         return;
                     }
                 }
-                if (hit.distance > 1.3f)
+                if (hit.distance > 1.1f)
                 {
                     if (hit.transform.tag != "Water")
                     {
@@ -175,14 +175,10 @@ public class Block : MonoBehaviour
                     {
                         if (hit.transform.parent.tag == "Geyser")
                         {
-                            jumpLandings[i] = hit.transform.position + transform.up * 2.0f;
+                            jumpLandings[i] = hit.transform.position + transform.up * 2.0f;                            
                         }
                     }
-                    catch
-                    {
-
-                    }
-
+                    catch{}
                     traversable[i] = false;
                     colliders[i].enabled = true;
                 }
@@ -193,6 +189,7 @@ public class Block : MonoBehaviour
                     traversable[i] = true;
                     colliders[i].enabled = false;
                     jumpTriggers[i].enabled = false;
+                    debugPoints[i] = hit.point;
                 }
             }
             else
@@ -201,7 +198,7 @@ public class Block : MonoBehaviour
                 colliders[i].enabled = true;
                 jumpTriggers[i].enabled = false;
             }
-            debugPoints[i] = hit.point;
+            
         }
     }
 
