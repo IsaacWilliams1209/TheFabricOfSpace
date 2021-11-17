@@ -77,12 +77,9 @@ public class GUI_Manager : MonoBehaviour
     public void SwitchGUILayout()
     {
         switchGUI = false;
-        Debug.Log("Changing Faces");
+        ResetList();
         if (currPlanetFace.sidesCompleted == 1)
         {
-            Debug.Log("Planet Face 02");
-            allSheepOnLevel.Clear();
-            screenIcons.Clear();
 
             //List that will track each individual sheep on the face. Will use its index to update the icons.
             allSheepOnLevel.Add(currSheep.gameObject.transform.GetChild(0).gameObject);
@@ -271,17 +268,16 @@ public class GUI_Manager : MonoBehaviour
         LeanTween.cancel(lastIcon);
     }
 
-    //private void ResetList()
-    //{
-    //    Debug.Log("The GUI is getting reset");
-    //    int index = allSheepOnLevel.Count - 1;
-    //    Debug.Log(index);
-    //    for (int i = index; i < allSheepOnLevel.Count - 1; i--)
-    //    {
-    //        Debug.Log("Removing");
-    //        allSheepOnLevel.RemoveAt(i);
-    //        screenIcons.RemoveAt(i);
-    //    }
-    //}
+    private void ResetList()
+    {
+        //Need to make sure to delete the game objects otherwise the icons will continue to overlay over the top of each other.
+        for (int i = 0; i < screenIcons.Count; i++)
+        {
+            Destroy(screenIcons[i]);
+        }
+
+        allSheepOnLevel.Clear();
+        screenIcons.Clear();
+    }
 
 }

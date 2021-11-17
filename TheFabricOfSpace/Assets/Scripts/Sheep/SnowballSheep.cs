@@ -47,7 +47,7 @@ public class SnowballSheep : MonoBehaviour
             GetComponent<Animator>().SetBool("IsRolling", true);
             RaycastHit hit;
 
-            int mask = (1 << 8) | (1 << 0);
+            int mask = (1 << 8) | (1 << 0) | (1 << 1);
             Debug.DrawRay(transform.position + (transform.up * 0.45f), direction, Color.blue, 5.0f);
             if (Physics.Raycast(transform.position + (transform.up * 0.45f), direction, out hit, 0.5f, mask) && !hit.collider.isTrigger)
             {

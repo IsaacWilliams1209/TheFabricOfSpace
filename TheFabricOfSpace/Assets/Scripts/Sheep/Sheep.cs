@@ -97,6 +97,8 @@ public class Sheep : MonoBehaviour
     [HideInInspector]
     public TutorialPromt promtChanger;
 
+    bool isEating;
+
     public GUI_Manager sheepIcons;
 
     // Start is called before the first frame update
@@ -172,6 +174,20 @@ public class Sheep : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isEating)
+        {
+            jumpTime += Time.deltaTime;
+            if (jumpTime < 2.66f)
+            {
+                canMove = false;
+            }
+            else
+            {
+                isEating = false;
+                jumpTime = 0;
+                canMove = true;
+            }
+        }
         if (active)
         {
             if (canMove && sheepType != SheepType.Snowball)
@@ -224,6 +240,8 @@ public class Sheep : MonoBehaviour
                 {
                     shepherd.berries[berryIndex].GetComponent<Shrubs>().GrantPowerUp(gameObject);
                     animator.SetTrigger("IsEating");
+                    animator.SetBool("IsWalking", false);
+                    isEating = true;
                     switch (sheepType)
                     {
                         case SheepType.Slab:
