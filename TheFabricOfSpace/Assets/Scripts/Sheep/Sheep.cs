@@ -215,6 +215,7 @@ public class Sheep : MonoBehaviour
                         {
                             isJumping = false;
 
+                            poweredUp = false;
                             canMove = true;
 
                             jumpIndex = 0;
@@ -305,7 +306,7 @@ public class Sheep : MonoBehaviour
 
             }
             // On left shift press, swap to the next active sheep
-            if (Input.GetKeyUp(KeyCode.LeftShift) && !staticHoldingSheep)
+            if (Input.GetKeyUp(KeyCode.LeftShift) && !isJumping && !staticHoldingSheep && (canMove || (sheepType == SheepType.Slab && poweredUp)))
             {
                 if (awakeSheep.Count != 0)
                 {
