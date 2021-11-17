@@ -97,6 +97,10 @@ public class Sheep : MonoBehaviour
     [HideInInspector]
     public TutorialPromt promtChanger;
 
+    bool isEating;
+
+    public GUI_Manager sheepIcons;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -111,6 +115,7 @@ public class Sheep : MonoBehaviour
         mainCollider = GetComponents<BoxCollider>()[0];
         wakingTrigger = GetComponents<BoxCollider>()[1];
         promtChanger = GameObject.Find("/GameObject").GetComponent<TutorialPromt>();
+
 
         // Set apropriate materials for the sheep
         if (active)
@@ -169,6 +174,20 @@ public class Sheep : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isEating)
+        {
+            jumpTime += Time.deltaTime;
+            if (jumpTime < 2.66f)
+            {
+                canMove = false;
+            }
+            else
+            {
+                isEating = false;
+                jumpTime = 0;
+                canMove = true;
+            }
+        }
         if (active)
         {
             if (canMove && sheepType != SheepType.Snowball)
@@ -180,8 +199,10 @@ public class Sheep : MonoBehaviour
                 // If the player can't move and is jump cycle through the jumpFrames
                 if (isJumping)
                 {
-                    jumpTime += Time.deltaTime / jumpLength * jumpFrames.Length;
-                    transform.position = Vector3.Lerp(jumpFrames[jumpIndex], jumpFrames[jumpIndex + 1], jumpTime);
+                    jumpTime += Time.deltaTime / jumpLength * jumpFrames.Length;
+
+                    transform.position = Vector3.Lerp(jumpFrames[jumpIndex], jumpFrames[jumpIndex + 1], jumpTime);
+
                     if (transform.position == jumpFrames[jumpIndex + 1])
                     {
                         jumpTime = 0;
@@ -208,11 +229,10 @@ public class Sheep : MonoBehaviour
                 if (canWake)
                 {
                     closestSheep.GetComponent<Sheep>().awake = true;
-
+                    sheepIcons.guiNeedsUpdate = true;
                     //closestSheep.transform.GetChild(1).GetComponent<Renderer>().material = sheepMaterials[0];
                     closestSheep.GetComponent<Sheep>().wakingTrigger.enabled = false;
                     awakeSheep.Insert(0, closestSheep);
-
                     swap = true;
 
                 }
@@ -220,6 +240,8 @@ public class Sheep : MonoBehaviour
                 {
                     shepherd.berries[berryIndex].GetComponent<Shrubs>().GrantPowerUp(gameObject);
                     animator.SetTrigger("IsEating");
+                    animator.SetBool("IsWalking", false);
+                    isEating = true;
                     switch (sheepType)
                     {
                         case SheepType.Slab:
@@ -328,6 +350,7 @@ public class Sheep : MonoBehaviour
         // Swap to the next sheep
         if (swap)
         {
+            sheepIcons.guiNeedsUpdate = true;
             animator.SetBool("IsWalking", false);
             //shepherd.SwapCams();
             if (shepherd.isSheepFocus)

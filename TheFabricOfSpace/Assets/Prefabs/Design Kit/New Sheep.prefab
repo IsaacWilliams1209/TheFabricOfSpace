@@ -169,7 +169,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 6636989768583844672, guid: fdeb4d8581c78a445b2f9261871000e8, type: 3}
+  m_Mesh: {fileID: 6636989768583844672, guid: cc7d0c3f0f242ad4e8115c67f814aac5, type: 3}
   m_Bones:
   - {fileID: 678208247843191211}
   - {fileID: 5181928320895201478}
@@ -829,7 +829,7 @@ MonoBehaviour:
   meshes:
   - {fileID: 7120451651249902827, guid: 0d3bba08f3fabd541860dd5790e516a9, type: 3}
   - {fileID: -2167570075894139802, guid: c9f92f50dc58f7446b2bcbd0bef36351, type: 3}
-  - {fileID: -5415402816329098856, guid: 6372d10be0236f7418ae94403d60e118, type: 3}
+  - {fileID: -5200131832812644735, guid: 59d42c9f89f4e48489a4d7c412490c40, type: 3}
   - {fileID: 6159415530302770013, guid: e79c17fcd2ed96c488179c9eca747d67, type: 3}
   staticHoldingSheep: 0
   materialHolder: []

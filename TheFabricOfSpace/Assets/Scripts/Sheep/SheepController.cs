@@ -49,6 +49,10 @@ public class SheepController : MonoBehaviour
 
         if (grounded)
         {
+            if (hit.collider.isTrigger)
+            {
+
+            }
             transform.position = Sheep.MaskVector(transform.position, transform.parent.forward) + Sheep.MaskVector(hit.point, transform.parent.up) + Sheep.MaskVector(transform.position, transform.parent.right);
             currentGravity = Vector3.zero;
         }

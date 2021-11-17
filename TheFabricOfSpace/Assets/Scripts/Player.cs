@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     MenuManager menuManager;
     public int sidesCompleted;
     public bool playerWon = false;
+    public bool inMainMenu = true;
 
     private void Start()
     {
@@ -28,6 +29,14 @@ public class Player : MonoBehaviour
                 Destroy(worldReset.transform.GetChild(i+1).gameObject);
             }
             worldReset.GetComponent<Planet_Generation>().PlanetSpawn();
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (!inMainMenu)
+            {
+                Time.timeScale = 0;
+                menuManager.SwitchMenu(MenuType.PauseMenu);
+            }
         }
     }
 }

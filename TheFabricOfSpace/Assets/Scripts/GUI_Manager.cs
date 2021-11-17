@@ -1,83 +1,262 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+
 
 public class GUI_Manager : MonoBehaviour
 {
-    Shepherd currSheepType;
-    bool isVoxelSheep;
+    public Shepherd currSheep;
+    public bool guiNeedsUpdate = false;
     Vector3 originalTransform;
-    GameObject defaultSheepIcon;
-    GameObject voxelSheepIcon;
-    Vector3 uiScaleSize = new Vector3(2.4f, 2.4f, 2.4f);
+    [SerializeField] Sprite defaultSheepIcon, slabSheepIcon, snowballSheepIcon, shockSheepIcon, sheepAsleepIcon;
+    GameObject activeSheepIcon;
+    Vector3 uiScaleSize = new Vector3(2.2f, 2.2f, 2.2f);
     float uiEffectSpeed = 0.8f;
     PopUp_Manager popUpManager;
-    Camera camera;
+    Player currPlanetFace;
+    [SerializeField] Vector3 newIconScale;
+    Vector3 iconOffset = new Vector3(0,100,0);
+    [SerializeField]List<GameObject> allSheepOnLevel = new List<GameObject>(); //[0] component will always be the icon of the active sheep and shouldn't be touched.
+    [SerializeField] List<GameObject> screenIcons = new List<GameObject>(); //tracks what sheep icons are currently inactive.
+    Sprite currPowerIcon;
+    public bool isSheepSwapping;
+    int amountOfGoldBerries = 0;
+    TextMeshProUGUI berryCount;
+    public bool switchGUI = false;
 
     private void Start()
     {
-        currSheepType = GameObject.Find("Shepherd").GetComponent<Shepherd>();
-        defaultSheepIcon = GameObject.Find("Sheep_Icon01");
-        voxelSheepIcon = GameObject.Find("Sheep_Icon02");
+        currSheep = GameObject.Find("Shepherd").GetComponent<Shepherd>();
+        defaultSheepIcon = Resources.Load<Sprite>("UI/Sheep/DefaultSheepIcon") as Sprite;
+        slabSheepIcon = Resources.Load<Sprite>("UI/Sheep/SlabSheepIcon") as Sprite;
+        snowballSheepIcon = Resources.Load<Sprite>("UI/Sheep/SnowballSheepIcon") as Sprite;
+        shockSheepIcon = Resources.Load<Sprite>("UI/Sheep/ShockSheepIcon") as Sprite;
+        sheepAsleepIcon = Resources.Load<Sprite>("UI/Sheep/SheepAsleepIcon") as Sprite;
+        activeSheepIcon = transform.GetChild(0).gameObject;
         popUpManager = PopUp_Manager.GetInstance();
-        camera = Camera.main;
+        currSheep.activeSheep.GetComponent<Sheep>().sheepIcons = this;
+        berryCount = transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+        currPlanetFace = GameObject.Find("/GameObject").GetComponent<Player>();
+        InitialGUILayOut();
     }
 
     void Update()
     {
-        IconUpdater();
-        PopUpManager();
-        if (Input.GetKeyDown(KeyCode.G))
+        if (switchGUI) { SwitchGUILayout(); }
+        if (guiNeedsUpdate)
         {
-            Debug.Log(currSheepType.GetComponentInChildren<Sheep>().gameObject.transform.position);
+            currSheep.activeSheep.GetComponent<Sheep>().sheepIcons = this;
+            UpdateGUI();
+            UpdateActiveIcon();
+        }
+        IconAnimation();
+        PopUpManager();
+    }
 
+    
+    private void UpdateGUI()
+    {
+        berryCount.text = amountOfGoldBerries + " / 6";
+        for (int i = 0; i < allSheepOnLevel.Count; i++)
+        {
+            if (allSheepOnLevel[i].GetComponent<Sheep>().awake == false)
+            {
+                screenIcons[i].GetComponent<Image>().sprite = sheepAsleepIcon;
+            }
+            else
+            {
+                screenIcons[i].GetComponent<Image>().sprite = UpdateIconType(allSheepOnLevel[i].GetComponent<Sheep>());
+                
+            }
+        }
+        guiNeedsUpdate = false;
+
+    }
+
+    public void SwitchGUILayout()
+    {
+        switchGUI = false;
+        Debug.Log("Changing Faces");
+        if (currPlanetFace.sidesCompleted == 1)
+        {
+            Debug.Log("Planet Face 02");
+            allSheepOnLevel.Clear();
+            screenIcons.Clear();
+
+            //List that will track each individual sheep on the face. Will use its index to update the icons.
+            allSheepOnLevel.Add(currSheep.gameObject.transform.GetChild(0).gameObject);
+            allSheepOnLevel.Add(currSheep.gameObject.transform.GetChild(1).gameObject);
+            allSheepOnLevel.Add(currSheep.gameObject.transform.GetChild(2).gameObject);
+
+            //The GUI icons that are on the screen for the player to see.
+            iconOffset = UpdateVector(iconOffset, new Vector3(100, iconOffset.y, iconOffset.z));
+            screenIcons.Add(CreateSheepIcon(iconOffset, "Non Active Sheep", 1));
+            iconOffset = UpdateVector(iconOffset, new Vector3(0, iconOffset.y, iconOffset.z));
+            screenIcons.Add(CreateSheepIcon(iconOffset, "Non Active Sheep ", 2));
+            iconOffset = UpdateVector(iconOffset, new Vector3(-100, iconOffset.y, iconOffset.z));
+            screenIcons.Add(CreateSheepIcon(iconOffset, "Non Active Sheep ", 3));
+
+            amountOfGoldBerries = currPlanetFace.sidesCompleted;
+        }
+        if(currPlanetFace.sidesCompleted == 2)
+        {
+            //List that will track each individual sheep on the face. Will use its index to update the icons.
+            allSheepOnLevel.Add(currSheep.gameObject.transform.GetChild(0).gameObject);
+            allSheepOnLevel.Add(currSheep.gameObject.transform.GetChild(1).gameObject);
+            allSheepOnLevel.Add(currSheep.gameObject.transform.GetChild(2).gameObject);
+            allSheepOnLevel.Add(currSheep.gameObject.transform.GetChild(3).gameObject);
+
+            //The GUI icons that are on the screen for the player to see.
+            iconOffset = UpdateVector(iconOffset, new Vector3(50, iconOffset.y, iconOffset.z));
+            screenIcons.Add(CreateSheepIcon(iconOffset, "Non Active Sheep", 1));
+            iconOffset = UpdateVector(iconOffset, new Vector3(0, iconOffset.y, iconOffset.z));
+            screenIcons.Add(CreateSheepIcon(iconOffset, "Non Active Sheep ", 2));
+            iconOffset = UpdateVector(iconOffset, new Vector3(-50, iconOffset.y, iconOffset.z));
+            screenIcons.Add(CreateSheepIcon(iconOffset, "Non Active Sheep ", 3));
+            iconOffset = UpdateVector(iconOffset, new Vector3(-100, iconOffset.y, iconOffset.z));
+            screenIcons.Add(CreateSheepIcon(iconOffset, "Non Active Sheep ", 4));
+
+            amountOfGoldBerries = currPlanetFace.sidesCompleted;
+            guiNeedsUpdate = true;
+        }
+        if (currPlanetFace.sidesCompleted == 3)
+        {
+            //List that will track each individual sheep on the face. Will use its index to update the icons.
+            allSheepOnLevel.Add(currSheep.gameObject.transform.GetChild(0).gameObject);
+
+            //The GUI icons that are on the screen for the player to see.
+            iconOffset = UpdateVector(iconOffset, new Vector3(0, iconOffset.y, iconOffset.z));
+            screenIcons.Add(CreateSheepIcon(iconOffset, "Non Active Sheep ", 1));
+
+            amountOfGoldBerries = currPlanetFace.sidesCompleted;
+            guiNeedsUpdate = true;
+        }
+        if (currPlanetFace.sidesCompleted == 4)
+        {
+            //List that will track each individual sheep on the face. Will use its index to update the icons.
+            allSheepOnLevel.Add(currSheep.gameObject.transform.GetChild(0).gameObject);
+            allSheepOnLevel.Add(currSheep.gameObject.transform.GetChild(1).gameObject);
+
+            //The GUI icons that are on the screen for the player to see.
+            iconOffset = UpdateVector(iconOffset, new Vector3(50, iconOffset.y, iconOffset.z));
+            screenIcons.Add(CreateSheepIcon(iconOffset, "Non Active Sheep", 1));
+            iconOffset = UpdateVector(iconOffset, new Vector3(-50, iconOffset.y, iconOffset.z));
+            screenIcons.Add(CreateSheepIcon(iconOffset, "Non Active Sheep ", 2));
+
+            amountOfGoldBerries = currPlanetFace.sidesCompleted;
+            guiNeedsUpdate = true;
+        }
+        if (currPlanetFace.sidesCompleted == 5)
+        {
+            //List that will track each individual sheep on the face. Will use its index to update the icons.
+            allSheepOnLevel.Add(currSheep.gameObject.transform.GetChild(0).gameObject);
+            allSheepOnLevel.Add(currSheep.gameObject.transform.GetChild(1).gameObject);
+
+            //The GUI icons that are on the screen for the player to see.
+            iconOffset = UpdateVector(iconOffset, new Vector3(50, iconOffset.y, iconOffset.z));
+            screenIcons.Add(CreateSheepIcon(iconOffset, "Non Active Sheep", 1));
+            iconOffset = UpdateVector(iconOffset, new Vector3(-50, iconOffset.y, iconOffset.z));
+            screenIcons.Add(CreateSheepIcon(iconOffset, "Non Active Sheep ", 2));
+
+            amountOfGoldBerries = currPlanetFace.sidesCompleted;
+            guiNeedsUpdate = true;
+        }
+        guiNeedsUpdate = true;
+    }
+
+    private void InitialGUILayOut()
+    {
+        //List that will track each individual sheep on the face. Will use its index to update the icons.
+        allSheepOnLevel.Add(currSheep.gameObject.transform.GetChild(0).gameObject);
+        allSheepOnLevel.Add(currSheep.gameObject.transform.GetChild(1).gameObject);
+        allSheepOnLevel.Add(currSheep.gameObject.transform.GetChild(2).gameObject);
+
+        //The GUI icons that are on the screen for the player to see.
+        iconOffset = UpdateVector(iconOffset, new Vector3(100, iconOffset.y, iconOffset.z));
+        screenIcons.Add(CreateSheepIcon(iconOffset, "Non Active Sheep" , 1));
+        iconOffset = UpdateVector(iconOffset, new Vector3(0, iconOffset.y, iconOffset.z));
+        screenIcons.Add(CreateSheepIcon(iconOffset, "Non Active Sheep ", 2));
+        iconOffset = UpdateVector(iconOffset, new Vector3(-100, iconOffset.y, iconOffset.z));
+        screenIcons.Add(CreateSheepIcon(iconOffset, "Non Active Sheep ", 3));
+
+        guiNeedsUpdate = true;
+    }
+
+    private void UpdateActiveIcon()
+    {
+        if (currSheep.activeSheep.GetComponent<Sheep>().sheepType == SheepType.Sheared)
+        {
+            activeSheepIcon.GetComponent<Image>().sprite = defaultSheepIcon;
+        }
+        else if (currSheep.activeSheep.GetComponent<Sheep>().sheepType == SheepType.Slab)
+        {
+            activeSheepIcon.GetComponent<Image>().sprite = slabSheepIcon;
+
+        }
+        else if (currSheep.activeSheep.GetComponent<Sheep>().sheepType == SheepType.Snowball)
+        {
+            activeSheepIcon.GetComponent<Image>().sprite = snowballSheepIcon;
+        }
+        else if (currSheep.activeSheep.GetComponent<Sheep>().sheepType == SheepType.Static)
+        {
+            activeSheepIcon.GetComponent<Image>().sprite = shockSheepIcon;
         }
     }
 
-    void IconUpdater()
+    private Sprite UpdateIconType(Sheep sheepToUpdate)
     {
-        if (currSheepType.activeSheep.GetComponent<Sheep>().sheepType == SheepType.Slab)
+        if(sheepToUpdate.sheepType == SheepType.Sheared)
         {
-            if (!LeanTween.isTweening(voxelSheepIcon))
-            {
-                PulseEffect(voxelSheepIcon);
-                CancelTween(defaultSheepIcon);
-            }
+            return currPowerIcon = defaultSheepIcon;
         }
-        else
+        else if (sheepToUpdate.sheepType == SheepType.Slab)
         {
-            if (!LeanTween.isTweening(defaultSheepIcon))
-            {
-                PulseEffect(defaultSheepIcon);
-                CancelTween(voxelSheepIcon);
-            }
+            return currPowerIcon = slabSheepIcon;
         }
+        else if (sheepToUpdate.sheepType == SheepType.Snowball)
+        {
+            return currPowerIcon = snowballSheepIcon;
+        }
+        else if (sheepToUpdate.sheepType == SheepType.Static)
+        {
+            return currPowerIcon = shockSheepIcon;
+        }
+        return currPowerIcon;
+    }
 
+    private void IconAnimation()
+    {
+        if (!LeanTween.isTweening(activeSheepIcon))
+        {
+            PulseEffect(activeSheepIcon);
+        }
+    }
+
+    private GameObject CreateSheepIcon(Vector3 iconOffset, string name, int iconNumber)
+    {
+        GameObject temp = Instantiate(gameObject.transform.GetChild(0).gameObject, activeSheepIcon.transform.position, new Quaternion(0, 0, 0, 0));
+        temp.transform.position -= iconOffset;
+        temp.transform.localScale = newIconScale;
+        Color tempColour = new Color(0.6f, 0.6f, 0.6f, 0);
+        temp.GetComponent<Image>().color -= tempColour;
+        temp.GetComponent<Image>().sprite = sheepAsleepIcon;
+        temp.name = name + iconNumber;
+        temp.transform.parent = gameObject.transform;
+        return temp;
+    }
+
+    private Vector3 UpdateVector(Vector3 vectorToAdjust, Vector3 updateVector)
+    {
+        vectorToAdjust.x = updateVector.x;
+        vectorToAdjust.y = updateVector.y;
+        vectorToAdjust.z = updateVector.z;
+        return vectorToAdjust;
     }
 
     void PopUpManager()
     {
-        if (currSheepType.activeSheep.GetComponent<Sheep>().canJump)
-        {
-            Vector3 tempPos = currSheepType.activeSheep.GetComponent<Sheep>().gameObject.transform.position;
-            popUpManager.popUps[0].gameObject.transform.position = new Vector3(tempPos.x, tempPos.y + 2, tempPos.z);
-            popUpManager.popUps[0].gameObject.transform.LookAt(popUpManager.popUps[0].gameObject.transform.position + camera.transform.rotation * Vector3.forward,
-                camera.transform.rotation * Vector3.up);
-            popUpManager.SwitchPopUp(PopUpType.RButton);
-        }
-        else if(currSheepType.activeSheep.GetComponent<Sheep>().canWake)
-        {
-            Vector3 tempPos = currSheepType.activeSheep.GetComponent<Sheep>().gameObject.transform.position;
-            popUpManager.popUps[1].gameObject.transform.position = new Vector3(tempPos.x, tempPos.y + 2, tempPos.z);
-            popUpManager.popUps[1].gameObject.transform.LookAt(popUpManager.popUps[1].gameObject.transform.position + camera.transform.rotation * Vector3.forward,
-                camera.transform.rotation * Vector3.up);
-            popUpManager.SwitchPopUp(PopUpType.SpaceBar);
-        }
-        else
-        {
-            popUpManager.ClosePopUps();
 
-        }
     }
 
     private void PulseEffect(GameObject currIcon)
@@ -91,4 +270,18 @@ public class GUI_Manager : MonoBehaviour
         lastIcon.gameObject.transform.localScale = originalTransform;
         LeanTween.cancel(lastIcon);
     }
+
+    //private void ResetList()
+    //{
+    //    Debug.Log("The GUI is getting reset");
+    //    int index = allSheepOnLevel.Count - 1;
+    //    Debug.Log(index);
+    //    for (int i = index; i < allSheepOnLevel.Count - 1; i--)
+    //    {
+    //        Debug.Log("Removing");
+    //        allSheepOnLevel.RemoveAt(i);
+    //        screenIcons.RemoveAt(i);
+    //    }
+    //}
+
 }

@@ -93,4 +93,12 @@ public class Shepherd : MonoBehaviour
         }
 
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            transform.parent.GetComponentInChildren<Transition>().Activate(activeSheep.GetComponent<Sheep>());
+        }
+    }
 }
