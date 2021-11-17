@@ -215,6 +215,7 @@ public class Sheep : MonoBehaviour
                         {
                             isJumping = false;
 
+                            poweredUp = false;
                             canMove = true;
 
                             jumpIndex = 0;
@@ -305,7 +306,7 @@ public class Sheep : MonoBehaviour
 
             }
             // On left shift press, swap to the next active sheep
-            if (Input.GetKeyUp(KeyCode.LeftShift) && !staticHoldingSheep)
+            if (Input.GetKeyUp(KeyCode.LeftShift) && !isJumping && !staticHoldingSheep && (canMove || (sheepType == SheepType.Slab && poweredUp)))
             {
                 if (awakeSheep.Count != 0)
                 {
@@ -520,15 +521,25 @@ public class Sheep : MonoBehaviour
         float newX = startingPos.z;
         float newZ = startingPos.x;
 
+        float yTest = 0;
         for (int i = 0; i < numFrames; i++)
         {
             newX += z_dist;
             newZ += x_dist;
 
             float yToBeFound = A * (newX * newX) + B * newX + C;
+            yTest = yToBeFound;
             Vector3 temp = transform.parent.right * newZ + transform.parent.up * yToBeFound + transform.parent.forward * newX;
             jumpFrames[i] = temp;
         }
+        if (yTest - MaskVectorAsFloat(transform.position, transform.up) > 0.1f)
+        {
+            for (int i = 0; i< numFrames; i++)
+            {
+                jumpFrames[i] -= transform.up * (yTest - MaskVectorAsFloat(transform.position, transform.up));
+            }
+        }
+        Debug.Log("Jump complete");
         ////////////////////// END OF BORROWED CODE //////////////////////////
     }
 

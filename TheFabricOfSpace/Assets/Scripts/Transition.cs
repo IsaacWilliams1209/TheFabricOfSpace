@@ -105,6 +105,7 @@ public class Transition : MonoBehaviour
     {
         if (!isComplete)
         {
+            sheep.animator.SetBool("IsWalking", false);
             sheep.canMove = false;   
             Player player = GameObject.Find("/GameObject").GetComponent<Player>();
             player.sidesCompleted++;
