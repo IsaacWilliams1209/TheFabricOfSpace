@@ -807,7 +807,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: e184fc1cbac070d4887e42aaba709f2b, type: 2}
   - {fileID: 2100000, guid: 55c3ec5679a95c2428eadebd83c43a40, type: 2}
   - {fileID: 2100000, guid: 555cfc54fa8552848b2402de936e5424, type: 2}
-  - {fileID: 6482697493424803068, guid: 6372d10be0236f7418ae94403d60e118, type: 3}
+  - {fileID: 2100000, guid: 8b48c647d1b7f8c4eb34e06cce4a6da3, type: 2}
   - {fileID: 2100000, guid: ef735307293485f42bc3dd8427cdfa8f, type: 2}
   index: 0
   poweredUp: 0

@@ -153,6 +153,11 @@ public class Sheep : MonoBehaviour
                     break;
                 case SheepType.Snowball:
                     animator.SetBool("IsSnowball", true);
+                    materialHolder = matChanger.materials;
+                    materialHolder[1] = sheepMaterials[3];
+                    materialHolder[2] = sheepMaterials[3];
+                    materialHolder[0] = sheepMaterials[3];
+                    matChanger.materials = materialHolder;
                     matChanger.sharedMesh = meshes[2];
                     break;
                 case SheepType.Static:
@@ -253,7 +258,12 @@ public class Sheep : MonoBehaviour
                             matChanger.materials = materialHolder;
                             break;
                         case SheepType.Snowball:
-                             matChanger.sharedMesh = meshes[2];
+                            materialHolder = matChanger.materials;
+                            materialHolder[1] = sheepMaterials[3];
+                            materialHolder[2] = sheepMaterials[3];
+                            materialHolder[0] = sheepMaterials[3];
+                            matChanger.materials = materialHolder;
+                            matChanger.sharedMesh = meshes[2];
                             break;
                         case SheepType.Static:
                             materialHolder = matChanger.materials;
