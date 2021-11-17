@@ -108,6 +108,10 @@ public class Transition : MonoBehaviour
             sheep.canMove = false;   
             Player player = GameObject.Find("/GameObject").GetComponent<Player>();
             player.sidesCompleted++;
+            if (player.sidesCompleted == 6)
+            {
+                return;
+            }
             isComplete = true;
             currentSheep = sheep;
             cameraStartingRotation = currentSheep.transform.GetChild(2).GetChild(1).rotation;
