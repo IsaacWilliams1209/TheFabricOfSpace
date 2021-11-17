@@ -20,6 +20,8 @@ public class Transition : MonoBehaviour
     float timer;
 
     Sheep currentSheep;
+
+    GUI_Manager sheepIcons;
     
     Quaternion cameraStartingRotation;
 
@@ -29,6 +31,8 @@ public class Transition : MonoBehaviour
     {
         cameraRotation = GameObject.Find("/LavishPlanet/Planet_Rotation/Main Camera").GetComponent<Camera_Rotation>();
         Debug.Log("BerrySet");
+        //sheepIcons = Resources.FindObjectsOfTypeAll("GUI").GetComponent<GUI_Manager>();
+        sheepIcons = Resources.FindObjectsOfTypeAll<GUI_Manager>()[0];
     }
 
     void LateUpdate()
@@ -52,7 +56,6 @@ public class Transition : MonoBehaviour
                 cameraRotation.right = right;
                 currentSheep.shepherd.SwapCams();
             }
-            
         }
         if (finishedRotating && timer > transitionTimer && !RENAMELATER)
         {
@@ -76,12 +79,16 @@ public class Transition : MonoBehaviour
                 isComplete = false;
                 tempShepherd.SwapCams();
                 tempShepherd.activeSheep.GetComponent<Sheep>().promtChanger.UpdateText(tempShepherd.activeSheep.GetComponent<Sheep>());
+                sheepIcons.switchGUI = true;
+                sheepIcons.currSheep = tempShepherd;
+                //sheepIcons.SwitchGUILayout();
                 currentSheep = tempShepherd.activeSheep.GetComponent<Sheep>();
                 currentSheep.canMove = false;
                 cameraStartingRotation = currentSheep.transform.GetChild(2).GetChild(1).rotation;
                 cameraStartingPosition = currentSheep.transform.GetChild(2).GetChild(1).position;
                 timer = 0;
                 RENAMELATER = true;
+                finishedRotating = false;
             }
         }
         if (RENAMELATER && timer < transitionTimer)
@@ -101,6 +108,10 @@ public class Transition : MonoBehaviour
             sheep.canMove = false;   
             Player player = GameObject.Find("/GameObject").GetComponent<Player>();
             player.sidesCompleted++;
+            if (player.sidesCompleted == 6)
+            {
+                return;
+            }
             isComplete = true;
             currentSheep = sheep;
             cameraStartingRotation = currentSheep.transform.GetChild(2).GetChild(1).rotation;
