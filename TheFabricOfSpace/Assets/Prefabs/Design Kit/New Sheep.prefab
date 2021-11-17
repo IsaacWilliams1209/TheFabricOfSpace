@@ -829,11 +829,12 @@ MonoBehaviour:
   meshes:
   - {fileID: 7120451651249902827, guid: 0d3bba08f3fabd541860dd5790e516a9, type: 3}
   - {fileID: -2167570075894139802, guid: c9f92f50dc58f7446b2bcbd0bef36351, type: 3}
-  - {fileID: -5200131832812644735, guid: 59d42c9f89f4e48489a4d7c412490c40, type: 3}
+  - {fileID: 4610916648429993761, guid: b4f4dac36f325cf4498da2c7944dec5e, type: 3}
   - {fileID: 6159415530302770013, guid: e79c17fcd2ed96c488179c9eca747d67, type: 3}
   staticHoldingSheep: 0
   materialHolder: []
   promtChanger: {fileID: 0}
+  sheepIcons: {fileID: 0}
 --- !u!65 &5058815981710956296
 BoxCollider:
   m_ObjectHideFlags: 0
