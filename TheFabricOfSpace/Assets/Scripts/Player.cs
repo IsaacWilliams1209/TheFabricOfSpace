@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (sidesCompleted == 6) { playerWon = true; }
+        if (sidesCompleted == 5) { playerWon = true; }
 
         if (playerWon) {
             playerWon = false;

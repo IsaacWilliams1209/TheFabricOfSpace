@@ -109,7 +109,7 @@ public class Transition : MonoBehaviour
             sheep.canMove = false;   
             Player player = GameObject.Find("/GameObject").GetComponent<Player>();
             player.sidesCompleted++;
-            if (player.sidesCompleted == 6)
+            if (player.sidesCompleted == 5)
             {
                 sheep.shepherd.SwapCams();
                 return;
