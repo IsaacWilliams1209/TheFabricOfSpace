@@ -17,8 +17,8 @@ public class GUI_Manager : MonoBehaviour
     Player currPlanetFace;
     [SerializeField] Vector3 newIconScale;
     Vector3 iconOffset = new Vector3(0, 100, 0);
-    [SerializeField] List<GameObject> allSheepOnLevel = new List<GameObject>(); //[0] component will always be the icon of the active sheep and shouldn't be touched.
-    [SerializeField] List<GameObject> screenIcons = new List<GameObject>(); //tracks what sheep icons are currently inactive.
+    public List<GameObject> allSheepOnLevel = new List<GameObject>(); //[0] component will always be the icon of the active sheep and shouldn't be touched.
+    public List<GameObject> screenIcons = new List<GameObject>(); //tracks what sheep icons are currently inactive.
     GameObject ePopUp, shiftPopUp, spacePopUp;
     Sprite currPowerIcon;
     public bool isSheepSwapping;
@@ -205,7 +205,7 @@ public class GUI_Manager : MonoBehaviour
         }
     }
 
-    private Sprite UpdateIconType(Sheep sheepToUpdate)
+    public Sprite UpdateIconType(Sheep sheepToUpdate)
     {
         if (sheepToUpdate.sheepType == SheepType.Sheared)
         {
