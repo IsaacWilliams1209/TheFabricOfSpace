@@ -101,6 +101,16 @@ public class Sheep : MonoBehaviour
 
     public GUI_Manager sheepIcons;
 
+    [HideInInspector]
+    public Vector3 cameraPos;
+
+    float lerpTimer = 1.5f;
+
+    float timer = 0;
+
+    [HideInInspector]
+    public bool isSwapping;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -179,6 +189,21 @@ public class Sheep : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isSwapping)
+        {
+            CamLerp(awakeSheep[awakeSheep.Count - 1].transform.GetChild(2).GetChild(1).position, cameraPos);
+            if (timer > lerpTimer)
+            {
+                isSwapping = false;
+                timer = 0;
+            }
+            else
+            {
+                return;
+            }
+
+        }
+
         if (isEating)
         {
             jumpTime += Time.deltaTime;
@@ -366,8 +391,11 @@ public class Sheep : MonoBehaviour
             //shepherd.SwapCams();
             if (shepherd.isSheepFocus)
             {
-                transform.GetChild(2).GetChild(1).gameObject.SetActive(false);
                 awakeSheep[0].transform.GetChild(2).GetChild(1).gameObject.SetActive(true);
+                awakeSheep[0].GetComponent<Sheep>().cameraPos = awakeSheep[0].transform.GetChild(2).GetChild(1).position;
+                awakeSheep[0].GetComponent<Sheep>().isSwapping = true;
+                awakeSheep[0].transform.GetChild(2).GetChild(1).position = transform.GetChild(2).GetChild(1).position;                
+                transform.GetChild(2).GetChild(1).gameObject.SetActive(false);
             }
             promtChanger.UpdateText(awakeSheep[0].GetComponent<Sheep>());
             transform.GetComponent<BoxCollider>().enabled = true;
@@ -380,6 +408,7 @@ public class Sheep : MonoBehaviour
             //matChanger.material = sheepMaterials[1];            
             active = false;
             swap = false;
+            
         }
     }
 
@@ -576,6 +605,13 @@ public class Sheep : MonoBehaviour
         temp.z = data.z * Mathf.Abs(mask.z);
         return temp;
     }
+
+    void CamLerp(Vector3 from, Vector3 to)
+    {
+        timer += Time.deltaTime;
+        transform.GetChild(2).GetChild(1).position = Vector3.Lerp(from, to, timer / lerpTimer);
+    }
+
 
     void OnDrawGizmos()
     {
