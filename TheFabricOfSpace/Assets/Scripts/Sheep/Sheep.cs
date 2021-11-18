@@ -104,7 +104,7 @@ public class Sheep : MonoBehaviour
     [HideInInspector]
     public Vector3 cameraPos;
 
-    float lerpTimer = 1f;
+    float lerpTimer = 0.75f;
 
     float timer = 0;
 
