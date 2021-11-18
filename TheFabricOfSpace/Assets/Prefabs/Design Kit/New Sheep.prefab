@@ -519,8 +519,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.2, y: 0.2, z: 0.1}
-  m_Center: {x: 0, y: 0.28, z: 0.33}
+  m_Size: {x: 0.2, y: 0.19999999, z: 0.51152545}
+  m_Center: {x: 0, y: 0.28, z: 0.12423733}
 --- !u!1 &2068444065037528592
 GameObject:
   m_ObjectHideFlags: 0
@@ -807,7 +807,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: e184fc1cbac070d4887e42aaba709f2b, type: 2}
   - {fileID: 2100000, guid: 55c3ec5679a95c2428eadebd83c43a40, type: 2}
   - {fileID: 2100000, guid: 555cfc54fa8552848b2402de936e5424, type: 2}
-  - {fileID: 6482697493424803068, guid: 6372d10be0236f7418ae94403d60e118, type: 3}
+  - {fileID: 2100000, guid: 8b48c647d1b7f8c4eb34e06cce4a6da3, type: 2}
   - {fileID: 2100000, guid: ef735307293485f42bc3dd8427cdfa8f, type: 2}
   index: 0
   poweredUp: 0
@@ -829,11 +829,14 @@ MonoBehaviour:
   meshes:
   - {fileID: 7120451651249902827, guid: 0d3bba08f3fabd541860dd5790e516a9, type: 3}
   - {fileID: -2167570075894139802, guid: c9f92f50dc58f7446b2bcbd0bef36351, type: 3}
-  - {fileID: -5200131832812644735, guid: 59d42c9f89f4e48489a4d7c412490c40, type: 3}
+  - {fileID: 4610916648429993761, guid: b4f4dac36f325cf4498da2c7944dec5e, type: 3}
   - {fileID: 6159415530302770013, guid: e79c17fcd2ed96c488179c9eca747d67, type: 3}
   staticHoldingSheep: 0
   materialHolder: []
   promtChanger: {fileID: 0}
+  sheepIcons: {fileID: 0}
+  cameraPos: {x: 0, y: 0, z: 0}
+  isSwapping: 0
 --- !u!65 &5058815981710956296
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -101,6 +101,16 @@ public class Sheep : MonoBehaviour
 
     public GUI_Manager sheepIcons;
 
+    [HideInInspector]
+    public Vector3 cameraPos;
+
+    float lerpTimer = 1f;
+
+    float timer = 0;
+
+    [HideInInspector]
+    public bool isSwapping;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -153,6 +163,11 @@ public class Sheep : MonoBehaviour
                     break;
                 case SheepType.Snowball:
                     animator.SetBool("IsSnowball", true);
+                    materialHolder = matChanger.materials;
+                    materialHolder[1] = sheepMaterials[3];
+                    materialHolder[2] = sheepMaterials[3];
+                    materialHolder[0] = sheepMaterials[3];
+                    matChanger.materials = materialHolder;
                     matChanger.sharedMesh = meshes[2];
                     break;
                 case SheepType.Static:
@@ -174,6 +189,21 @@ public class Sheep : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isSwapping)
+        {
+            CamLerp(awakeSheep[awakeSheep.Count - 1].transform.GetChild(2).GetChild(1).position, cameraPos);
+            if (timer > lerpTimer)
+            {
+                isSwapping = false;
+                timer = 0;
+            }
+            else
+            {
+                return;
+            }
+
+        }
+
         if (isEating)
         {
             jumpTime += Time.deltaTime;
@@ -215,6 +245,7 @@ public class Sheep : MonoBehaviour
                         {
                             isJumping = false;
 
+                            poweredUp = false;
                             canMove = true;
 
                             jumpIndex = 0;
@@ -230,6 +261,7 @@ public class Sheep : MonoBehaviour
                 {
                     closestSheep.GetComponent<Sheep>().awake = true;
                     sheepIcons.guiNeedsUpdate = true;
+                    canWake = false;
                     //closestSheep.transform.GetChild(1).GetComponent<Renderer>().material = sheepMaterials[0];
                     closestSheep.GetComponent<Sheep>().wakingTrigger.enabled = false;
                     awakeSheep.Insert(0, closestSheep);
@@ -253,7 +285,12 @@ public class Sheep : MonoBehaviour
                             matChanger.materials = materialHolder;
                             break;
                         case SheepType.Snowball:
-                             matChanger.sharedMesh = meshes[2];
+                            materialHolder = matChanger.materials;
+                            materialHolder[1] = sheepMaterials[3];
+                            materialHolder[2] = sheepMaterials[3];
+                            materialHolder[0] = sheepMaterials[3];
+                            matChanger.materials = materialHolder;
+                            matChanger.sharedMesh = meshes[2];
                             break;
                         case SheepType.Static:
                             materialHolder = matChanger.materials;
@@ -305,7 +342,7 @@ public class Sheep : MonoBehaviour
 
             }
             // On left shift press, swap to the next active sheep
-            if (Input.GetKeyUp(KeyCode.LeftShift) && !staticHoldingSheep)
+            if (Input.GetKeyUp(KeyCode.LeftShift) && !isJumping && !staticHoldingSheep && (canMove || (sheepType == SheepType.Slab && poweredUp)))
             {
                 if (awakeSheep.Count != 0)
                 {
@@ -355,8 +392,11 @@ public class Sheep : MonoBehaviour
             //shepherd.SwapCams();
             if (shepherd.isSheepFocus)
             {
-                transform.GetChild(2).GetChild(1).gameObject.SetActive(false);
                 awakeSheep[0].transform.GetChild(2).GetChild(1).gameObject.SetActive(true);
+                awakeSheep[0].GetComponent<Sheep>().cameraPos = awakeSheep[0].transform.GetChild(2).GetChild(1).position;
+                awakeSheep[0].GetComponent<Sheep>().isSwapping = true;
+                awakeSheep[0].transform.GetChild(2).GetChild(1).position = transform.GetChild(2).GetChild(1).position;                
+                transform.GetChild(2).GetChild(1).gameObject.SetActive(false);
             }
             promtChanger.UpdateText(awakeSheep[0].GetComponent<Sheep>());
             transform.GetComponent<BoxCollider>().enabled = true;
@@ -369,6 +409,7 @@ public class Sheep : MonoBehaviour
             //matChanger.material = sheepMaterials[1];            
             active = false;
             swap = false;
+            
         }
     }
 
@@ -520,15 +561,25 @@ public class Sheep : MonoBehaviour
         float newX = startingPos.z;
         float newZ = startingPos.x;
 
+        float yTest = 0;
         for (int i = 0; i < numFrames; i++)
         {
             newX += z_dist;
             newZ += x_dist;
 
             float yToBeFound = A * (newX * newX) + B * newX + C;
+            yTest = yToBeFound;
             Vector3 temp = transform.parent.right * newZ + transform.parent.up * yToBeFound + transform.parent.forward * newX;
             jumpFrames[i] = temp;
         }
+        if (yTest - MaskVectorAsFloat(transform.position, transform.up) > 0.1f)
+        {
+            for (int i = 0; i< numFrames; i++)
+            {
+                jumpFrames[i] -= transform.up * (yTest - MaskVectorAsFloat(transform.position, transform.up));
+            }
+        }
+        Debug.Log("Jump complete");
         ////////////////////// END OF BORROWED CODE //////////////////////////
     }
 
@@ -555,6 +606,13 @@ public class Sheep : MonoBehaviour
         temp.z = data.z * Mathf.Abs(mask.z);
         return temp;
     }
+
+    void CamLerp(Vector3 from, Vector3 to)
+    {
+        timer += Time.deltaTime;
+        transform.GetChild(2).GetChild(1).position = Vector3.Lerp(from, to, timer / lerpTimer);
+    }
+
 
     void OnDrawGizmos()
     {
