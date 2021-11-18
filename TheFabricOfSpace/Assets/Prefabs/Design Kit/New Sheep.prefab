@@ -519,8 +519,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.2, y: 0.2, z: 0.1}
-  m_Center: {x: 0, y: 0.28, z: 0.33}
+  m_Size: {x: 0.2, y: 0.19999999, z: 0.51152545}
+  m_Center: {x: 0, y: 0.28, z: 0.12423733}
 --- !u!1 &2068444065037528592
 GameObject:
   m_ObjectHideFlags: 0
@@ -835,6 +835,8 @@ MonoBehaviour:
   materialHolder: []
   promtChanger: {fileID: 0}
   sheepIcons: {fileID: 0}
+  cameraPos: {x: 0, y: 0, z: 0}
+  isSwapping: 0
 --- !u!65 &5058815981710956296
 BoxCollider:
   m_ObjectHideFlags: 0

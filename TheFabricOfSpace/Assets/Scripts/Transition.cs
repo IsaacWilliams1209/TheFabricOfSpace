@@ -111,6 +111,7 @@ public class Transition : MonoBehaviour
             player.sidesCompleted++;
             if (player.sidesCompleted == 6)
             {
+                sheep.shepherd.SwapCams();
                 return;
             }
             isComplete = true;

@@ -104,7 +104,7 @@ public class Sheep : MonoBehaviour
     [HideInInspector]
     public Vector3 cameraPos;
 
-    float lerpTimer = 1.5f;
+    float lerpTimer = 1f;
 
     float timer = 0;
 
@@ -261,6 +261,7 @@ public class Sheep : MonoBehaviour
                 {
                     closestSheep.GetComponent<Sheep>().awake = true;
                     sheepIcons.guiNeedsUpdate = true;
+                    canWake = false;
                     //closestSheep.transform.GetChild(1).GetComponent<Renderer>().material = sheepMaterials[0];
                     closestSheep.GetComponent<Sheep>().wakingTrigger.enabled = false;
                     awakeSheep.Insert(0, closestSheep);
