@@ -16,7 +16,7 @@ public class GUI_Manager : MonoBehaviour
     PopUp_Manager popUpManager;
     Player currPlanetFace;
     [SerializeField] Vector3 newIconScale;
-    Vector3 iconOffset = new Vector3(0, 100, 0);
+    Vector3 iconOffset = new Vector3(0, 150, 0);
     public List<GameObject> allSheepOnLevel = new List<GameObject>(); //[0] component will always be the icon of the active sheep and shouldn't be touched.
     public List<GameObject> screenIcons = new List<GameObject>(); //tracks what sheep icons are currently inactive.
     GameObject ePopUp, shiftPopUp, spacePopUp;
@@ -61,7 +61,7 @@ public class GUI_Manager : MonoBehaviour
 
     private void UpdateGUI()
     {
-        berryCount.text = amountOfGoldBerries + " / 6";
+        berryCount.text = amountOfGoldBerries + " / 5";
         for (int i = 0; i < allSheepOnLevel.Count; i++)
         {
             if (allSheepOnLevel[i].GetComponent<Sheep>().awake == false)
@@ -109,13 +109,13 @@ public class GUI_Manager : MonoBehaviour
             allSheepOnLevel.Add(currSheep.gameObject.transform.GetChild(3).gameObject);
 
             //The GUI icons that are on the screen for the player to see.
-            iconOffset = UpdateVector(iconOffset, new Vector3(50, iconOffset.y, iconOffset.z));
+            iconOffset = UpdateVector(iconOffset, new Vector3(150, iconOffset.y, iconOffset.z));
             screenIcons.Add(CreateSheepIcon(iconOffset, "Non Active Sheep", 1));
-            iconOffset = UpdateVector(iconOffset, new Vector3(0, iconOffset.y, iconOffset.z));
+            iconOffset = UpdateVector(iconOffset, new Vector3(50, iconOffset.y, iconOffset.z));
             screenIcons.Add(CreateSheepIcon(iconOffset, "Non Active Sheep ", 2));
             iconOffset = UpdateVector(iconOffset, new Vector3(-50, iconOffset.y, iconOffset.z));
             screenIcons.Add(CreateSheepIcon(iconOffset, "Non Active Sheep ", 3));
-            iconOffset = UpdateVector(iconOffset, new Vector3(-100, iconOffset.y, iconOffset.z));
+            iconOffset = UpdateVector(iconOffset, new Vector3(-150, iconOffset.y, iconOffset.z));
             screenIcons.Add(CreateSheepIcon(iconOffset, "Non Active Sheep ", 4));
 
             amountOfGoldBerries = currPlanetFace.sidesCompleted;
