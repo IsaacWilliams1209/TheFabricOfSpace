@@ -26,7 +26,7 @@ public class GUI_Manager : MonoBehaviour
     TextMeshProUGUI berryCount;
     public bool switchGUI = false;
     GameObject popUp;
-    private float popUpTime = 0.8f;
+    private float popUpTime = 0.5f;
     bool cancelPopUp = false;
 
     private void Start()
@@ -285,7 +285,7 @@ public class GUI_Manager : MonoBehaviour
                 ePopUp.SetActive(false);
                 shiftPopUp.SetActive(false);
                 spacePopUp.SetActive(false);
-                popUpTime = 0.8f;
+                popUpTime = 0.5f;
                 cancelPopUp = false;
             }
         }
