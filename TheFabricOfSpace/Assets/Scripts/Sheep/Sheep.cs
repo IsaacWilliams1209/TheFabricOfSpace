@@ -122,14 +122,15 @@ public class Sheep : MonoBehaviour
         sheep = shepherd.sheep;
         awakeSheep = shepherd.awakeSheep;        
         controller = GetComponent<SheepController>();
-        mainCollider = GetComponents<BoxCollider>()[0];
-        wakingTrigger = GetComponents<BoxCollider>()[1];
+        mainCollider = GetComponents<BoxCollider>()[1];
+        wakingTrigger = GetComponents<BoxCollider>()[0];
         promtChanger = GameObject.Find("/GameObject").GetComponent<TutorialPromt>();
 
 
         // Set apropriate materials for the sheep
         if (active)
         {
+
             animator.SetBool("IsAwake", true);
             shepherd.activeSheep = gameObject;
             wakingTrigger.enabled = false;
