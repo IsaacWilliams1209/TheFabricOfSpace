@@ -63,6 +63,7 @@ public class ButtonContoller : MonoBehaviour
             case ButtonType.ResumeGame:
                 Time.timeScale = 1.0f;
                 menuManager.TurnMenuOff(MenuType.PauseMenu);
+                menuManager.SwitchMenu(MenuType.GUI);
                 break;
             default:
                 break;

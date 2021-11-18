@@ -610,7 +610,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3714346487896797966, guid: b7c0a9f87069d584f8a8114bf6fd606f, type: 3}
       propertyPath: m_Name
-      value: SettingsMenu
+      value: ControlsMenu
       objectReference: {fileID: 0}
     - target: {fileID: 3714346487896797966, guid: b7c0a9f87069d584f8a8114bf6fd606f, type: 3}
       propertyPath: m_IsActive
@@ -2627,6 +2627,10 @@ PrefabInstance:
     - target: {fileID: 3267076818097217563, guid: 6b02ae5c4e3ce51428647ad720e66b16, type: 3}
       propertyPath: m_Name
       value: Pause_Menu
+      objectReference: {fileID: 0}
+    - target: {fileID: 3267076818097217563, guid: 6b02ae5c4e3ce51428647ad720e66b16, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b02ae5c4e3ce51428647ad720e66b16, type: 3}
